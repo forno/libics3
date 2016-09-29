@@ -2,5 +2,6 @@
 #define LIBICS3_ICS3_ICS_H_
 
 #include "ics3/version.hpp"
+#include "ics3/core.hpp"
 
 #endif // LIBICS3_ICS3_ICS_H_
