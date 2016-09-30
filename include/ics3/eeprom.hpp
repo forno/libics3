@@ -7,11 +7,11 @@
 
 namespace ics {
   enum struct EepFlag {
-    REVERSE =   000000001;
-    FREE =      000000010;
-    PWMINH =    000000100;
-    ROLL_MODE = 000010000;
-    SLAVE =     010000000;
+    REVERSE =   000000001,
+    FREE =      000000010,
+    PWMINH =    000000100,
+    ROLL_MODE = 000010000,
+    SLAVE =     010000000
   };
 
   class EepParam {
