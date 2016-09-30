@@ -6,6 +6,14 @@
 #include <stdexcept>
 
 namespace ics {
+  enum struct EepFlag {
+    REVERSE =   000000001;
+    FREE =      000000010;
+    PWMINH =    000000100;
+    ROLL_MODE = 000010000;
+    SLAVE =     010000000;
+  };
+
   class EepParam {
     public:
       static EepParam strech() noexcept;
@@ -14,6 +22,7 @@ namespace ics {
       static EepParam deadBand() noexcept;
       static EepParam dumping() noexcept;
       static EepParam selfTimer() noexcept;
+      static EepParam flag() noexcept;
       static EepParam pulseMaxLimit() noexcept;
       static EepParam pulseMinLimit() noexcept;
       static EepParam tmperatureLimit() noexcept;
@@ -33,6 +42,7 @@ namespace ics {
       void setRaw4byte(std::array<unsigned char, 64> &) const noexcept;
       void setNormal(uint16_t) throw(std::range_error);
       void setEven(uint16_t) throw(std::range_error);
+      void setFlag(uint16_t) throw(std::range_error);
 
       const int offset;
       const uint16_t min;
