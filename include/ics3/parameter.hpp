@@ -17,7 +17,7 @@ namespace ics {
     unsigned char get() const noexcept;
     void set(unsigned char) throw(std::invalid_argument);
   private:
-    Parameter(unsigned char, unsigned char, unsigned char) noexcept;
+    Parameter(unsigned char, unsigned char, unsigned char, unsigned char) noexcept;
     const unsigned char sc;
     const unsigned char min;
     const unsigned char max;

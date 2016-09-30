@@ -1,22 +1,22 @@
 #include "ics3/parameter.hpp"
 
 ics::Parameter ics::Parameter::stretch() noexcept {
-  static const Parameter STRETCH(0x01, 1, 127);
+  static const Parameter STRETCH(0x01, 1, 127, 30);
   return STRETCH;
 }
 
 ics::Parameter ics::Parameter::speed() noexcept {
-  static const Parameter SPEED(0x02, 1, 127);
+  static const Parameter SPEED(0x02, 1, 127, 127);
   return SPEED;
 }
 
 ics::Parameter ics::Parameter::current() noexcept {
-  static const Parameter CURRENT(0x03, 0, 63);
+  static const Parameter CURRENT(0x03, 0, 63, 63);
   return CURRENT;
 }
 
 ics::Parameter ics::Parameter::temperature() noexcept {
-  static const Parameter TEMPERATURE(0x04, 1, 127);
+  static const Parameter TEMPERATURE(0x04, 1, 127, 80);
   return TEMPERATURE;
 }
 
@@ -30,9 +30,9 @@ void ics::Parameter::set(unsigned char input) throw(std::invalid_argument) {
   data = input;
 }
 
-ics::Parameter::Parameter(unsigned char sc, unsigned char min, unsigned char max) noexcept
+ics::Parameter::Parameter(unsigned char sc, unsigned char min, unsigned char max, unsigned char default_data) noexcept
 : sc(sc),
   min(min),
   max(max),
-  data(-1)
+  data(default_data)
 {}
