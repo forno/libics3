@@ -1,4 +1,6 @@
-test: bin build/test.o build/angle.o
+test: bin/test
+
+bin/test: bin build/test.o build/angle.o
 	g++ -o bin/test build/test.o build/angle.o
 
 build/angle.o: build src/angle.cpp
