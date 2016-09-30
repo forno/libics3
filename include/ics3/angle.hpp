@@ -20,6 +20,7 @@ namespace ics {
     const double min;
     const double max;
     uint16_t (*const getRawFunc)();
+    double data;
   };
 }
 
