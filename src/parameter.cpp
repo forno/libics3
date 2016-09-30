@@ -33,5 +33,6 @@ void ics::Parameter::set(unsigned char input) throw(std::invalid_argument) {
 ics::Parameter::Parameter(unsigned char sc, unsigned char min, unsigned char max) noexcept
 : sc(sc),
   min(min),
-  max(max)
+  max(max),
+  data(-1)
 {}
