@@ -35,6 +35,7 @@ ics::Angle::Angle(double min, double max, uint16_t (Angle::*getRawFunc)() const 
 : min(min),
   max(max),
   getRawFunc(getRawFunc)
+  data(0)
 {}
 
 uint16_t ics::Angle::rawDegree() const noexcept {
