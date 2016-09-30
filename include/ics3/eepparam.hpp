@@ -5,13 +5,18 @@
 #include <stdexcept>
 
 namespace ics {
-  enum struct EepFlag {
+  enum EepFlag : uint16_t {
     REVERSE =   000000001,
     FREE =      000000010,
     PWMINH =    000000100,
     ROLL_MODE = 000010000,
     SLAVE =     010000000
   };
+  enum EepBaudrate : uint16_t {
+    RATE115200 = 10
+    RATE625000 = 1,
+    RATE1250000 = 0,
+  }
 
   class EepParam {
     public:
@@ -22,38 +27,41 @@ namespace ics {
       static EepParam dumping() noexcept;
       static EepParam selfTimer() noexcept;
       static EepParam flag() noexcept;
-      static EepParam pulseMaxLimit() noexcept;
-      static EepParam pulseMinLimit() noexcept;
-      static EepParam tmperatureLimit() noexcept;
-      static EepParam currentLimit() noexcept;
+      static EepParam pulseMax() noexcept;
+      static EepParam pulseMin() noexcept;
+      static EepParam baudrate() noexcept;
+      static EepParam temperature() noexcept;
+      static EepParam current() noexcept;
       static EepParam response() noexcept;
       static EepParam userOffset() noexcept;
       static EepParam id() noexcept;
       static EepParam strech1() noexcept;
       static EepParam strech2() noexcept;
       static EepParam strech3() noexcept;
-      void set(uint16_t) throw(std::range_error);
-      uint16_t get() const noexcept;
       void setRaw(std::array<unsigned char, 64> &) const noexcept;
+      uint16_t get() const noexcept;
+      void set(uint16_t) throw(std::invalid_argument);
     private:
       EepParam(int,
                uint16_t,
                uint16_t,
                void (EepParam::*)(std::array<unsigned char, 64> &) const noexcept,
-               void (EepParam::*)(uint16_t) throw(std::range_error),
+               void (EepParam::*)(uint16_t) throw(std::invalid_argument),
                uint16_t
               ) noexcept;
       void setRaw2byte(std::array<unsigned char, 64> &) const noexcept;
       void setRaw4byte(std::array<unsigned char, 64> &) const noexcept;
-      void setNormal(uint16_t) throw(std::range_error);
-      void setEven(uint16_t) throw(std::range_error);
-      void setFlag(uint16_t) throw(std::range_error);
+      void setNormal(uint16_t) throw(std::invalid_argument);
+      void setEven(uint16_t) throw(std::invalid_argument);
+      void setFlag(uint16_t) throw(std::invalid_argument);
+      void setBaudrate(uint16_t) throw(std::invalid_argument);
+      void setOffset(uint16_t) throw(std::invalid_argument);
 
       const int offset;
       const uint16_t min;
       const uint16_t max;
       void (EepParam::*const setRawFunc)(std::array<unsigned char, 64> &) const noexcept;
-      void (EepParam::*const setFunc)(uint16_t) throw(std::range_error);
+      void (EepParam::*const setFunc)(uint16_t) throw(std::invalid_argument);
       uint16_t data;
   };
 }
