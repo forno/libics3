@@ -4,8 +4,11 @@
 #include <stdexcept>
 
 namespace ics {
+  class ICS3;
+
   class Parameter {
   public:
+    friend ICS3;
     static Parameter stretch() noexcept;
     static Parameter speed() noexcept;
     static Parameter current() noexcept;
