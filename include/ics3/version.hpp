@@ -11,8 +11,8 @@ namespace ics {
       V6
     };
 
-    static const Versions getVersion();
-    static void setVersion(const Versions);
+    static const Versions getVersion() noexcept;
+    static void setVersion(const Versions) noexcept;
   private:
     static Versions version;
     MinorVersion();
