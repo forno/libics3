@@ -13,14 +13,14 @@ namespace ics {
     void set(double) throw(std::invalid_argument);
     uint16_t getRaw() const noexcept;
   private:
-    Angle(double, double, uint16_t (Angle::*)() const) noexcept;
+    Angle(double, double, uint16_t (Angle::*)() const noexcept) noexcept;
     uint16_t rawDegree() const noexcept;
     uint16_t rawRadian() const noexcept;
     void checkValid(double) const throw(std::invalid_argument);
 
     const double min;
     const double max;
-    uint16_t (Angle::*const getRawFunc)() const; // no new to no declaration of destructor, copy, etc...
+    uint16_t (Angle::*const getRawFunc)() const noexcept; // no new to no declaration of destructor, copy, etc...
     double data;
   };
 }

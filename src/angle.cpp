@@ -31,7 +31,7 @@ uint16_t ics::Angle::getRaw() const noexcept {
   return (this->*getRawFunc)();
 }
 
-ics::Angle::Angle(double min, double max, uint16_t (Angle::*getRawFunc)() const) noexcept
+ics::Angle::Angle(double min, double max, uint16_t (Angle::*getRawFunc)() const noexcept) noexcept
 : min(min),
   max(max),
   getRawFunc(getRawFunc)
