@@ -9,7 +9,6 @@ namespace ics {
     static const Core &getReference();
     std::vector<unsigned char> &communicate(std::vector<unsigned char>);
   private:
-    static const Core INSTANCE;
   };
 }
 
