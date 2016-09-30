@@ -9,7 +9,6 @@ ex)[KRS series servo moters produced by KONDO KAGAKU co., ltd.](http://kondo-rob
 
 ## CAPTION
 This software only support serial mode.
-if you use this on ICS3.5 or after,
 You should lock the serial mode for never turn on PWM mode.
 
 ## API Reference
