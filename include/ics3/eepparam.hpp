@@ -6,17 +6,17 @@
 
 namespace ics {
   enum EepFlag : uint16_t {
-    REVERSE =   000000001,
-    FREE =      000000010,
-    PWMINH =    000000100,
-    ROLL_MODE = 000010000,
-    SLAVE =     010000000
+    REVERSE =   0x1,
+    FREE =      0x2,
+    PWMINH =    0x8,
+    ROLL_MODE = 0x10,
+    SLAVE =     0x80
   };
   enum EepBaudrate : uint16_t {
-    RATE115200 = 10
+    RATE115200 = 10,
     RATE625000 = 1,
-    RATE1250000 = 0,
-  }
+    RATE1250000 = 0
+  };
 
   class EepParam {
     public:
