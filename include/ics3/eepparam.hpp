@@ -40,7 +40,8 @@ namespace ics {
                uint16_t,
                uint16_t,
                void (EepParam::*)(std::array<unsigned char, 64> &) const noexcept,
-               void (EepParam::*)(uint16_t) throw(std::range_error)
+               void (EepParam::*)(uint16_t) throw(std::range_error),
+               uint16_t
               ) noexcept;
       void setRaw2byte(std::array<unsigned char, 64> &) const noexcept;
       void setRaw4byte(std::array<unsigned char, 64> &) const noexcept;
