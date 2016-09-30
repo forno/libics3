@@ -5,6 +5,7 @@
 #include <vector>
 
 namespace ics {
+  class EepParam;
   class Eeprom {
   public:
     Eeprom() noexcept;
