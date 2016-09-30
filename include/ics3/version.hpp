@@ -5,7 +5,6 @@ namespace ics {
   class MinorVersion {
   public:
     enum struct Versions {
-      DEFAULT,
       V0,
       V5,
       V6
