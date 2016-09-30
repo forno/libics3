@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <stdexcept>
-#include <termios>
+#include <termios.h>
 
 namespace ics {
   class Core {
