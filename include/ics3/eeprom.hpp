@@ -37,7 +37,12 @@ namespace ics {
       uint16_t get() const noexcept;
       void setRaw(std::array<unsigned char, 64> &) const noexcept;
     private:
-      EepParam(int, uint16_t, uint16_t, void (*)(std::array<unsigned char, 64> &), void (*)(uint16_t)) noexcept;
+      EepParam(int,
+               uint16_t,
+               uint16_t,
+               void (EepParam::*)(std::array<unsigned char, 64> &) const noexcept,
+               void (EepParam::*)(uint16_t) throw(std::range_error)
+              ) noexcept;
       void setRaw2byte(std::array<unsigned char, 64> &) const noexcept;
       void setRaw4byte(std::array<unsigned char, 64> &) const noexcept;
       void setNormal(uint16_t) throw(std::range_error);
@@ -47,8 +52,8 @@ namespace ics {
       const int offset;
       const uint16_t min;
       const uint16_t max;
-      void (*const rawFunc)(std::array<unsigned char, 64> &);
-      void (*const setFunc)(uint16_t);
+      void (EepParam::*const setRawFunc)(std::array<unsigned char, 64> &) const noexcept;
+      void (EepParam::*const setFunc)(uint16_t) throw(std::range_error);
       uint16_t data;
   };
 
