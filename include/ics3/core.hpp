@@ -9,7 +9,7 @@ namespace ics {
   class Core {
   public:
     static const Core &getReference();
-    std::vector<unsigned char> &communicate(std::vector<unsigned char>);
+    std::vector<unsigned char> &communicate(std::vector<unsigned char>) const noexcept;
   private:
     explicit Core(const char *) throw(std::runtime_error);
     Core(const Core &);
