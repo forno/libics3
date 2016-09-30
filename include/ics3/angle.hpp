@@ -1,15 +1,16 @@
 #ifndef LIBICS3_ICS3_ANGLE_H_
 #define LIBICS3_ICS3_ANGLE_H_
 
-namespace ics {
+#include <stdexcept>
 
+namespace ics {
   class Angle {
   public:
     static Angle createDegree() noexcept;
     static Angle createRadian() noexcept;
 
     double get() const noexcept;
-    void set() noexcept;
+    void set(double) throw(std::invalid_argument);
     uint16_t getRaw() const noexcept;
   private:
     explicit Angle(double, double, uint16_t (*)()) noexcept;
