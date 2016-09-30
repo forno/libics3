@@ -13,7 +13,7 @@ namespace ics {
     void set(double) throw(std::invalid_argument);
     uint16_t getRaw() const noexcept;
   private:
-    explicit Angle(double, double, uint16_t (*)()) noexcept;
+    Angle(double, double, uint16_t (*)()) noexcept;
     uint16_t rawDegree() const noexcept;
     uint16_t rawRadian() const noexcept;
 
