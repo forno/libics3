@@ -3,14 +3,14 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 
-ics::Angle ics::Angle::createDegree() noexcept {
-  static const Angle DEGREE(-130, 130, &ics::Angle::rawDegree);
+ics::Angle ics::Angle::newDegree() noexcept {
+  static const Angle DEGREE(-130, 130, &ics::Angle::getRawDegree);
   return DEGREE;
 }
 
-ics::Angle ics::Angle::createRadian() noexcept {
+ics::Angle ics::Angle::newRadian() noexcept {
   static const double limit = 130 * M_PI / 180;
-  static const Angle RADIAN(-limit, limit, &ics::Angle::rawRadian);
+  static const Angle RADIAN(-limit, limit, &ics::Angle::getRawRadian);
   return RADIAN;
 }
 
@@ -35,11 +35,11 @@ ics::Angle::Angle(double min, double max, uint16_t (Angle::*getRawFunc)() const 
   data(0)
 {}
 
-uint16_t ics::Angle::rawDegree() const noexcept {
+uint16_t ics::Angle::getRawDegree() const noexcept {
   return static_cast<uint16_t>(data * 800 / 27 + 7500);
 }
 
-uint16_t ics::Angle::rawRadian() const noexcept {
+uint16_t ics::Angle::getRawRadian() const noexcept {
   return static_cast<uint16_t>(data / M_PI * 16000 / 3 + 7500);
 }
 

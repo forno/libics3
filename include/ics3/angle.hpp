@@ -6,16 +6,16 @@
 namespace ics {
   class Angle {
   public:
-    static Angle createDegree() noexcept;
-    static Angle createRadian() noexcept;
+    static Angle newDegree() noexcept;
+    static Angle newRadian() noexcept;
 
     double get() const noexcept;
     void set(double) throw(std::invalid_argument);
     uint16_t getRaw() const noexcept;
   private:
     Angle(double, double, uint16_t (Angle::*)() const noexcept) noexcept;
-    uint16_t rawDegree() const noexcept;
-    uint16_t rawRadian() const noexcept;
+    uint16_t getRawDegree() const noexcept;
+    uint16_t getRawRadian() const noexcept;
 
     const double min;
     const double max;

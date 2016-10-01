@@ -21,8 +21,8 @@ int main(int argc, char **argv) {
   }
   {
     std::cout << std::endl << "angle test section" << std::endl;
-    ics::Angle degree = ics::Angle::createDegree();
-    ics::Angle radian = ics::Angle::createRadian();
+    ics::Angle degree = ics::Angle::newDegree();
+    ics::Angle radian = ics::Angle::newRadian();
     assert(degree.getRaw() == radian.getRaw());
     degree.set(0);
     radian.set(0);
