@@ -1,21 +1,23 @@
-test: bin/test
+test: bin build bin/test
 
-bin/test: bin build/test.o build/angle.o build/parameter.o build/eepparam.o build/eeprom.o
-	g++ -o bin/test build/test.o build/angle.o build/parameter.o  build/eepparam.o build/eeprom.o
+OBJS = build/test.o build/angle.o build/parameter.o build/eepparam.o build/eeprom.o
 
-build/angle.o: build src/angle.cpp
+bin/test: $(OBJS)
+	g++ -o bin/test $(OBJS)
+
+build/angle.o: src/angle.cpp
 	g++ -Iinclude -std=c++11 -Wall -o build/angle.o -c src/angle.cpp
 
-build/parameter.o: build src/parameter.cpp
+build/parameter.o: src/parameter.cpp
 	g++ -Iinclude -std=c++11 -Wall -o build/parameter.o -c src/parameter.cpp
 
-build/eepparam.o: build src/eepparam.cpp
+build/eepparam.o: src/eepparam.cpp
 	g++ -Iinclude -std=c++11 -Wall -o build/eepparam.o -c src/eepparam.cpp
 
-build/eeprom.o: build src/eeprom.cpp
+build/eeprom.o: src/eeprom.cpp
 	g++ -Iinclude -std=c++11 -Wall -o build/eeprom.o -c src/eeprom.cpp
 
-build/test.o: build src/test.cpp
+build/test.o: src/test.cpp
 	g++ -Iinclude -std=c++11 -Wall -o build/test.o -c src/test.cpp
 
 build:
