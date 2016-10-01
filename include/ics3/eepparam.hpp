@@ -38,6 +38,7 @@ namespace ics {
       static EepParam strech1() noexcept;
       static EepParam strech2() noexcept;
       static EepParam strech3() noexcept;
+
       uint16_t get() const noexcept;
       void set(uint16_t) throw(std::invalid_argument);
       void write(std::array<unsigned char, 64> &) const noexcept;
