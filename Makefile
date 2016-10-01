@@ -1,7 +1,7 @@
 test: bin/test
 
 bin/test: bin build/test.o build/angle.o build/parameter.o build/eepparam.o
-	g++ -o bin/test build/test.o build/angle.o build/parameter.o
+	g++ -o bin/test build/test.o build/angle.o build/parameter.o  build/eepparam.o
 
 build/angle.o: build src/angle.cpp
 	g++ -Iinclude -std=c++11 -Wall -o build/angle.o -c src/angle.cpp
