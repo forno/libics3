@@ -38,29 +38,28 @@ namespace ics {
       static EepParam strech1() noexcept;
       static EepParam strech2() noexcept;
       static EepParam strech3() noexcept;
-      void setRaw(std::array<unsigned char, 64> &) const noexcept;
       uint16_t get() const noexcept;
       void set(uint16_t) throw(std::invalid_argument);
+      void write(std::array<unsigned char, 64> &) const noexcept;
+      void read(const std::array<unsigned char, 64> &) throw(std::invalid_argument);
     private:
-      EepParam(int,
+      EepParam(size_t,
+               size_t,
                uint16_t,
                uint16_t,
-               void (EepParam::*)(std::array<unsigned char, 64> &) const noexcept,
                void (EepParam::*)(uint16_t) throw(std::invalid_argument),
                uint16_t
               ) noexcept;
-      void setRaw2byte(std::array<unsigned char, 64> &) const noexcept;
-      void setRaw4byte(std::array<unsigned char, 64> &) const noexcept;
       void setNormal(uint16_t) throw(std::invalid_argument);
       void setEven(uint16_t) throw(std::invalid_argument);
       void setFlag(uint16_t) throw(std::invalid_argument);
       void setBaudrate(uint16_t) throw(std::invalid_argument);
       void setOffset(uint16_t) throw(std::invalid_argument);
 
-      const int offset;
+      const size_t offset;
+      const size_t length;
       const uint16_t min;
       const uint16_t max;
-      void (EepParam::*const setRawFunc)(std::array<unsigned char, 64> &) const noexcept;
       void (EepParam::*const setFunc)(uint16_t) throw(std::invalid_argument);
       uint16_t data;
   };
