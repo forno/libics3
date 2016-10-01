@@ -8,6 +8,7 @@ int main(int argc, char **argv) {
   std::cout << "angle of degree test section" << std::endl;
   {
     ics::Angle degree = ics::Angle::createDegree();
+    std::cout << degree.get() << ':' << degree.getRaw() << std::endl;
     degree.set(0);
     std::cout << degree.get() << ':' << degree.getRaw() << std::endl;
     degree.set(90);
@@ -24,6 +25,7 @@ int main(int argc, char **argv) {
   {
     std::cout << std::endl << "angle of radian test section" << std::endl;
     ics::Angle radian = ics::Angle::createRadian();
+    std::cout << radian.get() << ':' << radian.getRaw() << std::endl;
     radian.set(0);
     std::cout << radian.get() << ':' << radian.getRaw() << std::endl;
     radian.set(M_PI / 2);
@@ -40,6 +42,7 @@ int main(int argc, char **argv) {
   {
     std::cout << std::endl << "parameter test section" << std::endl;
     ics::Parameter current = ics::Parameter::current();
+    std::cout << static_cast<int>(current.get()) << std::endl;
     current.set(30);
     std::cout << static_cast<int>(current.get()) << std::endl;
     try {
