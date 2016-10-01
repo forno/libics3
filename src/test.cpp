@@ -49,5 +49,18 @@ int main(int argc, char **argv) {
       std::cout << e.what() << std::endl;
     }
   }
+  {
+    std::cout << std::endl << "EepParam test section" << std::endl;
+    ics::EepParam speed = ics::EepParam::speed();
+    std::cout << speed.get() << std::endl;
+    speed.set(100);
+    std::cout << speed.get() << std::endl;
+    try {
+      speed.set(200);
+      std::cerr << "Never run this" << std::endl;
+    } catch (std::invalid_argument e) {
+      std::cout << e.what() << std::endl;
+    }
+  }
   return 0;
 }
