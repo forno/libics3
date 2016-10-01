@@ -3,17 +3,21 @@
 
 #include <array>
 #include <vector>
+#include <stdexcept>
 
 namespace ics {
   class EepParam;
+  class ICS3;
+
   class Eeprom {
   public:
-    Eeprom() noexcept;
-    void set(EepParam) noexcept;
-    EepParam get(const EepParam &) const noexcept;
-    void copy(std::vector<unsigned char> &) const noexcept;
-
+    friend ICS3;
+    EepParam get(EepParam) const throw(std::runtime_error);
+    void set(const EepParam &) noexcept;
+    void copyTo(std::vector<unsigned char> &) const noexcept;
+    void copyTo(std::array<unsigned char, 64> &) const noexcept;
   private:
+    Eeprom() noexcept;
     std::array<unsigned char, 64> data;
   };
 }
