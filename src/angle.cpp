@@ -19,11 +19,8 @@ double ics::Angle::get() const noexcept {
 }
 
 void ics::Angle::set(double angle) throw(std::invalid_argument) {
-  try {
-    checkValid(angle);
-  } catch (const std::invalid_argument e) {
-    throw e;
-  }
+  if (angle < min) throw std::invalid_argument("Too small angle");
+  if (max < angle) throw std::invalid_argument("Too big angle");
   data = angle;
 }
 
@@ -46,7 +43,3 @@ uint16_t ics::Angle::rawRadian() const noexcept {
   return static_cast<uint16_t>(data / M_PI * 16000 / 3 + 7500);
 }
 
-void ics::Angle::checkValid(double input) const throw(std::invalid_argument) {
-  if (input < min) throw std::invalid_argument("Too small angle");
-  if (max < input) throw std::invalid_argument("Too big angle");
-}

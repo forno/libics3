@@ -16,7 +16,6 @@ namespace ics {
     Angle(double, double, uint16_t (Angle::*)() const noexcept) noexcept;
     uint16_t rawDegree() const noexcept;
     uint16_t rawRadian() const noexcept;
-    void checkValid(double) const throw(std::invalid_argument);
 
     const double min;
     const double max;
