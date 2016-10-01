@@ -6,8 +6,21 @@
 #include "ics3/ics"
 
 int main(int argc, char **argv) {
-  std::cout << "angle test section" << std::endl;
   {
+    std::cout << std::endl << "EepParam test section" << std::endl;
+    ics::EepParam speed = ics::EepParam::speed();
+    assert(127 == speed.get());
+    speed.set(100);
+    assert(100 == speed.get());
+    try {
+      speed.set(200);
+      std::cerr << "Never run this" << std::endl;
+    } catch (std::invalid_argument e) {
+      std::cout << e.what() << std::endl;
+    }
+  }
+  {
+    std::cout << std::endl << "angle test section" << std::endl;
     ics::Angle degree = ics::Angle::createDegree();
     ics::Angle radian = ics::Angle::createRadian();
     assert(degree.getRaw() == radian.getRaw());
@@ -43,19 +56,6 @@ int main(int argc, char **argv) {
       current.set(70);
       std::cerr << "Never run this" << std::endl;
     } catch (const std::invalid_argument &e) {
-      std::cout << e.what() << std::endl;
-    }
-  }
-  {
-    std::cout << std::endl << "EepParam test section" << std::endl;
-    ics::EepParam speed = ics::EepParam::speed();
-    assert(127 == speed.get());
-    speed.set(100);
-    assert(100 == speed.get());
-    try {
-      speed.set(200);
-      std::cerr << "Never run this" << std::endl;
-    } catch (std::invalid_argument e) {
       std::cout << e.what() << std::endl;
     }
   }
