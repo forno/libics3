@@ -6,19 +6,7 @@ test: bin build bin/test
 bin/test: $(OBJS)
 	$(CXX) -o $@ $^
 
-build/angle.o: src/angle.cpp
-	$(CXX) $(CXXFLAGS) -o $@ -c $<
-
-build/parameter.o: src/parameter.cpp
-	$(CXX) $(CXXFLAGS) -o $@ -c $<
-
-build/eepparam.o: src/eepparam.cpp
-	$(CXX) $(CXXFLAGS) -o $@ -c $<
-
-build/eeprom.o: src/eeprom.cpp
-	$(CXX) $(CXXFLAGS) -o $@ -c $<
-
-build/test.o: src/test.cpp
+build/%.o: src/%.cpp
 	$(CXX) $(CXXFLAGS) -o $@ -c $<
 
 build:
