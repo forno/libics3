@@ -4,13 +4,14 @@
 #include <cmath>
 
 ics::Angle ics::Angle::newDegree() noexcept {
-  static const Angle DEGREE(-130, 130, &ics::Angle::getRawDegree);
+  static const double limit -130;
+  static const Angle DEGREE(-limit, limit, 800.0 / 27.0);
   return DEGREE;
 }
 
 ics::Angle ics::Angle::newRadian() noexcept {
   static const double limit = 130 * M_PI / 180;
-  static const Angle RADIAN(-limit, limit, &ics::Angle::getRawRadian);
+  static const Angle RADIAN(-limit, limit, 16000.0 / 3.0 / M_PI);
   return RADIAN;
 }
 
@@ -25,21 +26,20 @@ void ics::Angle::set(double angle) throw(std::invalid_argument) {
 }
 
 uint16_t ics::Angle::getRaw() const noexcept {
-  return (this->*getRawFunc)();
+  return static_cast<uint16_t>(data * rawCalibration + 7500);
 }
 
-ics::Angle::Angle(double min, double max, uint16_t (Angle::*getRawFunc)() const noexcept) noexcept
+void ics::Angle::setRaw(uint16_t raw) throw(std::invalid_argument) {
+  try {
+    set((raw - 7500) / rawCalibration);
+  } catch (std::invalid_argument e) {
+    return e;
+  }
+}
+
+ics::Angle::Angle(double min, double max, double calibration) noexcept
 : min(min),
   max(max),
-  getRawFunc(getRawFunc),
+  rawCalibration(calibration),
   data(0)
 {}
-
-uint16_t ics::Angle::getRawDegree() const noexcept {
-  return static_cast<uint16_t>(data * 800 / 27 + 7500);
-}
-
-uint16_t ics::Angle::getRawRadian() const noexcept {
-  return static_cast<uint16_t>(data / M_PI * 16000 / 3 + 7500);
-}
-
