@@ -1,24 +1,25 @@
-test: bin build bin/test
-
+CXXFLAGS = -std=c++11 -Iinclude -Wall -Wextra -Winit-self -Wno-missing-field-initializers
 OBJS = build/test.o build/angle.o build/parameter.o build/eepparam.o build/eeprom.o
 
+test: bin build bin/test
+
 bin/test: $(OBJS)
-	g++ -o bin/test $(OBJS)
+	$(CXX) -o $@ $^
 
 build/angle.o: src/angle.cpp
-	g++ -Iinclude -std=c++11 -Wall -o build/angle.o -c src/angle.cpp
+	$(CXX) $(CXXFLAGS) -o $@ -c $<
 
 build/parameter.o: src/parameter.cpp
-	g++ -Iinclude -std=c++11 -Wall -o build/parameter.o -c src/parameter.cpp
+	$(CXX) $(CXXFLAGS) -o $@ -c $<
 
 build/eepparam.o: src/eepparam.cpp
-	g++ -Iinclude -std=c++11 -Wall -o build/eepparam.o -c src/eepparam.cpp
+	$(CXX) $(CXXFLAGS) -o $@ -c $<
 
 build/eeprom.o: src/eeprom.cpp
-	g++ -Iinclude -std=c++11 -Wall -o build/eeprom.o -c src/eeprom.cpp
+	$(CXX) $(CXXFLAGS) -o $@ -c $<
 
 build/test.o: src/test.cpp
-	g++ -Iinclude -std=c++11 -Wall -o build/test.o -c src/test.cpp
+	$(CXX) $(CXXFLAGS) -o $@ -c $<
 
 build:
 	mkdir -p build
