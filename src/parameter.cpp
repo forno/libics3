@@ -30,6 +30,10 @@ void ics::Parameter::set(unsigned char input) throw(std::invalid_argument) {
   data = input;
 }
 
+unsigned char ics::Parameter::getSc() const noexcept {
+  return sc;
+}
+
 ics::Parameter::Parameter(unsigned char sc, unsigned char min, unsigned char max, unsigned char default_data) noexcept
 : sc(sc),
   min(min),

@@ -4,11 +4,8 @@
 #include <stdexcept>
 
 namespace ics {
-  class ICS3;
-
   class Parameter {
   public:
-    friend ICS3;
     static Parameter stretch() noexcept;
     static Parameter speed() noexcept;
     static Parameter current() noexcept;
@@ -16,6 +13,7 @@ namespace ics {
 
     unsigned char get() const noexcept;
     void set(unsigned char) throw(std::invalid_argument);
+    unsigned char getSc() const noexcept;
   private:
     Parameter(unsigned char, unsigned char, unsigned char, unsigned char) noexcept;
     const unsigned char sc;
