@@ -1,5 +1,5 @@
 CXXFLAGS = -std=c++11 -Iinclude -Wall -Wextra -Winit-self -Wno-missing-field-initializers
-OBJS = build/test.o build/angle.o build/parameter.o build/eepparam.o build/eeprom.o
+OBJS = build/test.o build/angle.o build/parameter.o build/eepparam.o build/eeprom.o build/core.o
 
 test: bin build bin/test
 

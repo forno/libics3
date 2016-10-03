@@ -9,7 +9,7 @@ namespace ics {
   class Core {
   public:
     ~Core() noexcept;
-    static const Core &getReference(const char *, speed_t) throw(std::invalid_argument, std::runtime_error) throw(std::invalid_argument, std::runtime_error);
+    static const Core &getReference(const char *, speed_t) throw(std::invalid_argument, std::runtime_error); 
     void communicate(std::vector<unsigned char> &, std::vector<unsigned char> &) const throw(std::runtime_error);
   private:
     Core(const char *, speed_t) throw(std::invalid_argument, std::runtime_error);
