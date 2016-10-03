@@ -5,10 +5,10 @@
 #include "ics3/eeprom.hpp"
 #include "ics3/parameter.hpp"
 
-ics::ICS3::ICS3() throw(std::runtime_error)
+ics::ICS3::ICS3(unsigned char *path, ICSBaudrate baudrate) throw(std::runtime_error)
 {
   try {
-    core = Core::getInstalce();
+    core = Core::getInstalce(path, static_cast<speed_t>(baudrate));
   } catch (std::runtime_error e) {
     throw e;
   }
