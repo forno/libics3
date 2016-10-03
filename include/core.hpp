@@ -8,14 +8,16 @@
 namespace ics {
   class Core {
   public:
-    static const Core &getReference();
-    std::vector<unsigned char> &communicate(std::vector<unsigned char>) const noexcept;
+    ~Core() noexcept;
+    static const Core &getReference(const char *, speed_t) throw(std::invalid_argument, std::runtime_error) throw(std::invalid_argument, std::runtime_error);
+    void communicate(std::vector<unsigned char> &, std::vector<unsigned char> &) const throw(std::runtime_error);
   private:
-    explicit Core(const char *) throw(std::runtime_error);
-    Core(const Core &);
+    Core(const char *, speed_t) throw(std::invalid_argument, std::runtime_error);
+    Core(const Core &); // not implement this copy constructor
+    static struct termios getTermios() noexcept;
 
     int fd;
-    termios tio;
+    termios oldTio;
   };
 }
 
