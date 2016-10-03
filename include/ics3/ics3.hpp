@@ -16,10 +16,10 @@ namespace ics {
   public:
     ICS3() throw(std::runtime_error);
     Angle move(const ID &, Angle) const throw(std::runtime_error);
-    Parameter get(const ID &, Parameter) const throw(std::rutime_error);
-    void set(const ID &, const Parameter &) const throw(std::rutime_error);
-    Eeprom getRom(const ID &) const throw(std::rutime_error);
-    void setRom(const ID &, const Eeprom &) const throw(std::rutime_error);
+    Parameter get(const ID &, Parameter) const throw(std::runtime_error);
+    void set(const ID &, const Parameter &) const throw(std::runtime_error);
+    Eeprom getRom(const ID &) const throw(std::runtime_error);
+    void setRom(const ID &, const Eeprom &) const throw(std::runtime_error);
 
   private:
     const Core &core;

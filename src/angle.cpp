@@ -4,7 +4,7 @@
 #include <cmath>
 
 ics::Angle ics::Angle::newDegree() noexcept {
-  static const double limit -130;
+  static const double limit = 130;
   static const Angle DEGREE(-limit, limit, 800.0 / 27.0);
   return DEGREE;
 }
@@ -33,7 +33,7 @@ void ics::Angle::setRaw(uint16_t raw) throw(std::invalid_argument) {
   try {
     set((raw - 7500) / rawCalibration);
   } catch (std::invalid_argument e) {
-    return e;
+    throw e;
   }
 }
 
