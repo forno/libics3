@@ -161,7 +161,7 @@ void ics::EepParam::setFlag(uint16_t input) throw(std::invalid_argument) {
 }
 
 void ics::EepParam::setBaudrate(uint16_t input) throw(std::invalid_argument) {
-  EepBaudrate const buf = static_cast<EepBaudrate>(input);
+  Baudrate const buf = static_cast<Baudrate>(input);
   switch (buf) {
   case RATE115200: case RATE625000: case RATE1250000:
     break;

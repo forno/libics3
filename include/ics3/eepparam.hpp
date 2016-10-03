@@ -5,64 +5,64 @@
 #include <stdexcept>
 
 namespace ics {
-  enum EepFlag : uint16_t {
-    REVERSE =   0x1,
-    FREE =      0x2,
-    PWMINH =    0x8,
-    ROLL_MODE = 0x10,
-    SLAVE =     0x80
-  };
-  enum EepBaudrate : uint16_t {
-    RATE115200 = 10,
-    RATE625000 = 1,
-    RATE1250000 = 0
-  };
-
   class EepParam {
-    public:
-      static EepParam strech() noexcept;
-      static EepParam speed() noexcept;
-      static EepParam punch() noexcept;
-      static EepParam deadBand() noexcept;
-      static EepParam dumping() noexcept;
-      static EepParam selfTimer() noexcept;
-      static EepParam flag() noexcept;
-      static EepParam pulseMax() noexcept;
-      static EepParam pulseMin() noexcept;
-      static EepParam baudrate() noexcept;
-      static EepParam temperature() noexcept;
-      static EepParam current() noexcept;
-      static EepParam response() noexcept;
-      static EepParam userOffset() noexcept;
-      static EepParam id() noexcept;
-      static EepParam strech1() noexcept;
-      static EepParam strech2() noexcept;
-      static EepParam strech3() noexcept;
+  public:
+    enum Flag : uint16_t {
+      REVERSE =   0x1,
+      FREE =      0x2,
+      PWMINH =    0x8,
+      ROLL_MODE = 0x10,
+      SLAVE =     0x80
+    };
+    enum Baudrate : uint16_t {
+      RATE115200 = 10,
+      RATE625000 = 1,
+      RATE1250000 = 0
+    };
 
-      uint16_t get() const noexcept;
-      void set(uint16_t) throw(std::invalid_argument);
-      void write(std::array<unsigned char, 64> &) const noexcept;
-      void read(const std::array<unsigned char, 64> &) throw(std::invalid_argument);
-    private:
-      EepParam(size_t,
-               size_t,
-               uint16_t,
-               uint16_t,
-               void (EepParam::*)(uint16_t) throw(std::invalid_argument),
-               uint16_t
-              ) noexcept;
-      void setNormal(uint16_t) throw(std::invalid_argument);
-      void setEven(uint16_t) throw(std::invalid_argument);
-      void setFlag(uint16_t) throw(std::invalid_argument);
-      void setBaudrate(uint16_t) throw(std::invalid_argument);
-      void setOffset(uint16_t) throw(std::invalid_argument);
+    static EepParam strech() noexcept;
+    static EepParam speed() noexcept;
+    static EepParam punch() noexcept;
+    static EepParam deadBand() noexcept;
+    static EepParam dumping() noexcept;
+    static EepParam selfTimer() noexcept;
+    static EepParam flag() noexcept;
+    static EepParam pulseMax() noexcept;
+    static EepParam pulseMin() noexcept;
+    static EepParam baudrate() noexcept;
+    static EepParam temperature() noexcept;
+    static EepParam current() noexcept;
+    static EepParam response() noexcept;
+    static EepParam userOffset() noexcept;
+    static EepParam id() noexcept;
+    static EepParam strech1() noexcept;
+    static EepParam strech2() noexcept;
+    static EepParam strech3() noexcept;
 
-      const size_t offset;
-      const size_t length;
-      const uint16_t min;
-      const uint16_t max;
-      void (EepParam::*const setFunc)(uint16_t) throw(std::invalid_argument);
-      uint16_t data;
+    uint16_t get() const noexcept;
+    void set(uint16_t) throw(std::invalid_argument);
+    void write(std::array<unsigned char, 64> &) const noexcept;
+    void read(const std::array<unsigned char, 64> &) throw(std::invalid_argument);
+  private:
+    EepParam(size_t,
+             size_t,
+             uint16_t,
+             uint16_t,
+             void (EepParam::*)(uint16_t) throw(std::invalid_argument),
+             uint16_t
+            ) noexcept;
+    void setNormal(uint16_t) throw(std::invalid_argument);
+    void setEven(uint16_t) throw(std::invalid_argument);
+    void setFlag(uint16_t) throw(std::invalid_argument);
+    void setBaudrate(uint16_t) throw(std::invalid_argument);
+    void setOffset(uint16_t) throw(std::invalid_argument);
+
+    const size_t offset;
+    const size_t length;
+    const uint16_t min;
+    const uint16_t max;
+    void (EepParam::*const setFunc)(uint16_t) throw(std::invalid_argument);
+    uint16_t data;
   };
 }
 
