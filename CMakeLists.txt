@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8.12)
 project(ics3 CXX)
 
 set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -Wextra -Winit-self -Wno-missing-field-initializers -g -fPIC")
+set(CMAKE_INSTALL_PREFIX /usr/local)
 
 
 ################################################################
@@ -12,11 +13,6 @@ set(ICS3_PATCH_VERSION 0)
 set(ICS3_VERSION
   ${ICS3_MAJOR_VERSION}.${ICS3_MINOR_VERSION}.${ICS3_PATCH_VERSION}
 )
-
-
-################################################################
-set(CMAKE_INCLUDE_CURRENT_DIR_IN_INTERFACE ON)
-set(CMAKE_INSTALL_PREFIX /usr/local)
 
 
 ################################################################
