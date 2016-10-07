@@ -1,8 +1,8 @@
 #include "ics3/id.hpp"
 
-ics::ID::ID(unsigned char data) throw(std::invalid_argument) {
+ics::ID::ID(unsigned char id) throw(std::invalid_argument) {
   try {
-    set(data);
+    set(id);
   } catch (std::invalid_argument e) {
     throw e;
   }
