@@ -11,7 +11,7 @@ ics::Core::~Core() noexcept {
   close(fd);
 }
 
-const ics::Core& ics::Core::getReference(const char* path, speed_t baudrate = B115200) throw(std::runtime_error) {
+const ics::Core& ics::Core::getReference(const char* path, speed_t baudrate = B115200) throw(std::invalid_argument, std::runtime_error) {
   static const Core core(path, baudrate); // update plan: mutable path and baudrate
   return core;
 }
