@@ -5,6 +5,7 @@
 #include "ics3/eepparam.hpp"
 #include "ics3/angle.hpp"
 #include "ics3/parameter.hpp"
+#include "ics3/id.hpp"
 #include "ics3/ics3.hpp"
 
 #endif // LIBICS3_ICS3_ICS_H_
