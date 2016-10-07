@@ -97,12 +97,12 @@ uint16_t ics::EepParam::get() const noexcept {
 void ics::EepParam::set(uint16_t input) throw(std::invalid_argument) {
   try {
     (this->*setFunc)(input);
-  } catch (std::invalid_argument e) {
-    throw e;
+  } catch (std::invalid_argument& e) {
+    throw;
   }
 }
 
-void ics::EepParam::write(std::array<unsigned char, 64> &dest) const noexcept {
+void ics::EepParam::write(std::array<unsigned char, 64>& dest) const noexcept {
   uint16_t mask = 0xF;
   for (size_t i = offset + length - 1; i >= offset; i--) {
     dest[i] = data & mask;
@@ -110,7 +110,7 @@ void ics::EepParam::write(std::array<unsigned char, 64> &dest) const noexcept {
   }
 }
 
-void ics::EepParam::read(const std::array<unsigned char, 64> &src) throw(std::invalid_argument) {
+void ics::EepParam::read(const std::array<unsigned char, 64>& src) throw(std::invalid_argument) {
   uint16_t result = 0;
   uint16_t mask = 0xF;
   for (size_t i = offset + length - 1; i >= offset; i--) {
@@ -119,8 +119,8 @@ void ics::EepParam::read(const std::array<unsigned char, 64> &src) throw(std::in
   }
   try {
     set(result);
-  } catch (std::invalid_argument e) {
-    throw e;
+  } catch (std::invalid_argument& e) {
+    throw;
   }
 }
 
@@ -149,8 +149,8 @@ void ics::EepParam::setEven(uint16_t input) throw(std::invalid_argument) {
   if (input % 2) throw std::invalid_argument("Must even value");
   try {
     setNormal(input);
-  } catch (std::invalid_argument e) {
-    throw e;
+  } catch (std::invalid_argument& e) {
+    throw;
   }
 }
 
