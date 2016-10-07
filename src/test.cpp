@@ -7,6 +7,12 @@
 
 int main(int argc, char **argv) {
   {
+    ics::ID id(2);
+    ics::Angle degree = ics::Angle::newDegree();
+    ics::ICS3 ics("/dev/ttyUSB0", ics::ICSBaudrate::RATE115200);
+    ics::Angle nowPos = ics.move(id, degree);
+  }
+  {
     std::cout << std::endl << "EepParam test section" << std::endl;
     ics::EepParam speed = ics::EepParam::speed();
     assert(127 == speed.get());
