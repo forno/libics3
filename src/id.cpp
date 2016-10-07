@@ -3,8 +3,8 @@
 ics::ID::ID(unsigned char id) throw(std::invalid_argument) {
   try {
     set(id);
-  } catch (std::invalid_argument e) {
-    throw e;
+  } catch (std::invalid_argument& e) {
+    throw;
   }
 }
 
