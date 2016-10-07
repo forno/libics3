@@ -18,16 +18,17 @@ namespace ics {
     //RATE625000 = B625000,
     //RATE1250000 = B1250000
   };
+
   class ICS3 {
   public:
-    ICS3(const char *, ICSBaudrate) throw(std::invalid_argument, std::runtime_error);
-    Angle move(const ID &, Angle) const throw(std::runtime_error);
-    Parameter get(const ID &, Parameter) const throw(std::runtime_error);
-    void set(const ID &, const Parameter &) const throw(std::runtime_error);
-    Eeprom getRom(const ID &) const throw(std::runtime_error);
-    void setRom(const ID &, const Eeprom &) const throw(std::runtime_error);
+    ICS3(const char*, ICSBaudrate) throw(std::invalid_argument, std::runtime_error);
+    Angle move(const ID&, Angle) const throw(std::runtime_error);
+    Parameter get(const ID&, Parameter) const throw(std::runtime_error);
+    void set(const ID&, const Parameter&) const throw(std::runtime_error);
+    Eeprom getRom(const ID&) const throw(std::runtime_error);
+    void setRom(const ID&, const Eeprom&) const throw(std::runtime_error);
   private:
-    const Core &core;
+    const Core& core;
   };
 }
 

@@ -4,14 +4,11 @@
 #include "ics3/angle.hpp"
 #include "ics3/eeprom.hpp"
 #include "ics3/parameter.hpp"
+#include "ics3/id.hpp"
 
-ics::ICS3::ICS3(unsigned char *path, ICSBaudrate baudrate) throw(std::runtime_error)
+ics::ICS3::ICS3(const char* path, ICSBaudrate baudrate) throw(std::invalid_argument, std::runtime_error)
+  : core(Core::getReference(path, static_cast<speed_t>(baudrate)))
 {
-  try {
-    core = Core::getInstalce(path, static_cast<speed_t>(baudrate));
-  } catch (std::runtime_error e) {
-    throw e;
-  }
 }
 
 ics::Angle ics::ICS3::move(const ID &id, Angle angle) const throw(std::runtime_error) {
