@@ -21,7 +21,7 @@ int main(int argc, char **argv) {
     try {
       speed.set(200);
       std::cerr << "Never run this" << std::endl;
-    } catch (std::invalid_argument e) {
+    } catch (std::invalid_argument& e) {
       std::cout << e.what() << std::endl;
     }
   }
@@ -42,13 +42,13 @@ int main(int argc, char **argv) {
     try {
       degree.set(150);
       std::cerr << "Never run this" << std::endl;
-    } catch (const std::invalid_argument &e) {
+    } catch (const std::invalid_argument& e) {
       std::cout << e.what() << std::endl;
     }
     try {
       radian.set(M_PI);
       std::cerr << "Never run this" << std::endl;
-    } catch (const std::invalid_argument &e) {
+    } catch (const std::invalid_argument& e) {
       std::cout << e.what() << std::endl;
     }
   }
@@ -61,7 +61,7 @@ int main(int argc, char **argv) {
     try {
       current.set(70);
       std::cerr << "Never run this" << std::endl;
-    } catch (const std::invalid_argument &e) {
+    } catch (const std::invalid_argument& e) {
       std::cout << e.what() << std::endl;
     }
   }

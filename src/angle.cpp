@@ -32,8 +32,8 @@ uint16_t ics::Angle::getRaw() const noexcept {
 void ics::Angle::setRaw(uint16_t raw) throw(std::invalid_argument) {
   try {
     set((raw - 7500) / rawCalibration);
-  } catch (std::invalid_argument e) {
-    throw e;
+  } catch (std::invalid_argument& e) {
+    throw;
   }
 }
 
