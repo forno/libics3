@@ -41,8 +41,8 @@ namespace ics {
 
     uint16_t get() const noexcept;
     void set(uint16_t) throw(std::invalid_argument);
-    void write(std::array<unsigned char, 64> &) const noexcept;
-    void read(const std::array<unsigned char, 64> &) throw(std::invalid_argument);
+    void write(std::array<unsigned char, 64>&) const noexcept;
+    void read(const std::array<unsigned char, 64>&) throw(std::invalid_argument);
   private:
     EepParam(size_t,
              size_t,
