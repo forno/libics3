@@ -6,22 +6,22 @@
 ics::EepParam ics::Eeprom::get(EepParam param) const throw(std::runtime_error) {
   try {
     param.read(data);
-  } catch (std::invalid_argument e) {
+  } catch (std::invalid_argument& e) {
     throw std::runtime_error("Fail data: non initialize EEPROM by ICS");
   }
   return param;
 }
 
-void ics::Eeprom::set(const EepParam &param) noexcept {
+void ics::Eeprom::set(const EepParam& param) noexcept {
   param.write(data);
 }
 
-void ics::Eeprom::copyTo(std::vector<unsigned char> &dest) const noexcept {
+void ics::Eeprom::copyTo(std::vector<unsigned char>& dest) const noexcept {
   dest.resize(data.size());
   std::copy(data.begin(), data.end(), dest.begin());
 }
 
-void ics::Eeprom::copyTo(std::array<unsigned char, 64> &dest) const noexcept {
+void ics::Eeprom::copyTo(std::array<unsigned char, 64>& dest) const noexcept {
   dest = data;
 }
 
