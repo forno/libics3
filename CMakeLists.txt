@@ -33,8 +33,7 @@ include_directories(
   ${PROJECT_HEADER_DIR}
 )
 
-link_directories(
-)
+link_directories()
 
 add_library(ics3
   SHARED ${ICS3_SOURCES}
@@ -52,6 +51,6 @@ install(TARGETS ics3
   LIBRARY DESTINATION lib
 )
 
-install(DIRECTORY
-  ${ICS3_HEADER_DIR}/ics3 DESTINATION include
+install(DIRECTORY ${ICS3_HEADER_DIR}/ics3
+  DESTINATION include
 )
