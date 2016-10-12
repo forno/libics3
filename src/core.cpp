@@ -11,12 +11,12 @@ ics::Core::~Core() noexcept {
   close(fd);
 }
 
-const ics::Core& ics::Core::getReference(const char* path, speed_t baudrate = B115200) throw(std::invalid_argument, std::runtime_error) {
+const ics::Core& ics::Core::getReference(const char* path, speed_t baudrate = B115200) {
   static const Core core(path, baudrate); // update plan: mutable path and baudrate
   return core;
 }
 
-void ics::Core::communicate(std::vector<unsigned char>& tx, std::vector<unsigned char>& rx) const throw(std::runtime_error) {
+void ics::Core::communicate(std::vector<unsigned char>& tx, std::vector<unsigned char>& rx) const {
   write(fd, tx.data(), tx.size()); // send
   for (auto receive: rx) read(fd, &receive, 1); // receive
 // check section
@@ -28,7 +28,7 @@ void ics::Core::communicate(std::vector<unsigned char>& tx, std::vector<unsigned
   if ((tx[0] & 0x7F) != *receive) throw std::runtime_error("Receive failed");
 }
 
-ics::Core::Core(const char* path, speed_t baudrate) throw(std::invalid_argument, std::runtime_error) {
+ics::Core::Core(const char* path, speed_t baudrate) {
   if ((fd = open(path, O_RDWR | O_NOCTTY | O_NONBLOCK)) < 0)
     throw std::runtime_error("Cannot open deveice");
   if (!isatty(fd))

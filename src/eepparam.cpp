@@ -94,7 +94,7 @@ uint16_t ics::EepParam::get() const noexcept {
   return data;
 }
 
-void ics::EepParam::set(uint16_t input) throw(std::invalid_argument) {
+void ics::EepParam::set(uint16_t input) {
   try {
     (this->*setFunc)(input);
   } catch (std::invalid_argument& e) {
@@ -110,7 +110,7 @@ void ics::EepParam::write(std::array<unsigned char, 64>& dest) const noexcept {
   }
 }
 
-void ics::EepParam::read(const std::array<unsigned char, 64>& src) throw(std::invalid_argument) {
+void ics::EepParam::read(const std::array<unsigned char, 64>& src) {
   uint16_t result = 0;
   uint16_t mask = 0xF;
   for (size_t i = offset + length - 1; i >= offset; i--) {
@@ -128,7 +128,7 @@ ics::EepParam::EepParam(size_t offset,
                         size_t length,
                         uint16_t min,
                         uint16_t max,
-                        void (EepParam::*setFunc)(uint16_t) throw(std::invalid_argument),
+                        void (EepParam::*setFunc)(uint16_t),
                         uint16_t default_data
                        ) noexcept
 : offset(offset),
@@ -139,13 +139,13 @@ ics::EepParam::EepParam(size_t offset,
   data(default_data)
 {}
 
-void ics::EepParam::setNormal(uint16_t input) throw(std::invalid_argument) {
+void ics::EepParam::setNormal(uint16_t input) {
   if (input < min) throw std::invalid_argument("Too small value");
   if (max < input) throw std::invalid_argument("Too big value");
   data = input;
 }
 
-void ics::EepParam::setEven(uint16_t input) throw(std::invalid_argument) {
+void ics::EepParam::setEven(uint16_t input) {
   if (input % 2) throw std::invalid_argument("Must even value");
   try {
     setNormal(input);
@@ -154,13 +154,13 @@ void ics::EepParam::setEven(uint16_t input) throw(std::invalid_argument) {
   }
 }
 
-void ics::EepParam::setFlag(uint16_t input) throw(std::invalid_argument) {
+void ics::EepParam::setFlag(uint16_t input) {
   input &= 010011111;
   input |= 000001000;
   data = input;
 }
 
-void ics::EepParam::setBaudrate(uint16_t input) throw(std::invalid_argument) {
+void ics::EepParam::setBaudrate(uint16_t input) {
   Baudrate const buf = static_cast<Baudrate>(input);
   switch (buf) {
   case RATE115200: case RATE625000: case RATE1250000:
@@ -171,7 +171,7 @@ void ics::EepParam::setBaudrate(uint16_t input) throw(std::invalid_argument) {
   data = buf;
 }
 
-void ics::EepParam::setOffset(uint16_t input) throw(std::invalid_argument) {
+void ics::EepParam::setOffset(uint16_t input) {
   static const int8_t minBuf = min; // I expect stand 0x8000 input cast to minus value
   int8_t inputBuf = input; // I expect stand 0x8000 input cast to minus value
   if (inputBuf < minBuf) throw std::invalid_argument("Too small value");

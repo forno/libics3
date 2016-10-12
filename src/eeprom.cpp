@@ -3,7 +3,7 @@
 #include "ics3/eepparam.hpp"
 #include "ics3/ics3.hpp"
 
-ics::EepParam ics::Eeprom::get(EepParam param) const throw(std::runtime_error) {
+ics::EepParam ics::Eeprom::get(EepParam param) const {
   try {
     param.read(data);
   } catch (std::invalid_argument& e) {

@@ -6,9 +6,9 @@
 namespace ics {
   class ID {
   public:
-    explicit ID(unsigned char) throw(std::invalid_argument);
+    explicit ID(unsigned char);
     unsigned char get() const noexcept;
-    void set(unsigned char) throw(std::invalid_argument);
+    void set(unsigned char);
   private:
     double data;
   };

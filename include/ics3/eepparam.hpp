@@ -40,28 +40,28 @@ namespace ics {
     static EepParam strech3() noexcept;
 
     uint16_t get() const noexcept;
-    void set(uint16_t) throw(std::invalid_argument);
+    void set(uint16_t);
     void write(std::array<unsigned char, 64>&) const noexcept;
-    void read(const std::array<unsigned char, 64>&) throw(std::invalid_argument);
+    void read(const std::array<unsigned char, 64>&);
   private:
     EepParam(size_t,
              size_t,
              uint16_t,
              uint16_t,
-             void (EepParam::*)(uint16_t) throw(std::invalid_argument),
+             void (EepParam::*)(uint16_t),
              uint16_t
             ) noexcept;
-    void setNormal(uint16_t) throw(std::invalid_argument);
-    void setEven(uint16_t) throw(std::invalid_argument);
-    void setFlag(uint16_t) throw(std::invalid_argument);
-    void setBaudrate(uint16_t) throw(std::invalid_argument);
-    void setOffset(uint16_t) throw(std::invalid_argument);
+    void setNormal(uint16_t);
+    void setEven(uint16_t);
+    void setFlag(uint16_t);
+    void setBaudrate(uint16_t);
+    void setOffset(uint16_t);
 
     const size_t offset;
     const size_t length;
     const uint16_t min;
     const uint16_t max;
-    void (EepParam::*const setFunc)(uint16_t) throw(std::invalid_argument);
+    void (EepParam::*const setFunc)(uint16_t);
     uint16_t data;
   };
 }

@@ -12,7 +12,7 @@ namespace ics {
   class Eeprom {
   public:
     friend ICS3;
-    EepParam get(EepParam) const throw(std::runtime_error);
+    EepParam get(EepParam) const;
     void set(const EepParam&) noexcept;
     void copyTo(std::vector<unsigned char>&) const noexcept;
     void copyTo(std::array<unsigned char, 64>&) const noexcept;

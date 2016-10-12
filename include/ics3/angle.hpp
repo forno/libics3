@@ -10,9 +10,9 @@ namespace ics {
     static Angle newRadian() noexcept;
 
     double get() const noexcept;
-    void set(double) throw(std::invalid_argument);
+    void set(double);
     uint16_t getRaw() const noexcept;
-    void setRaw(uint16_t) throw(std::invalid_argument);
+    void setRaw(uint16_t);
   private:
     Angle(double, double, double) noexcept;
 

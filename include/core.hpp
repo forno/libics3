@@ -9,10 +9,10 @@ namespace ics {
   class Core {
   public:
     ~Core() noexcept;
-    static const Core& getReference(const char*, speed_t) throw(std::invalid_argument, std::runtime_error); 
-    void communicate(std::vector<unsigned char>&, std::vector<unsigned char>&) const throw(std::runtime_error);
+    static const Core& getReference(const char*, speed_t); 
+    void communicate(std::vector<unsigned char>&, std::vector<unsigned char>&) const;
   private:
-    Core(const char*, speed_t) throw(std::invalid_argument, std::runtime_error);
+    Core(const char*, speed_t);
     Core(const Core&); // not implement this copy constructor
     static struct termios getTermios() noexcept;
 

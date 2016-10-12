@@ -12,7 +12,7 @@ namespace ics {
     static Parameter temperature() noexcept;
 
     unsigned char get() const noexcept;
-    void set(unsigned char) throw(std::invalid_argument);
+    void set(unsigned char);
     unsigned char getSc() const noexcept;
   private:
     Parameter(unsigned char, unsigned char, unsigned char, unsigned char) noexcept;
