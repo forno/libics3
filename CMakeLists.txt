@@ -14,14 +14,9 @@ set(ICS3_VERSION
 )
 
 ################################################################
-set(ICS3_SOURCES
-  ${PROJECT_SOURCE_DIR}/src/angle.cpp
-  ${PROJECT_SOURCE_DIR}/src/core.cpp
-  ${PROJECT_SOURCE_DIR}/src/eepparam.cpp
-  ${PROJECT_SOURCE_DIR}/src/eeprom.cpp
-  ${PROJECT_SOURCE_DIR}/src/ics3.cpp
-  ${PROJECT_SOURCE_DIR}/src/id.cpp
-  ${PROJECT_SOURCE_DIR}/src/parameter.cpp
+file(GLOB ICS3_SOURCES
+  ${PROJECT_SOURCE_DIR}/src/*.cpp
+  EXCLUDE ${PROJECT_SOURCE_DIR}/src/test.cpp
 )
 
 set(ICS3_HEADER_DIR
@@ -30,7 +25,7 @@ set(ICS3_HEADER_DIR
 
 ################################################################
 include_directories(
-  ${PROJECT_HEADER_DIR}
+  ${ICS3_HEADER_DIR}
 )
 
 link_directories()
