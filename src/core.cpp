@@ -18,10 +18,10 @@ const ics::Core& ics::Core::getReference(const char* path, speed_t baudrate = B1
 
 void ics::Core::communicate(std::vector<unsigned char>& tx, std::vector<unsigned char>& rx) const {
   write(fd, tx.data(), tx.size()); // send
-  for (auto& receive: rx) read(fd, &receive, 1); // receive
+  for (auto& receive : rx) read(fd, &receive, 1); // receive
 // check section
   auto receive = rx.begin();
-  for (const auto& send: tx) {
+  for (const auto& send : tx) {
     if (send != *receive) throw std::runtime_error("Loopback falied");
     receive++;
   }
