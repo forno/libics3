@@ -1,8 +1,8 @@
 #!/bin/bash
 
-mkdir -p build || exit
+mkdir -p ../build || exit
 
-cd build
+cd ../build
 cmake ..
 
 make
