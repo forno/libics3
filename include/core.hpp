@@ -13,8 +13,9 @@ namespace ics {
     void communicate(std::vector<unsigned char>&, std::vector<unsigned char>&) const;
   private:
     Core(const char*, speed_t);
-    Core(const Core&); // not implement this copy constructor
+    Core(const Core&) = delete;
     static struct termios getTermios() noexcept;
+    static struct termios getTermios(struct termios) noexcept;
 
     int fd;
     termios oldTio;

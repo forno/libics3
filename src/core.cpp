@@ -36,7 +36,7 @@ ics::Core::Core(const char* path, speed_t baudrate) {
       throw std::invalid_argument("Not tty device");
     if (tcgetattr(fd, &oldTio) < 0)
       throw std::runtime_error("Cannot setup tty");
-    struct termios newTio = getTermios();
+    struct termios newTio = getTermios(oldTio);
     if (cfsetispeed(&newTio, baudrate) < 0)
       throw std::runtime_error("Cannot set baudrate");
     if (cfsetospeed(&newTio, baudrate) < 0)
@@ -54,8 +54,20 @@ struct termios ics::Core::getTermios() noexcept {
   std::memset(&newTio, 0, sizeof(newTio));
   newTio.c_iflag = 0;
   newTio.c_oflag = 0;
-  newTio.c_cflag |= CS8 | CREAD | CLOCAL | PARENB;
+  newTio.c_cflag = CS8 | CREAD | CLOCAL | PARENB;
   newTio.c_lflag = 0;
+  newTio.c_cc[VMIN] = 1;
+  newTio.c_cc[VTIME] = 0;
+  return newTio;
+}
+
+struct termios ics::Core::getTermios(struct termios old) noexcept {
+  struct termios newTio;
+  std::memset(&newTio, 0, sizeof(newTio));
+  newTio.c_iflag = old.c_iflag;
+  newTio.c_oflag = 0;
+  newTio.c_cflag = ((old.c_cflag & ~CSIZE) | CS8 | CREAD | CLOCAL | PARENB) & ~(CSTOPB | PARODD);
+  newTio.c_lflag = old.c_lflag & ~(ISIG | ECHO | ICANON);
   newTio.c_cc[VMIN] = 1;
   newTio.c_cc[VTIME] = 0;
   return newTio;
