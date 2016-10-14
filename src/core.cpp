@@ -18,10 +18,10 @@ const ics::Core& ics::Core::getReference(const char* path, speed_t baudrate = B1
 
 void ics::Core::communicate(std::vector<unsigned char>& tx, std::vector<unsigned char>& rx) const {
   write(fd, tx.data(), tx.size()); // send
-  for (auto receive: rx) read(fd, &receive, 1); // receive
+  for (auto& receive: rx) read(fd, &receive, 1); // receive
 // check section
   auto receive = rx.begin();
-  for (auto send: tx) {
+  for (const auto& send: tx) {
     if (send != *receive) throw std::runtime_error("Loopback falied");
     receive++;
   }
@@ -31,17 +31,22 @@ void ics::Core::communicate(std::vector<unsigned char>& tx, std::vector<unsigned
 ics::Core::Core(const char* path, speed_t baudrate) {
   if ((fd = open(path, O_RDWR | O_NOCTTY | O_NONBLOCK)) < 0)
     throw std::runtime_error("Cannot open deveice");
-  if (!isatty(fd))
-    throw std::invalid_argument("Not tty device");
-  if (tcgetattr(fd, &oldTio) < 0)
-    throw std::runtime_error("Cannot setup tty");
-  struct termios newTio = getTermios();
-  if (cfsetispeed(&newTio, baudrate) < 0)
-    throw std::runtime_error("Cannot set baudrate");
-  if (cfsetospeed(&newTio, baudrate) < 0)
-    throw std::runtime_error("Cannot set baudrate");
-  if (tcsetattr(fd, TCSANOW, &newTio) < 0)
-    throw std::runtime_error("Cannot setup tty");
+  try {
+    if (!isatty(fd))
+      throw std::invalid_argument("Not tty device");
+    if (tcgetattr(fd, &oldTio) < 0)
+      throw std::runtime_error("Cannot setup tty");
+    struct termios newTio = getTermios();
+    if (cfsetispeed(&newTio, baudrate) < 0)
+      throw std::runtime_error("Cannot set baudrate");
+    if (cfsetospeed(&newTio, baudrate) < 0)
+      throw std::runtime_error("Cannot set baudrate");
+    if (tcsetattr(fd, TCSANOW, &newTio) < 0)
+      throw std::runtime_error("Cannot setup tty");
+  } catch (...) {
+    close(fd);
+    throw;
+  }
 }
 
 struct termios ics::Core::getTermios() noexcept {
