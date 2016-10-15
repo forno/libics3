@@ -15,7 +15,6 @@ namespace ics {
     Core(const char*, speed_t);
     Core(const Core&) = delete;
     static struct termios getTermios() noexcept;
-    static struct termios getTermios(struct termios) noexcept;
 
     int fd;
     termios oldTio;
