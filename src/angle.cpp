@@ -4,13 +4,13 @@
 #include <cmath>
 
 ics::Angle ics::Angle::newDegree() noexcept {
-  static const double limit = 130;
+  constexpr double limit = 130;
   static const Angle DEGREE(-limit, limit, 800.0 / 27.0);
   return DEGREE;
 }
 
 ics::Angle ics::Angle::newRadian() noexcept {
-  static const double limit = 130 * M_PI / 180;
+  constexpr double limit = 130 * M_PI / 180;
   static const Angle RADIAN(-limit, limit, 16000.0 / 3.0 / M_PI);
   return RADIAN;
 }
