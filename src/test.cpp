@@ -11,6 +11,7 @@ int main(int argc, char **argv) {
     ics::Angle degree = ics::Angle::newDegree();
     try {
       ics::ICS3 ics("/dev/ttyUSB0", ics::ICSBaudrate::RATE115200);
+      assert(7500 == degree.getRaw());
       ics::Angle nowPos = ics.move(id, degree);
       std::cout << nowPos.get() << std::endl;
     } catch (std::runtime_error& e) {
