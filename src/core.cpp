@@ -29,7 +29,7 @@ void ics::Core::communicate(std::vector<unsigned char>& tx, std::vector<unsigned
 }
 
 ics::Core::Core(const char* path, speed_t baudrate) {
-  if ((fd = open(path, O_RDWR | O_NOCTTY | O_NONBLOCK)) < 0)
+  if ((fd = open(path, O_RDWR | O_NOCTTY)) < 0)
     throw std::runtime_error("Cannot open deveice");
   try {
     if (!isatty(fd))
