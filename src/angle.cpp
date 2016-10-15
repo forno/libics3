@@ -14,6 +14,11 @@ ics::Angle ics::Angle::newRadian(double angle) noexcept {
 const uint16_t ics::Angle::MIN = 3500;
 const uint16_t ics::Angle::MAX = 11500;
 
+ics::Angle& ics::Angle::operator=(const Angle& rhs) noexcept {
+  rawData = rhs.rawData;
+  return *this;
+}
+
 double ics::Angle::get() const noexcept {
   return (rawData - 7500) / rawCalibration;
 }

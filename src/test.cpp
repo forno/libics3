@@ -18,13 +18,16 @@ int main(int argc, char **argv) {
       std::cout << nowPos.get() << std::endl;
       std::this_thread::sleep_for(std::chrono::milliseconds(1000));
       degree.set(50);
-      ics.move(id, degree);
+      nowPos = ics.move(id, degree);
+      std::cout << nowPos.get() << std::endl;
       std::this_thread::sleep_for(std::chrono::milliseconds(1000));
       degree.set(-50);
-      ics.move(id, degree);
+      nowPos = ics.move(id, degree);
+      std::cout << nowPos.get() << std::endl;
       std::this_thread::sleep_for(std::chrono::milliseconds(1000));
       degree.set(0);
-      ics.move(id, degree);
+      nowPos = ics.move(id, degree);
+      std::cout << nowPos.get() << std::endl;
     } catch (std::runtime_error& e) {
       std::cout << e.what() << std::endl;
     }

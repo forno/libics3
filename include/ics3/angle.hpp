@@ -11,6 +11,8 @@ namespace ics {
     static const uint16_t MIN;
     static const uint16_t MAX;
 
+    Angle& operator=(const Angle&) noexcept;
+
     double get() const noexcept;
     void set(double);
     uint16_t getRaw() const noexcept;
