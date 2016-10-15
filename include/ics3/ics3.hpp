@@ -23,6 +23,7 @@ namespace ics {
   public:
     ICS3(const char*, ICSBaudrate = ICSBaudrate::RATE115200);
     Angle free(const ID&) const;
+    Angle free(const ID&, Angle) const;
     Angle move(const ID&, Angle) const;
     Parameter get(const ID&, Parameter) const;
     void set(const ID&, const Parameter&) const;

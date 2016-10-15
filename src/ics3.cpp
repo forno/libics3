@@ -30,6 +30,25 @@ ics::Angle ics::ICS3::free(const ID& id) const {
   return angle;
 }
 
+ics::Angle ics::ICS3::free(const ID& id, Angle angle) const {
+  static std::vector<unsigned char> tx(3), rx(6);
+  tx[0] = 0x80 | id.get();
+  tx[1] = 0;
+  tx[2] = 0;
+  try {
+    core.communicate(tx, rx);
+  } catch (...) {
+    throw;
+  }
+  uint16_t receive = (rx[4] << 7) | rx[5];
+  try {
+    angle.setRaw(receive);
+  } catch (...) {
+    throw std::runtime_error("Receive angle error");
+  }
+  return angle;
+}
+
 ics::Angle ics::ICS3::move(const ID& id, Angle angle) const {
   static std::vector<unsigned char> tx(3), rx(6);
   uint16_t send = angle.getRaw();
