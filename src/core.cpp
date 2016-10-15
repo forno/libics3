@@ -56,19 +56,19 @@ struct termios ics::Core::getTermios() noexcept {
   newTio.c_oflag = 0;
   newTio.c_cflag = CS8 | CREAD | CLOCAL | PARENB;
   newTio.c_lflag = 0;
-  newTio.c_cc[VMIN] = 1;
-  newTio.c_cc[VTIME] = 0;
+  newTio.c_cc[VMIN] = 0;
+  newTio.c_cc[VTIME] = 1;
   return newTio;
 }
 
 struct termios ics::Core::getTermios(struct termios old) noexcept {
   struct termios newTio;
   std::memset(&newTio, 0, sizeof(newTio));
-  newTio.c_iflag = old.c_iflag;
+  newTio.c_iflag = old.c_iflag | IGNBRK;
   newTio.c_oflag = 0;
   newTio.c_cflag = ((old.c_cflag & ~CSIZE) | CS8 | CREAD | CLOCAL | PARENB) & ~(CSTOPB | PARODD);
   newTio.c_lflag = old.c_lflag & ~(ISIG | ECHO | ICANON);
-  newTio.c_cc[VMIN] = 1;
-  newTio.c_cc[VTIME] = 0;
+  newTio.c_cc[VMIN] = 0;
+  newTio.c_cc[VTIME] = 10;
   return newTio;
 }
