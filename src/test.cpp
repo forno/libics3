@@ -70,6 +70,12 @@ int main(int argc, char **argv) {
     }
   }
   {
+    std::cout << std::endl << "angle factory test section" << std::endl;
+    ics::Angle degree = ics::Angle::newDegree(90);
+    ics::Angle radian = ics::Angle::newRadian(M_PI / 2);
+    assert(degree.getRaw() == radian.getRaw());
+  }
+  {
     std::cout << std::endl << "parameter test section" << std::endl;
     ics::Parameter current = ics::Parameter::current();
     assert(63 == current.get());

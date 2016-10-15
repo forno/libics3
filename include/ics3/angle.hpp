@@ -6,8 +6,8 @@
 namespace ics {
   class Angle {
   public:
-    static Angle newDegree() noexcept;
-    static Angle newRadian() noexcept;
+    static Angle newDegree(double = 0.0) noexcept;
+    static Angle newRadian(double = 0.0) noexcept;
     static const uint16_t MIN;
     static const uint16_t MAX;
 
@@ -16,7 +16,7 @@ namespace ics {
     uint16_t getRaw() const noexcept;
     void setRaw(uint16_t);
   private:
-    Angle(double) noexcept;
+    Angle(double, double) noexcept;
 
     const double rawCalibration;
     uint16_t rawData;

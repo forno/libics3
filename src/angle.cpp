@@ -3,12 +3,12 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 
-ics::Angle ics::Angle::newDegree() noexcept {
-  return Angle(800.0 / 27.0);
+ics::Angle ics::Angle::newDegree(double angle) noexcept {
+  return Angle(800.0 / 27.0, angle);
 }
 
-ics::Angle ics::Angle::newRadian() noexcept {
-  return Angle(16000.0 / 3.0 / M_PI);
+ics::Angle ics::Angle::newRadian(double angle) noexcept {
+  return Angle(16000.0 / 3.0 / M_PI, angle);
 }
 
 const uint16_t ics::Angle::MIN = 3500;
@@ -36,7 +36,7 @@ void ics::Angle::setRaw(uint16_t raw) {
   rawData = raw;
 }
 
-ics::Angle::Angle(double calibration) noexcept
+ics::Angle::Angle(double calibration, double angle) noexcept
 : rawCalibration(calibration),
-  rawData(7500)
+  rawData(angle * calibration + 7500)
 {}
