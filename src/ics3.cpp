@@ -10,6 +10,26 @@ ics::ICS3::ICS3(const char* path, ICSBaudrate baudrate)
   : core(Core::getReference(path, static_cast<speed_t>(baudrate)))
 {}
 
+ics::Angle ics::ICS3::free(const ID& id) const {
+  static std::vector<unsigned char> tx(3), rx(6);
+  static Angle angle = Angle::newRadian();
+  tx[0] = 0x80 | id.get();
+  tx[1] = 0;
+  tx[2] = 0;
+  try {
+    core.communicate(tx, rx);
+  } catch (...) {
+    throw;
+  }
+  uint16_t receive = (rx[4] << 7) | rx[5];
+  try {
+    angle.setRaw(receive);
+  } catch (...) {
+    throw std::runtime_error("Receive angle error");
+  }
+  return angle;
+}
+
 ics::Angle ics::ICS3::move(const ID& id, Angle angle) const {
   static std::vector<unsigned char> tx(3), rx(6);
   uint16_t send = angle.getRaw();
@@ -18,13 +38,13 @@ ics::Angle ics::ICS3::move(const ID& id, Angle angle) const {
   tx[2] = 0x7F & send;
   try {
     core.communicate(tx, rx);
-  } catch (std::runtime_error& e) {
+  } catch (...) {
     throw;
   }
   uint16_t receive = (rx[4] << 7) | rx[5];
   try {
     angle.setRaw(receive);
-  } catch (std::invalid_argument& e) {
+  } catch (...) {
     throw std::runtime_error("Receive angle error");
   }
   return angle;
@@ -36,7 +56,7 @@ ics::Parameter ics::ICS3::get(const ID& id, Parameter param) const {
   tx[1] = param.getSc();
   try {
     core.communicate(tx, rx);
-  } catch (std::runtime_error& e) {
+  } catch (...) {
     throw;
   }
   param.set(rx[4]);
@@ -50,7 +70,7 @@ void ics::ICS3::set(const ID& id, const Parameter& param) const {
   tx[2] = param.get();
   try {
     core.communicate(tx, rx);
-  } catch (std::runtime_error& e) {
+  } catch (...) {
     throw;
   }
 }
@@ -61,7 +81,7 @@ ics::Eeprom ics::ICS3::getRom(const ID& id) const {
   tx[1] = 0;
   try {
     core.communicate(tx, rx);
-  } catch (std::runtime_error& e) {
+  } catch (...) {
     throw;
   }
   Eeprom rom;
@@ -76,7 +96,7 @@ void ics::ICS3::setRom(const ID& id, const Eeprom& rom) const {
   std::copy(rom.data.begin(), rom.data.end(), tx.begin() + 2);
   try {
     core.communicate(tx, rx);
-  } catch (std::runtime_error& e) {
+  } catch (...) {
     throw;
   }
 }

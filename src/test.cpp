@@ -28,6 +28,8 @@ int main(int argc, char **argv) {
       degree.set(0);
       nowPos = ics.move(id, degree);
       std::cout << nowPos.get() << std::endl;
+      nowPos = ics.free(id);
+      std::cout << nowPos.get() << std::endl;
     } catch (std::runtime_error& e) {
       std::cout << e.what() << std::endl;
     }
