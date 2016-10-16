@@ -12,7 +12,7 @@ ics::ICS3::ICS3(const char* path, ICSBaudrate baudrate)
 
 ics::Angle ics::ICS3::free(const ID& id) const {
   static Angle angle = Angle::newRadian();
-  free(id, angle);
+  return free(id, angle);
 }
 
 ics::Angle ics::ICS3::free(const ID& id, Angle angle) const {
