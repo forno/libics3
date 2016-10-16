@@ -6,8 +6,8 @@
 ics::EepParam ics::Eeprom::get(EepParam param) const {
   try {
     param.read(data);
-  } catch (std::invalid_argument& e) {
-    throw std::runtime_error("Fail data: non initialize EEPROM by ICS");
+  } catch (...) {
+    throw std::runtime_error {"Fail data: non initialize EEPROM by ICS"};
   }
   return param;
 }

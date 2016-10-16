@@ -21,8 +21,8 @@ unsigned char ics::Parameter::get() const noexcept {
 }
 
 void ics::Parameter::set(unsigned char input) {
-  if (input < min) throw std::invalid_argument("Too small value");
-  if (max < input) throw std::invalid_argument("Too big value");
+  if (input < min) throw std::invalid_argument {"Too small value"};
+  if (max < input) throw std::invalid_argument {"Too big value"};
   data = input;
 }
 
@@ -31,8 +31,8 @@ unsigned char ics::Parameter::getSc() const noexcept {
 }
 
 ics::Parameter::Parameter(unsigned char sc, unsigned char min, unsigned char max, unsigned char default_data) noexcept
-: sc(sc),
-  min(min),
-  max(max),
-  data(default_data)
+: sc {sc},
+  min {min},
+  max {max},
+  data {default_data}
 {}

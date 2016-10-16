@@ -13,13 +13,13 @@ ics::Angle& getReceiveAngle(std::vector<unsigned char> rx, ics::Angle& unit) {
   try {
     unit.setRaw(receive);
   } catch (...) {
-    throw std::runtime_error("Receive angle error");
+    throw std::runtime_error {"Receive angle error"};
   }
   return unit;
 }
 
 ics::ICS3::ICS3(const char* path, ICSBaudrate baudrate)
-  : core(Core::getReference(path, static_cast<speed_t>(baudrate)))
+  : core {Core::getReference(path, static_cast<speed_t>(baudrate))}
 {}
 
 ics::Angle ics::ICS3::free(const ID& id) const {

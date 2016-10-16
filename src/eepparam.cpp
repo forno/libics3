@@ -114,13 +114,13 @@ ics::EepParam::EepParam(size_t offset,
 {}
 
 void ics::EepParam::setNormal(uint16_t input) {
-  if (input < min) throw std::invalid_argument("Too small value");
-  if (max < input) throw std::invalid_argument("Too big value");
+  if (input < min) throw std::invalid_argument {"Too small value"};
+  if (max < input) throw std::invalid_argument {"Too big value"};
   data = input;
 }
 
 void ics::EepParam::setEven(uint16_t input) {
-  if (input % 2) throw std::invalid_argument("Must even value");
+  if (input % 2) throw std::invalid_argument {"Must even value"};
   setNormal(input); // throw std::invalid_argument
 }
 
@@ -144,7 +144,7 @@ void ics::EepParam::setBaudrate(uint16_t input) {
 void ics::EepParam::setOffset(uint16_t input) {
   static const int8_t minBuf {static_cast<int8_t>(min)}; // I expect stand 0x8000 input cast to minus value
   int8_t inputBuf {static_cast<int8_t>(input)}; // I expect stand 0x8000 input cast to minus value
-  if (inputBuf < minBuf) throw std::invalid_argument("Too small value");
-  if (max < inputBuf) throw std::invalid_argument("Too big value");
+  if (inputBuf < minBuf) throw std::invalid_argument {"Too small value"};
+  if (max < inputBuf) throw std::invalid_argument {"Too big value"};
   data = static_cast<uint8_t>(inputBuf);
 }
