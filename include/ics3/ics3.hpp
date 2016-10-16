@@ -5,10 +5,11 @@
 #include <vector>
 #include <termios.h>
 
+#include "ics3/angle.hpp"
+
 namespace ics {
   // Forward declaration
   class Core;
-  class Angle;
   class Parameter;
   class Eeprom;
   class ID;
@@ -32,6 +33,10 @@ namespace ics {
   private:
     const Core& core;
   };
+}
+
+inline ics::Angle ics::ICS3::free(const ID& id) const {
+  return free(id, Angle::newRadian());
 }
 
 #endif // LIBICS3_ICS3_ICS3_H_
