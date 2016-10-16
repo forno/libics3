@@ -4,9 +4,9 @@
 
 #include<stdexcept>
 
-ics::EepParam ics::Eeprom::get(EepParam param) const {
-  param.read(data);
-  return param;
+ics::EepParam ics::Eeprom::get(EepParam place) const {
+  place.read(data);
+  return place;
 }
 
 void ics::Eeprom::set(const EepParam& param) noexcept {
