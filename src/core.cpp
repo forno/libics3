@@ -5,14 +5,12 @@
 #include <cstring> // for memset
 
 ics::Core::~Core() noexcept {
-  if (fd < 0) return;
   tcsetattr(fd, TCSANOW, &oldTio);
-  if (fd < 0) return;
   close(fd);
 }
 
 const ics::Core& ics::Core::getReference(const char* path, speed_t baudrate = B115200) {
-  static const Core core(path, baudrate); // update plan: mutable path and baudrate
+  static const Core core {path, baudrate}; // update plan: mutable path and baudrate
   return core;
 }
 
@@ -20,32 +18,32 @@ void ics::Core::communicate(std::vector<unsigned char>& tx, std::vector<unsigned
   write(fd, tx.data(), tx.size()); // send
   for (auto& receive : rx) read(fd, &receive, 1); // receive
 // check section
-  auto receive = rx.begin();
+  auto receive {rx.begin()};
   for (const auto& send : tx) {
-    if (send != *receive) throw std::runtime_error("Loopback falied");
+    if (send != *receive) throw std::runtime_error {"Loopback falied"};
     receive++;
   }
-  if ((tx[0] & 0x7F) != *receive) throw std::runtime_error("Receive failed");
+  if ((tx[0] & 0x7F) != *receive) throw std::runtime_error {"Receive failed"};
 }
 
 ics::Core::Core(const char* path, speed_t baudrate)
-: fd(open(path, O_RDWR | O_NOCTTY)),
-  oldTio()
+: fd {open(path, O_RDWR | O_NOCTTY)},
+  oldTio {}
 {
   if (fd < 0)
-    throw std::runtime_error("Cannot open deveice");
+    throw std::runtime_error {"Cannot open deveice"};
   try {
     if (!isatty(fd))
-      throw std::invalid_argument("Not tty device");
+      throw std::invalid_argument {"Not tty device"};
     if (tcgetattr(fd, &oldTio) < 0)
-      throw std::runtime_error("Cannot setup tty");
+      throw std::runtime_error {"Cannot setup tty"};
     struct termios newTio = getTermios();
     if (cfsetispeed(&newTio, baudrate) < 0)
-      throw std::runtime_error("Cannot set baudrate");
+      throw std::runtime_error {"Cannot set baudrate"};
     if (cfsetospeed(&newTio, baudrate) < 0)
-      throw std::runtime_error("Cannot set baudrate");
+      throw std::runtime_error {"Cannot set baudrate"};
     if (tcsetattr(fd, TCSANOW, &newTio) < 0)
-      throw std::runtime_error("Cannot setup tty");
+      throw std::runtime_error {"Cannot setup tty"};
   } catch (...) {
     close(fd);
     throw;
