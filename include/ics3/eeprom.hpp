@@ -17,7 +17,7 @@ namespace ics {
     void copyTo(std::vector<unsigned char>&) const noexcept;
     void copyTo(std::array<unsigned char, 64>&) const noexcept;
   private:
-    Eeprom() noexcept;
+    explicit Eeprom() noexcept;
     std::array<unsigned char, 64> data;
   };
 }

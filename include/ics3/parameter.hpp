@@ -15,7 +15,7 @@ namespace ics {
     void set(unsigned char);
     unsigned char getSc() const noexcept;
   private:
-    Parameter(unsigned char, unsigned char, unsigned char, unsigned char) noexcept;
+    explicit Parameter(unsigned char, unsigned char, unsigned char, unsigned char) noexcept;
     const unsigned char sc;
     const unsigned char min;
     const unsigned char max;

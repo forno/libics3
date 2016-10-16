@@ -44,13 +44,14 @@ namespace ics {
     void write(std::array<unsigned char, 64>&) const noexcept;
     void read(const std::array<unsigned char, 64>&);
   private:
-    EepParam(size_t,
-             size_t,
-             uint16_t,
-             uint16_t,
-             void (EepParam::*)(uint16_t),
-             uint16_t
-            ) noexcept;
+    explicit EepParam(
+        size_t,
+        size_t,
+        uint16_t,
+        uint16_t,
+        void (EepParam::*)(uint16_t),
+        uint16_t
+    ) noexcept;
     void setNormal(uint16_t);
     void setEven(uint16_t);
     void setFlag(uint16_t);

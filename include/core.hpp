@@ -12,8 +12,7 @@ namespace ics {
     static const Core& getReference(const char*, speed_t); 
     void communicate(std::vector<unsigned char>&, std::vector<unsigned char>&) const;
   private:
-    Core(const char*, speed_t);
-    Core(const Core&) = delete;
+    explicit Core(const char*, speed_t);
     static struct termios getTermios() noexcept;
 
     int fd;
