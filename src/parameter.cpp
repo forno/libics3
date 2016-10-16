@@ -1,23 +1,19 @@
 #include "ics3/parameter.hpp"
 
 ics::Parameter ics::Parameter::stretch() noexcept {
-  static const Parameter STRETCH(0x01, 1, 127, 30);
-  return STRETCH;
+  return Parameter {0x01, 1, 127, 30};
 }
 
 ics::Parameter ics::Parameter::speed() noexcept {
-  static const Parameter SPEED(0x02, 1, 127, 127);
-  return SPEED;
+  return Parameter {0x02, 1, 127, 127};
 }
 
 ics::Parameter ics::Parameter::current() noexcept {
-  static const Parameter CURRENT(0x03, 0, 63, 63);
-  return CURRENT;
+  return Parameter {0x03, 0, 63, 63};
 }
 
 ics::Parameter ics::Parameter::temperature() noexcept {
-  static const Parameter TEMPERATURE(0x04, 1, 127, 80);
-  return TEMPERATURE;
+  return Parameter {0x04, 1, 127, 80};
 }
 
 unsigned char ics::Parameter::get() const noexcept {
