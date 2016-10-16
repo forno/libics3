@@ -1,22 +1,7 @@
 #include"ics3/angle.hpp"
 
-#include<stdexcept>
-
 #define _USE_MATH_DEFINES
 #include<cmath>
-
-inline uint16_t castToRaw(double angle, double calibration) noexcept {
-  return static_cast<uint16_t>(angle * calibration + 7500);
-}
-
-inline void checkInvalidAngle(uint16_t raw) {
-  if (raw < ics::Angle::MIN) throw std::invalid_argument {"Too small angle"};
-  if (ics::Angle::MAX < raw) throw std::invalid_argument {"Too big angle"};
-}
-
-ics::Angle ics::Angle::newDegree(double angle) noexcept {
-  return Angle {800.0 / 27.0, angle};
-}
 
 ics::Angle ics::Angle::newRadian(double angle) noexcept {
   return Angle {16000.0 / 3.0 / M_PI, angle};
@@ -42,11 +27,4 @@ uint16_t ics::Angle::getRaw() const noexcept {
 void ics::Angle::setRaw(uint16_t raw) {
   checkInvalidAngle(raw); // throw std::invalid_argument
   rawData = raw;
-}
-
-ics::Angle::Angle(double calibration, double angle)
-: rawCalibration {calibration},
-  rawData {castToRaw(angle, calibration)}
-{
-  checkInvalidAngle(rawData); // throw std::invalid_argument
 }
