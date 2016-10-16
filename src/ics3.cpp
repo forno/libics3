@@ -11,19 +11,8 @@ ics::ICS3::ICS3(const char* path, ICSBaudrate baudrate)
 {}
 
 ics::Angle ics::ICS3::free(const ID& id) const {
-  static std::vector<unsigned char> tx(3), rx(6);
   static Angle angle = Angle::newRadian();
-  tx[0] = 0x80 | id.get();
-  tx[1] = 0;
-  tx[2] = 0;
-  core.communicate(tx, rx); // throw std::runtime_error
-  uint16_t receive = (rx[4] << 7) | rx[5];
-  try {
-    angle.setRaw(receive);
-  } catch (...) {
-    throw std::runtime_error("Receive angle error");
-  }
-  return angle;
+  free(id, angle);
 }
 
 ics::Angle ics::ICS3::free(const ID& id, Angle angle) const {
