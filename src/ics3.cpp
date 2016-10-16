@@ -5,14 +5,26 @@
 #include "ics3/eeprom.hpp"
 #include "ics3/parameter.hpp"
 #include "ics3/id.hpp"
+#include <cassert>
+
+ics::Angle& getReceiveAngle(std::vector<unsigned char> rx, ics::Angle& unit) {
+  assert(rx.size() == 6);
+  uint16_t receive {static_cast<uint16_t>((rx[4] << 7) | rx[5])};
+  try {
+    unit.setRaw(receive);
+  } catch (...) {
+    throw std::runtime_error("Receive angle error");
+  }
+  return unit;
+}
 
 ics::ICS3::ICS3(const char* path, ICSBaudrate baudrate)
   : core(Core::getReference(path, static_cast<speed_t>(baudrate)))
 {}
 
 ics::Angle ics::ICS3::free(const ID& id) const {
-  static Angle angle = Angle::newRadian();
-  return free(id, angle);
+  static Angle unit {Angle::newRadian()};
+  return free(id, unit);
 }
 
 ics::Angle ics::ICS3::free(const ID& id, Angle angle) const {
@@ -21,29 +33,17 @@ ics::Angle ics::ICS3::free(const ID& id, Angle angle) const {
   tx[1] = 0;
   tx[2] = 0;
   core.communicate(tx, rx); // throw std::runtime_error
-  uint16_t receive = (rx[4] << 7) | rx[5];
-  try {
-    angle.setRaw(receive);
-  } catch (...) {
-    throw std::runtime_error("Receive angle error");
-  }
-  return angle;
+  return getReceiveAngle(rx, angle);
 }
 
 ics::Angle ics::ICS3::move(const ID& id, Angle angle) const {
   static std::vector<unsigned char> tx(3), rx(6);
-  uint16_t send = angle.getRaw();
+  uint16_t send {angle.getRaw()};
   tx[0] = 0x80 | id.get();
   tx[1] = 0x7F & (send >> 7);
   tx[2] = 0x7F & send;
   core.communicate(tx, rx); // throw std::runtime_error
-  uint16_t receive = (rx[4] << 7) | rx[5];
-  try {
-    angle.setRaw(receive);
-  } catch (...) {
-    throw std::runtime_error("Receive angle error");
-  }
-  return angle;
+  return getReceiveAngle(rx, angle);
 }
 
 ics::Parameter ics::ICS3::get(const ID& id, Parameter param) const {
