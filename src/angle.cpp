@@ -1,9 +1,9 @@
-#include "ics3/angle.hpp"
+#include"ics3/angle.hpp"
 
-#include <stdexcept>
+#include<stdexcept>
 
 #define _USE_MATH_DEFINES
-#include <cmath>
+#include<cmath>
 
 inline uint16_t castToRaw(double angle, double calibration) noexcept {
   return static_cast<uint16_t>(angle * calibration + 7500);

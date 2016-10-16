@@ -1,8 +1,8 @@
 #ifndef LIBICS3_ICS3_EEPROM_H_
 #define LIBICS3_ICS3_EEPROM_H_
 
-#include <array>
-#include <vector>
+#include<array>
+#include<vector>
 
 namespace ics {
   class EepParam;

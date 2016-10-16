@@ -1,14 +1,14 @@
-#include "ics3/ics3.hpp"
+#include"ics3/ics3.hpp"
 
-#include "core.hpp"
-#include "ics3/angle.hpp"
-#include "ics3/eeprom.hpp"
-#include "ics3/parameter.hpp"
-#include "ics3/id.hpp"
+#include"core.hpp"
+#include"ics3/angle.hpp"
+#include"ics3/eeprom.hpp"
+#include"ics3/parameter.hpp"
+#include"ics3/id.hpp"
 
-#include <stdexcept>
-#include <array>
-#include <cassert>
+#include<stdexcept>
+#include<array>
+#include<cassert>
 
 ics::Angle& getReceiveAngle(std::vector<unsigned char> rx, ics::Angle& unit) {
   assert(rx.size() == 6);

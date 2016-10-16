@@ -1,9 +1,9 @@
-#include "core.hpp"
+#include"core.hpp"
 
-#include <stdexcept>
-#include <fcntl.h> // for open FLAGS
-#include <unistd.h> // for tty checks
-#include <cstring> // for memset
+#include<stdexcept>
+#include<fcntl.h> // for open FLAGS
+#include<unistd.h> // for tty checks
+#include<cstring> // for memset
 
 ics::Core::~Core() noexcept {
   tcsetattr(fd, TCSANOW, &oldTio);

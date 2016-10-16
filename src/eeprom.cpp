@@ -1,8 +1,8 @@
-#include "ics3/eeprom.hpp"
+#include"ics3/eeprom.hpp"
 
-#include "ics3/eepparam.hpp"
+#include"ics3/eepparam.hpp"
 
-#include <stdexcept>
+#include<stdexcept>
 
 ics::EepParam ics::Eeprom::get(EepParam param) const {
   param.read(data);

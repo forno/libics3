@@ -1,6 +1,6 @@
-#include "ics3/eepparam.hpp"
+#include"ics3/eepparam.hpp"
 
-#include <stdexcept>
+#include<stdexcept>
 
 ics::EepParam ics::EepParam::strech() noexcept {
   return EepParam {2, 2, 2, 254, &ics::EepParam::setEven, 60};

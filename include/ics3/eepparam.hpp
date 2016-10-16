@@ -1,7 +1,7 @@
 #ifndef LIBICS3_ICS3_EEPPARAM_H_
 #define LIBICS3_ICS3_EEPPARAM_H_
 
-#include <array>
+#include<array>
 
 namespace ics {
   class EepParam {
