@@ -35,6 +35,21 @@ int main(int argc, char **argv) {
     }
   }
   {
+    std::cout << std::endl << "ID test section" << std::endl;
+    ics::ID id {0};
+    assert(id == 0);
+    assert(id == 0);
+    ics::ID id31 {31};
+    assert(id31 == 31);
+    assert(id31.get() == 31);
+    try {
+      ics::ID id32 {32};
+      assert(false);
+    } catch (std::invalid_argument& e) {
+      std::cout << e.what() << std::endl;
+    }
+  }
+  {
     std::cout << std::endl << "EepParam test section" << std::endl;
     ics::EepParam speed = ics::EepParam::speed();
     assert(127 == speed.get());
