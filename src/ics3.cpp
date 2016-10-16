@@ -1,7 +1,6 @@
 #include"ics3/ics3.hpp"
 
 #include"core.hpp"
-#include"ics3/angle.hpp"
 #include"ics3/eeprom.hpp"
 #include"ics3/parameter.hpp"
 #include"ics3/id.hpp"
