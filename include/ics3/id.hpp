@@ -9,7 +9,7 @@ namespace ics {
     ID(unsigned char);
     unsigned char get() const noexcept;
   private:
-    const double data;
+    const unsigned char data;
   };
 }
 
