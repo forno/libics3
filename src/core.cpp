@@ -28,8 +28,11 @@ void ics::Core::communicate(std::vector<unsigned char>& tx, std::vector<unsigned
   if ((tx[0] & 0x7F) != *receive) throw std::runtime_error("Receive failed");
 }
 
-ics::Core::Core(const char* path, speed_t baudrate) {
-  if ((fd = open(path, O_RDWR | O_NOCTTY)) < 0)
+ics::Core::Core(const char* path, speed_t baudrate)
+: fd(open(path, O_RDWR | O_NOCTTY)),
+  oldTio()
+{
+  if (fd < 0)
     throw std::runtime_error("Cannot open deveice");
   try {
     if (!isatty(fd))

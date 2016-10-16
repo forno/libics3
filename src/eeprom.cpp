@@ -25,4 +25,4 @@ void ics::Eeprom::copyTo(std::array<unsigned char, 64>& dest) const noexcept {
   dest = data;
 }
 
-ics::Eeprom::Eeprom() noexcept {}
+ics::Eeprom::Eeprom() noexcept : data() {}
