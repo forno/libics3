@@ -77,6 +77,6 @@ void ics::ICS3::setRom(const ID& id, const Eeprom& rom) const {
   static std::vector<unsigned char> tx(66), rx(68);
   tx[0] = 0xC0 | id.get();
   tx[2] = 0;
-  std::copy(rom.data.begin(), rom.data.end(), tx.begin() + 2);
+  rom.write(tx.begin() + 2);
   core.communicate(tx, rx); // throw std::runtime_error
 }
