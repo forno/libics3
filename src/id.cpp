@@ -1,5 +1,7 @@
 #include "ics3/id.hpp"
 
+#include <stdexcept>
+
 ics::ID::ID(unsigned char id)
 : data {id}
 {

@@ -1,7 +1,7 @@
 #ifndef LIBICS3_ICS3_ANGLE_H_
 #define LIBICS3_ICS3_ANGLE_H_
 
-#include <stdexcept>
+#include<cstdint>
 
 namespace ics {
   class Angle {

@@ -1,5 +1,7 @@
 #include "ics3/parameter.hpp"
 
+#include <stdexcept>
+
 ics::Parameter ics::Parameter::stretch() noexcept {
   return Parameter {0x01, 1, 127, 30};
 }

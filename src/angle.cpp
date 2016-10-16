@@ -1,5 +1,7 @@
 #include "ics3/angle.hpp"
 
+#include <stdexcept>
+
 #define _USE_MATH_DEFINES
 #include <cmath>
 

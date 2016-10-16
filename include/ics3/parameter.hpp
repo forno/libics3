@@ -1,8 +1,6 @@
 #ifndef LIBICS3_ICS3_PARAMETER_H_
 #define LIBICS3_ICS3_PARAMETER_H_
 
-#include <stdexcept>
-
 namespace ics {
   class Parameter {
   public:

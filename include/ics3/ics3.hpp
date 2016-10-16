@@ -1,7 +1,6 @@
 #ifndef LIBICS3_ICS3_ICS3_H_
 #define LIBICS3_ICS3_ICS3_H_
 
-#include <stdexcept>
 #include <vector>
 #include <termios.h>
 

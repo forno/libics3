@@ -1,5 +1,6 @@
 #include "core.hpp"
 
+#include <stdexcept>
 #include <fcntl.h> // for open FLAGS
 #include <unistd.h> // for tty checks
 #include <cstring> // for memset

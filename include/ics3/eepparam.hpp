@@ -2,7 +2,6 @@
 #define LIBICS3_ICS3_EEPPARAM_H_
 
 #include <array>
-#include <stdexcept>
 
 namespace ics {
   class EepParam {

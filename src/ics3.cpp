@@ -6,6 +6,7 @@
 #include "ics3/parameter.hpp"
 #include "ics3/id.hpp"
 
+#include <stdexcept>
 #include <array>
 #include <cassert>
 

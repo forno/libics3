@@ -2,7 +2,6 @@
 #define LIBICS3_ICS3_CORE_H_
 
 #include <vector>
-#include <stdexcept>
 #include <termios.h>
 
 namespace ics {
