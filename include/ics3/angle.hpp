@@ -2,12 +2,14 @@
 #define LIBICS3_ICS3_ANGLE_H_
 
 #include<stdexcept>
+#define _USE_MATH_DEFINES
+#include<cmath>
 
 namespace ics {
   class Angle {
   public:
     static constexpr Angle newDegree(double = 0.0) noexcept;
-    static Angle newRadian(double = 0.0) noexcept;
+    static constexpr Angle newRadian(double = 0.0) noexcept;
     static constexpr uint16_t MIN {3500};
     static constexpr uint16_t MAX {11500};
 
@@ -30,12 +32,16 @@ namespace ics {
     return Angle {800.0 / 27.0, angle};
   }
 
+  constexpr Angle Angle::newRadian(double angle) noexcept {
+    return Angle {16000.0 / 3.0 / M_PI, angle};
+  }
+
   constexpr Angle::Angle(double calibration, double angle)
   : rawData {checkInvalidAngle(castToRaw(angle, calibration))},
     rawCalibration {calibration}
   {}
 
-  constexpr inline uint16_t Angle::castToRaw(double angle, double calibration) noexcept {
+  constexpr uint16_t Angle::castToRaw(double angle, double calibration) noexcept {
     return static_cast<uint16_t>(angle * calibration + 7500);
   }
 
