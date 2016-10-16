@@ -22,9 +22,6 @@ ics::Angle ics::Angle::newRadian(double angle) noexcept {
   return Angle {16000.0 / 3.0 / M_PI, angle};
 }
 
-const uint16_t ics::Angle::MIN = 3500;
-const uint16_t ics::Angle::MAX = 11500;
-
 ics::Angle& ics::Angle::operator=(const Angle& rhs) noexcept {
   rawData = rhs.rawData;
   return *this;

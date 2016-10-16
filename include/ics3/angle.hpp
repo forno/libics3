@@ -8,8 +8,8 @@ namespace ics {
   public:
     static Angle newDegree(double = 0.0) noexcept;
     static Angle newRadian(double = 0.0) noexcept;
-    static const uint16_t MIN;
-    static const uint16_t MAX;
+    static constexpr uint16_t MIN {3500};
+    static constexpr uint16_t MAX {11500};
 
     Angle& operator=(const Angle&) noexcept;
 
