@@ -131,7 +131,7 @@ void ics::EepParam::setFlag(uint16_t input) {
 }
 
 void ics::EepParam::setBaudrate(uint16_t input) {
-  Baudrate const buf = static_cast<Baudrate>(input);
+  Baudrate const buf {static_cast<Baudrate>(input)};
   switch (buf) {
   case RATE115200: case RATE625000: case RATE1250000:
     break;
