@@ -24,11 +24,7 @@ double ics::Angle::get() const noexcept {
 }
 
 void ics::Angle::set(double angle) {
-  try {
-    setRaw(static_cast<uint16_t>(angle * rawCalibration + 7500));
-  } catch (...) {
-    throw;
-  }
+  setRaw(static_cast<uint16_t>(angle * rawCalibration + 7500)); // throw std::invalid_argument
 }
 
 uint16_t ics::Angle::getRaw() const noexcept {

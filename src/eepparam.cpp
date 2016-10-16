@@ -95,11 +95,7 @@ uint16_t ics::EepParam::get() const noexcept {
 }
 
 void ics::EepParam::set(uint16_t input) {
-  try {
-    (this->*setFunc)(input);
-  } catch (std::invalid_argument& e) {
-    throw;
-  }
+  (this->*setFunc)(input); // throw std::invalid_argument
 }
 
 void ics::EepParam::write(std::array<unsigned char, 64>& dest) const noexcept {
@@ -117,11 +113,7 @@ void ics::EepParam::read(const std::array<unsigned char, 64>& src) {
     result |= src[i] & mask;
     mask <<= 4;
   }
-  try {
-    set(result);
-  } catch (std::invalid_argument& e) {
-    throw;
-  }
+  set(result); // throw std::invalid_argument
 }
 
 ics::EepParam::EepParam(size_t offset,
@@ -147,11 +139,7 @@ void ics::EepParam::setNormal(uint16_t input) {
 
 void ics::EepParam::setEven(uint16_t input) {
   if (input % 2) throw std::invalid_argument("Must even value");
-  try {
-    setNormal(input);
-  } catch (std::invalid_argument& e) {
-    throw;
-  }
+  setNormal(input); // throw std::invalid_argument
 }
 
 void ics::EepParam::setFlag(uint16_t input) {
