@@ -3,7 +3,6 @@
 
 #include <array>
 #include <vector>
-#include <stdexcept>
 
 namespace ics {
   class EepParam;
@@ -17,7 +16,7 @@ namespace ics {
     void copyTo(std::vector<unsigned char>&) const noexcept;
     void copyTo(std::array<unsigned char, 64>&) const noexcept;
   private:
-    explicit Eeprom() noexcept;
+    explicit Eeprom(const std::array<unsigned char, 64>&);
     std::array<unsigned char, 64> data;
   };
 }

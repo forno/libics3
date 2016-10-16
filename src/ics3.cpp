@@ -5,6 +5,8 @@
 #include "ics3/eeprom.hpp"
 #include "ics3/parameter.hpp"
 #include "ics3/id.hpp"
+
+#include <array>
 #include <cassert>
 
 ics::Angle& getReceiveAngle(std::vector<unsigned char> rx, ics::Angle& unit) {
@@ -68,9 +70,9 @@ ics::Eeprom ics::ICS3::getRom(const ID& id) const {
   tx[0] = 0xA0 | id.get();
   tx[1] = 0;
   core.communicate(tx, rx); // throw std::runtime_error
-  Eeprom rom;
-  std::copy(rx.begin() + 2, rx.end(), rom.data.begin());
-  return rom;
+  std::array<unsigned char, 64> rom;
+  std::copy(rx.begin() + 2, rx.end(), rom.begin());
+  return Eeprom {rom};
 }
 
 void ics::ICS3::setRom(const ID& id, const Eeprom& rom) const {

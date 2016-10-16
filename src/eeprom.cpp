@@ -3,6 +3,8 @@
 #include "ics3/eepparam.hpp"
 #include "ics3/ics3.hpp"
 
+#include <stdexcept>
+
 ics::EepParam ics::Eeprom::get(EepParam param) const {
   try {
     param.read(data);
@@ -25,4 +27,6 @@ void ics::Eeprom::copyTo(std::array<unsigned char, 64>& dest) const noexcept {
   dest = data;
 }
 
-ics::Eeprom::Eeprom() noexcept : data() {}
+ics::Eeprom::Eeprom(const std::array<unsigned char, 64>& src)
+: data {src}
+{}
