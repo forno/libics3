@@ -9,10 +9,11 @@
 
 int main(int argc, char **argv) {
   {
+    std::cout << std::endl << "ICS3 test section" << std::endl;
     ics::ID id(2);
     ics::Angle degree = ics::Angle::newDegree();
     try {
-      ics::ICS3 ics("/dev/ttyUSB0", ics::ICSBaudrate::RATE115200);
+      ics::ICS3 ics("/dev/ttyUSB0");
       assert(7500 == degree.getRaw());
       ics::Angle nowPos = ics.move(id, degree);
       std::cout << nowPos.get() << std::endl;
