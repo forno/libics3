@@ -8,8 +8,8 @@ that suport ICS3.5 or after serial communication.
 ex)[KRS series servo moters produced by KONDO KAGAKU co., ltd.](http://kondo-robot.com/product-category/servomotor/krs)
 
 ## CAPTION
-This software only support serial mode.
-You should lock the serial mode for never turn on PWM mode.
+1. This software only support serial mode. You should lock the serial mode for never turn on PWM mode.
+2. Linux need setup a serial USB adaptor for use it. `script/setup.sh` will mount it to `/dev/ttyUSB0`.
 
 ## API Reference
 Reference [the libics3 wiki](https://github.com/forno/libics3/wiki)
