@@ -16,9 +16,9 @@ namespace ics {
 
     Angle& operator=(const Angle&) noexcept;
 
-    double get() const noexcept;
+    constexpr double get() const noexcept;
     void set(double);
-    uint16_t getRaw() const noexcept;
+    constexpr uint16_t getRaw() const noexcept;
     void setRaw(uint16_t);
   private:
     constexpr explicit Angle(double, double);
@@ -35,6 +35,27 @@ namespace ics {
 
   constexpr Angle Angle::newRadian(double angle) noexcept {
     return Angle {16000.0 / 3.0 / M_PI, angle};
+  }
+
+  inline Angle& Angle::operator=(const Angle& rhs) noexcept {
+    rawData = rhs.rawData;
+    return *this;
+  }
+
+  constexpr double Angle::get() const noexcept {
+    return (rawData - 7500) / rawCalibration;
+  }
+
+  inline void Angle::set(double angle) {
+    setRaw(castToRaw(angle, rawCalibration)); // throw std::invalid_argument
+  }
+
+  constexpr uint16_t Angle::getRaw() const noexcept {
+    return rawData;
+  }
+
+  inline void Angle::setRaw(uint16_t raw) {
+    rawData = checkInvalidAngle(raw); // throw std::invalid_argument
   }
 
   constexpr Angle::Angle(double calibration, double angle)
