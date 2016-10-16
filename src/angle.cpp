@@ -7,7 +7,7 @@ inline uint16_t castToRaw(double angle, double calibration) noexcept {
   return static_cast<uint16_t>(angle * calibration + 7500);
 }
 
-inline void checkInvalid(uint16_t raw) {
+inline void checkInvalidAngle(uint16_t raw) {
   if (raw < ics::Angle::MIN) throw std::invalid_argument {"Too min angle"};
   if (ics::Angle::MAX < raw) throw std::invalid_argument {"Too big angle"};
 }
@@ -41,7 +41,7 @@ uint16_t ics::Angle::getRaw() const noexcept {
 }
 
 void ics::Angle::setRaw(uint16_t raw) {
-  checkInvalid(raw); // throw std::invalid_argument
+  checkInvalidAngle(raw); // throw std::invalid_argument
   rawData = raw;
 }
 
@@ -49,5 +49,5 @@ ics::Angle::Angle(double calibration, double angle)
 : rawCalibration {calibration},
   rawData {castToRaw(angle, calibration)}
 {
-  checkInvalid(rawData); // throw std::invalid_argument
+  checkInvalidAngle(rawData); // throw std::invalid_argument
 }
