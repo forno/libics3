@@ -1,51 +1,88 @@
-cmake_minimum_required(VERSION 2.8.12)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8.12.1)
 project(ics3 CXX)
 
-set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -Wextra -Winit-self -Wno-missing-field-initializers -g -fPIC")
-set(CMAKE_INSTALL_PREFIX /usr/local)
+SET(PROJECT_VER_MAJOR 0)
+SET(PROJECT_VER_MINOR 1)
+SET(PROJECT_VER_PATCH 0)
+SET(PROJECT_VER "${PROJECT_VER_MAJOR}.${PROJECT_VER_MINOR}.${PROJECT_VER_PATCH}")
+SET(PROJECT_APIVER "${PROJECT_VER_MAJOR}.${PROJECT_VER_MINOR}")
 
-################################################################
-set(ICS3_MAJOR_VERSION 0)
-set(ICS3_MINOR_VERSION 1)
-set(ICS3_PATCH_VERSION 0)
+IF(NOT DEFINED CMAKE_BUILD_TYPE)
+  # No effect for multi-configuration generators (e.g. for Visual Studio)
+  SET(CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING "Choose: RelWithDebInfo Release Debug MinSizeRel None")
+ENDIF()
 
-set(ICS3_VERSION
-  ${ICS3_MAJOR_VERSION}.${ICS3_MINOR_VERSION}.${ICS3_PATCH_VERSION}
+SET(MY_DIR ${ics3_SOURCE_DIR})
+
+OPTION(BUILD_SHARED_LIBS "Build shared (ON) or static (OFF) libraries" ON)
+OPTION(ENABLE_CXX11 "Enable C++11 support" ON)
+
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
+
+SET(HAVE_CXX11 disabled)
+IF(ENABLE_CXX11)
+  INCLUDE(CheckCXXCompilerFlag)
+  CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
+  CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
+  IF(COMPILER_SUPPORTS_CXX11)
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+    SET(LIBICS3_WITH_CXX11_SUPPORT 1)
+    SET(HAVE_CXX11 yes)
+  ELSEIF(COMPILER_SUPPORTS_CXX0X)
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+    SET(HAVE_CXX11 c++0x)
+  ELSE()
+    SET(HAVE_CXX11 no)
+    MESSAGE(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
+  ENDIF()
+ENDIF(ENABLE_CXX11)
+
+#set the default path for built executables to the "bin" directory
+SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
+
+#set the default path for built libraries to the "lib" directory
+SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
+SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
+
+# Add includes
+INCLUDE_DIRECTORIES(
+  "${MY_DIR}/include"
+  ${PROJECT_BINARY_DIR} # for generated headers
 )
 
-################################################################
-file(GLOB ICS3_SOURCES
-  ${PROJECT_SOURCE_DIR}/src/*.cpp
-  EXCLUDE ${PROJECT_SOURCE_DIR}/src/test.cpp
+FILE(GLOB ICS3_SOURCES
+  ${MY_DIR}/src/*.cpp
+  EXCLUDE ${MY_DIR}/src/test.cpp
 )
 
-set(ICS3_HEADER_DIR
-  ${PROJECT_SOURCE_DIR}/include
+FILE(GLOB ICS3_HEADERS
+  ${MY_DIR}/include/ics3/*.hpp
+  ${MY_DIR}/include/core.hpp
 )
 
-################################################################
-include_directories(
-  ${ICS3_HEADER_DIR}
+SET(SOURCES
+  ${ICS3_HEADERS}
+  ${ICS3_SOURCES}
 )
 
-link_directories()
-
-add_library(ics3
-  SHARED ${ICS3_SOURCES}
+ADD_LIBRARY(ics3 ${SOURCES})
+SET_TARGET_PROPERTIES(ics3 PROPERTIES
+  CXX_VISIBILITY_PRESET hidden
+  VISIBILITY_INLINES_HIDDEN 1
+  VERSION ${PROJECT_VER}
+  SOVERSION ${PROJECT_APIVER}
 )
 
-target_link_libraries(ics3)
+TARGET_LINK_LIBRARIES(ics3)
+INSTALL(TARGETS ics3 DESTINATION lib RUNTIME DESTINATION bin)
+INSTALL(DIRECTORY "${MY_DIR}/include/${PROJECT_NAME}" DESTINATION include)
+INSTALL(DIRECTORY "${PROJECT_BINARY_DIR}/${PROJECT_NAME}" DESTINATION include)
 
-################################################################
-set_target_properties(ics3 PROPERTIES
-  VERSION    ${ICS3_VERSION}
-  SOVERSION  ${ICS3_MAJOR_VERSION}
-)
-
-install(TARGETS ics3
-  LIBRARY DESTINATION lib
-)
-
-install(DIRECTORY ${ICS3_HEADER_DIR}/ics3
-  DESTINATION include
-)
+GET_CMAKE_PROPERTY(vars VARIABLES)
+MESSAGE(STATUS "Feature list:")
+FOREACH(var ${vars})
+  IF(var MATCHES ^HAVE_)
+    STRING(REPLACE HAVE_ "" feature ${var})
+    MESSAGE(STATUS "  ${feature}    ${${var}}")
+  ENDIF()
+ENDFOREACH()
