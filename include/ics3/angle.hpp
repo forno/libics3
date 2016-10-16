@@ -4,6 +4,7 @@
 #include<stdexcept>
 #define _USE_MATH_DEFINES
 #include<cmath>
+#undef _USE_MATH_DEFINES
 
 namespace ics {
   class Angle {
