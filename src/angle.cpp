@@ -10,7 +10,7 @@ inline uint16_t castToRaw(double angle, double calibration) noexcept {
 }
 
 inline void checkInvalidAngle(uint16_t raw) {
-  if (raw < ics::Angle::MIN) throw std::invalid_argument {"Too min angle"};
+  if (raw < ics::Angle::MIN) throw std::invalid_argument {"Too small angle"};
   if (ics::Angle::MAX < raw) throw std::invalid_argument {"Too big angle"};
 }
 
