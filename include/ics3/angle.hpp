@@ -18,7 +18,7 @@ namespace ics {
     uint16_t getRaw() const noexcept;
     void setRaw(uint16_t);
   private:
-    explicit Angle(double, double) noexcept;
+    explicit Angle(double, double);
 
     const double rawCalibration;
     uint16_t rawData;
