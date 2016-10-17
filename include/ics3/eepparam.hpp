@@ -2,6 +2,7 @@
 #define LIBICS3_ICS3_EEPPARAM_H_
 
 #include<array>
+#include<stdexcept>
 
 namespace ics {
   class EepParam {
@@ -48,93 +49,93 @@ namespace ics {
         size_t,
         uint16_t,
         uint16_t,
-        void (EepParam::*)(uint16_t),
+        uint16_t (*)(uint16_t, uint16_t, uint16_t),
         uint16_t
     ) noexcept;
-    void setNormal(uint16_t);
-    void setEven(uint16_t);
-    void setFlag(uint16_t);
-    void setBaudrate(uint16_t);
-    void setOffset(uint16_t);
+    static constexpr uint16_t checkInvalidRange(uint16_t, uint16_t, uint16_t);
+    static constexpr uint16_t checkInvalidEvenRange(uint16_t, uint16_t, uint16_t);
+    static constexpr uint16_t checkInvalidFlag(uint16_t, uint16_t, uint16_t);
+    static constexpr uint16_t checkInvalidBaudrate(uint16_t, uint16_t, uint16_t);
+    static constexpr uint16_t checkInvalidOffset(uint16_t, uint16_t, uint16_t);
 
     const size_t offset;
     const size_t length;
     const uint16_t min;
     const uint16_t max;
-    void (EepParam::*const setFunc)(uint16_t);
+    uint16_t (*const setFunc)(uint16_t, uint16_t, uint16_t);
     uint16_t data;
   };
 
   constexpr EepParam EepParam::strech(uint16_t data) noexcept {
-    return EepParam {2, 2, 2, 254, &EepParam::setEven, data};
+    return EepParam {2, 2, 2, 254, &EepParam::checkInvalidEvenRange, data};
   }
 
   constexpr EepParam EepParam::speed(uint16_t data) noexcept {
-    return EepParam {4, 2, 1, 127, &EepParam::setNormal, data};
+    return EepParam {4, 2, 1, 127, &EepParam::checkInvalidRange, data};
   }
 
   constexpr EepParam EepParam::punch(uint16_t data) noexcept {
-    return EepParam {6, 2, 0, 10, &EepParam::setNormal, data};
+    return EepParam {6, 2, 0, 10, &EepParam::checkInvalidRange, data};
   }
 
   constexpr EepParam EepParam::deadBand(uint16_t data) noexcept {
-    return EepParam {8, 2, 0, 5, &EepParam::setNormal, data};
+    return EepParam {8, 2, 0, 5, &EepParam::checkInvalidRange, data};
   }
 
   constexpr EepParam EepParam::dumping(uint16_t data) noexcept {
-    return EepParam {10, 2, 1, 255, &EepParam::setNormal, data};
+    return EepParam {10, 2, 1, 255, &EepParam::checkInvalidRange, data};
   }
 
   constexpr EepParam EepParam::selfTimer(uint16_t data) noexcept {
-    return EepParam {12, 2, 10, 255, &EepParam::setNormal, data};
+    return EepParam {12, 2, 10, 255, &EepParam::checkInvalidRange, data};
   }
 
   constexpr EepParam EepParam::flag(uint16_t data) noexcept {
-    return EepParam {14, 2, 0, 255, &EepParam::setFlag, data};
+    return EepParam {14, 2, 0, 255, &EepParam::checkInvalidFlag, data};
   }
 
   constexpr EepParam EepParam::pulseMax(uint16_t data) noexcept {
-    return EepParam {16, 4, 3500, 11500, &EepParam::setNormal, data};
+    return EepParam {16, 4, 3500, 11500, &EepParam::checkInvalidRange, data};
   }
 
   constexpr EepParam EepParam::pulseMin(uint16_t data) noexcept {
-    return EepParam {20, 4, 3500, 11500, &EepParam::setNormal, data};
+    return EepParam {20, 4, 3500, 11500, &EepParam::checkInvalidRange, data};
   }
 
   constexpr EepParam EepParam::baudrate(uint16_t data) noexcept {
-    return EepParam {26, 2, 0, 10, &EepParam::setBaudrate, data};
+    return EepParam {26, 2, 0, 10, &EepParam::checkInvalidBaudrate, data};
   }
 
   constexpr EepParam EepParam::temperature(uint16_t data) noexcept {
-    return EepParam {28, 2, 1, 127, &EepParam::setNormal, data};
+    return EepParam {28, 2, 1, 127, &EepParam::checkInvalidRange, data};
   }
 
   constexpr EepParam EepParam::current(uint16_t data) noexcept {
-    return EepParam {30, 2, 1, 63, &EepParam::setNormal, data};
+    return EepParam {30, 2, 1, 63, &EepParam::checkInvalidRange, data};
   }
 
   constexpr EepParam EepParam::response(uint16_t data) noexcept {
-    return EepParam {50, 2, 1, 5, &EepParam::setNormal, data};
+    return EepParam {50, 2, 1, 5, &EepParam::checkInvalidRange, data};
   }
 
   constexpr EepParam EepParam::userOffset(uint16_t data) noexcept {
-    return EepParam {52, 2, static_cast<uint16_t>(-127), 127, &EepParam::setOffset, data};
+    return EepParam {52, 2, static_cast<uint16_t>(-127), 127, &EepParam::checkInvalidOffset, data};
   }
 
   constexpr EepParam EepParam::id(uint16_t data) noexcept {
-    return EepParam {56, 2, 0, 31, &EepParam::setNormal, data};
+    return EepParam {56, 2, 0, 31, &EepParam::checkInvalidRange, data};
   }
 
   constexpr EepParam EepParam::strech1(uint16_t data) noexcept {
-    return EepParam {58, 2, 2, 254, &EepParam::setEven, data};
+    return EepParam {58, 2, 2, 254, &EepParam::checkInvalidEvenRange, data};
   }
 
   constexpr EepParam EepParam::strech2(uint16_t data) noexcept {
-    return EepParam {60, 2, 2, 254, &EepParam::setEven, data};
+    return EepParam {60, 2, 2, 254, &EepParam::checkInvalidEvenRange, data};
   }
 
   constexpr EepParam EepParam::strech3(uint16_t data) noexcept {
-    return EepParam {62, 2, 2, 254, &EepParam::setEven, data};
+    return EepParam {62, 2, 2, 254, &EepParam::checkInvalidEvenRange, data};
   }
 
   constexpr uint16_t EepParam::get() const noexcept {
@@ -142,7 +143,7 @@ namespace ics {
   }
 
   inline void EepParam::set(uint16_t input) {
-    (this->*setFunc)(input); // throw std::invalid_argument
+    data = (*setFunc)(input, min, max); // throw std::invalid_argument
   }
 
   constexpr EepParam::EepParam(
@@ -150,7 +151,7 @@ namespace ics {
       size_t length,
       uint16_t min,
       uint16_t max,
-      void (EepParam::*setFunc)(uint16_t),
+      uint16_t (*setFunc)(uint16_t, uint16_t, uint16_t),
       uint16_t data
   ) noexcept
   : offset(offset),
@@ -158,8 +159,39 @@ namespace ics {
     min(min),
     max(max),
     setFunc(setFunc),
-    data(data)
+    data(setFunc(data, min, max)) // throw std::invalid_argument
   {}
+
+  constexpr uint16_t EepParam::checkInvalidRange(uint16_t input, uint16_t min, uint16_t max) {
+    return input < min ? throw std::invalid_argument {"Too small argument"} :
+           max < input ? throw std::invalid_argument {"Too small argument"} :
+           input;
+  }
+
+  constexpr uint16_t EepParam::checkInvalidEvenRange(uint16_t input, uint16_t min, uint16_t max) {
+    return input % 2 ?
+           throw std::invalid_argument {"Must even value"} :
+           checkInvalidRange(input, min, max); // throw std::invalid_argument
+  }
+
+  constexpr uint16_t EepParam::checkInvalidFlag(uint16_t input, uint16_t, uint16_t) {
+    return input & 0x60 ? throw std::invalid_argument {"Eepparam(flag): Must down bits 0x60"} :
+           !(input & 0x04) ? throw std::invalid_argument {"Eepparam(flag): Must up bits 0x04"} :
+           input;
+  }
+
+  constexpr uint16_t EepParam::checkInvalidBaudrate(uint16_t input, uint16_t, uint16_t) {
+    return input == RATE115200 ? input :
+           input == RATE625000 ? input :
+           input == RATE1250000 ? input :
+           throw std::invalid_argument {"baudrate not exist"};
+  }
+
+  constexpr uint16_t EepParam::checkInvalidOffset(uint16_t input, uint16_t min, uint16_t max) {
+    return input < max ? input : // this min < 0; min of uint16_t is 0
+           min < input ? input : // this min < 0; input must bigger than min.
+           throw std::invalid_argument {"Eeprom(offset): range over"}; // min < input < max is failed
+  }
 }
 
 #endif // LIBICS3_ICS3_EEPPARAM_H_
