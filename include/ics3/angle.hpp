@@ -59,7 +59,7 @@ namespace ics {
   }
 
   constexpr Angle::Angle(double calibration, double angle)
-  : rawData {checkInvalidAngle(castToRaw(angle, calibration))},
+  : rawData {checkInvalidAngle(castToRaw(angle, calibration))}, // throw std::invalid_argument
     rawCalibration {calibration}
   {}
 
