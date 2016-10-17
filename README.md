@@ -32,7 +32,7 @@ make install
 You need to specify `cmake -Dlibics3_DIR=$HOME/libics3/lib/cmake/libics3`
 for CMake based third-party application to find libics3.
 
-Or, you can change CMAKE_INSTALL_PREFIX parameter on this installation.
+Or, you can change `CMAKE_INSTALL_PREFIX` parameter on this installation.
 ex) `cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local`
 
 ## LICENSE
