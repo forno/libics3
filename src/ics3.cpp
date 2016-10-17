@@ -11,6 +11,7 @@
 
 /**
  * CAPTION: this func have a side effect to unit; change data of it.
+ * For running speed.
  */
 ics::Angle& getReceiveAngle(std::vector<unsigned char> rx, ics::Angle& unit) {
   assert(rx.size() == 6);
