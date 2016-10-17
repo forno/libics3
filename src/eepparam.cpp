@@ -127,8 +127,8 @@ void ics::EepParam::setEven(uint16_t input) {
 }
 
 void ics::EepParam::setFlag(uint16_t input) {
-  input &= 010011111;
-  input |= 000001000;
+  input &= 0x9f;
+  input |= 0x08;
   data = input;
 }
 
