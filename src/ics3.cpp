@@ -9,11 +9,7 @@
 #include<array>
 #include<cassert>
 
-/**
- * CAPTION: this func have a side effect to unit; change data of it.
- * For running speed.
- */
-ics::Angle& getReceiveAngle(std::vector<unsigned char> rx, ics::Angle& unit) {
+ics::Angle getReceiveAngle(std::vector<unsigned char> rx, ics::Angle unit) {
   assert(rx.size() == 6);
   uint16_t receive {static_cast<uint16_t>((rx[4] << 7) | rx[5])};
   try {
