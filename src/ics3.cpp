@@ -9,9 +9,8 @@
 #include<array>
 #include<cassert>
 
-ics::Angle getReceiveAngle(std::vector<unsigned char> rx, ics::Angle unit) {
-  assert(rx.size() == 6);
-  uint16_t receive {static_cast<uint16_t>((rx[4] << 7) | rx[5])};
+ics::Angle getReceiveAngle(std::vector<unsigned char>::iterator&& it, ics::Angle unit) {
+  uint16_t receive {static_cast<uint16_t>((*it << 7) | *(++it))};
   try {
     unit.setRaw(receive);
   } catch (...) {
@@ -30,7 +29,7 @@ ics::Angle ics::ICS3::free(const ID& id, const Angle& unit) const {
   tx[1] = 0;
   tx[2] = 0;
   core.communicate(tx, rx); // throw std::runtime_error
-  return getReceiveAngle(rx, unit);
+  return getReceiveAngle(rx.begin() + 4, unit);
 }
 
 ics::Angle ics::ICS3::move(const ID& id, const Angle& angle) const {
@@ -40,7 +39,7 @@ ics::Angle ics::ICS3::move(const ID& id, const Angle& angle) const {
   tx[1] = 0x7F & (send >> 7);
   tx[2] = 0x7F & send;
   core.communicate(tx, rx); // throw std::runtime_error
-  return getReceiveAngle(rx, angle);
+  return getReceiveAngle(rx.begin() + 4, angle);
 }
 
 ics::Parameter ics::ICS3::get(const ID& id, Parameter param) const {
