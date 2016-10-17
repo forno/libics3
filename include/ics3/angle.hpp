@@ -9,8 +9,10 @@
 namespace ics {
   class Angle {
   public:
-    static constexpr Angle newDegree(double = 0.0) noexcept;
-    static constexpr Angle newRadian(double = 0.0) noexcept;
+    static constexpr Angle newDegree(double = 0.0);
+    static constexpr Angle newRadian(double = 0.0);
+    static constexpr Angle newSameUnit(const Angle&, double = 0.0);
+    static constexpr Angle newCalibration(double, double = 0.0);
     static constexpr uint16_t MIN {3500};
     static constexpr uint16_t MAX {11500};
 
@@ -29,12 +31,20 @@ namespace ics {
     const double rawCalibration;
   };
 
-  constexpr Angle Angle::newDegree(double angle) noexcept {
+  constexpr Angle Angle::newDegree(double angle) {
     return Angle {800.0 / 27.0, angle};
   }
 
-  constexpr Angle Angle::newRadian(double angle) noexcept {
+  constexpr Angle Angle::newRadian(double angle) {
     return Angle {16000.0 / 3.0 / M_PI, angle};
+  }
+
+  constexpr Angle Angle::newSameUnit(const Angle& unit, double angle) {
+    return Angle {unit.rawCalibration, angle};
+  }
+
+  constexpr Angle Angle::newCalibration(double calibration, double angle) {
+    return Angle {calibration, angle};
   }
 
   inline Angle& Angle::operator=(const Angle& rhs) noexcept {
