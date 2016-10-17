@@ -1,6 +1,8 @@
 #ifndef LIBICS3_ICS3_PARAMETER_H_
 #define LIBICS3_ICS3_PARAMETER_H_
 
+#include<stdexcept>
+
 namespace ics {
   class Parameter {
   public:
@@ -39,6 +41,12 @@ namespace ics {
 
   constexpr unsigned char Parameter::get() const noexcept {
     return data;
+  }
+
+  inline void Parameter::set(unsigned char input) {
+    data = input < min ? throw std::invalid_argument {"Too small value"} :
+           max < input ? throw std::invalid_argument {"Too big value"} :
+           input;
   }
 
   constexpr unsigned char Parameter::getSc() const noexcept {
