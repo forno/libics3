@@ -5,8 +5,9 @@
 #include<vector>
 #include<algorithm>
 
+#include"ics3/eepparam.hpp"
+
 namespace ics {
-  class EepParam;
   class ICS3;
 
   class Eeprom {
@@ -19,6 +20,10 @@ namespace ics {
     explicit Eeprom(const std::array<unsigned char, 64>&);
     std::array<unsigned char, 64> data;
   };
+
+  inline void Eeprom::set(const EepParam& param) noexcept {
+    param.write(data);
+  }
 
   template<typename Iter> inline void Eeprom::write(Iter&& dest) const noexcept {
     std::copy(data.begin(), data.end(), dest);
