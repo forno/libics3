@@ -38,7 +38,7 @@ namespace ics {
     static constexpr EepParam strech2() noexcept;
     static constexpr EepParam strech3() noexcept;
 
-    uint16_t get() const noexcept;
+    constexpr uint16_t get() const noexcept;
     void set(uint16_t);
     void write(std::array<unsigned char, 64>&) const noexcept;
     void read(const std::array<unsigned char, 64>&);
@@ -135,6 +135,14 @@ namespace ics {
 
   constexpr EepParam EepParam::strech3() noexcept {
     return EepParam {62, 2, 2, 254, &EepParam::setEven, 60};
+  }
+
+  constexpr uint16_t EepParam::get() const noexcept {
+    return data;
+  }
+
+  inline void EepParam::set(uint16_t input) {
+    (this->*setFunc)(input); // throw std::invalid_argument
   }
 
   constexpr EepParam::EepParam(

@@ -2,14 +2,6 @@
 
 #include<stdexcept>
 
-uint16_t ics::EepParam::get() const noexcept {
-  return data;
-}
-
-void ics::EepParam::set(uint16_t input) {
-  (this->*setFunc)(input); // throw std::invalid_argument
-}
-
 void ics::EepParam::write(std::array<unsigned char, 64>& dest) const noexcept {
   uint16_t mask {0xF};
   for (size_t i {offset + length - 1}; i >= offset; i--) {
