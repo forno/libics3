@@ -52,8 +52,9 @@ INCLUDE_DIRECTORIES(
 
 FILE(GLOB ICS3_SOURCES
   ${MY_DIR}/src/*.cpp
-  EXCLUDE ${MY_DIR}/src/test.cpp
 )
+
+LIST(REMOVE_ITEM ICS3_SOURCES ${MY_DIR}/src/test.cpp)
 
 FILE(GLOB ICS3_HEADERS
   ${MY_DIR}/include/ics3/*.hpp
