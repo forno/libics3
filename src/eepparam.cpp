@@ -100,21 +100,6 @@ void ics::EepParam::read(const std::array<unsigned char, 64>& src) {
   set(result); // throw std::invalid_argument
 }
 
-ics::EepParam::EepParam(size_t offset,
-                        size_t length,
-                        uint16_t min,
-                        uint16_t max,
-                        void (EepParam::*setFunc)(uint16_t),
-                        uint16_t default_data
-                       ) noexcept
-: offset(offset),
-  length(length),
-  min(min),
-  max(max),
-  setFunc(setFunc),
-  data(default_data)
-{}
-
 void ics::EepParam::setNormal(uint16_t input) {
   if (input < min) throw std::invalid_argument {"Too small value"};
   if (max < input) throw std::invalid_argument {"Too big value"};

@@ -43,7 +43,7 @@ namespace ics {
     void write(std::array<unsigned char, 64>&) const noexcept;
     void read(const std::array<unsigned char, 64>&);
   private:
-    explicit EepParam(
+    constexpr explicit EepParam(
         size_t,
         size_t,
         uint16_t,
@@ -64,6 +64,22 @@ namespace ics {
     void (EepParam::*const setFunc)(uint16_t);
     uint16_t data;
   };
+
+  constexpr EepParam::EepParam(
+      size_t offset,
+      size_t length,
+      uint16_t min,
+      uint16_t max,
+      void (EepParam::*setFunc)(uint16_t),
+      uint16_t default_data
+  ) noexcept
+  : offset(offset),
+    length(length),
+    min(min),
+    max(max),
+    setFunc(setFunc),
+    data(default_data)
+  {}
 }
 
 #endif // LIBICS3_ICS3_EEPPARAM_H_
