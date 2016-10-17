@@ -52,11 +52,11 @@ namespace ics {
         uint16_t (*)(uint16_t, uint16_t, uint16_t),
         uint16_t
     ) noexcept;
-    static constexpr uint16_t checkInvalidRange(uint16_t, uint16_t, uint16_t);
-    static constexpr uint16_t checkInvalidEvenRange(uint16_t, uint16_t, uint16_t);
-    static constexpr uint16_t checkInvalidFlag(uint16_t, uint16_t, uint16_t);
-    static constexpr uint16_t checkInvalidBaudrate(uint16_t, uint16_t, uint16_t);
-    static constexpr uint16_t checkInvalidOffset(uint16_t, uint16_t, uint16_t);
+    static uint16_t checkInvalidRange(uint16_t, uint16_t, uint16_t);
+    static uint16_t checkInvalidEvenRange(uint16_t, uint16_t, uint16_t);
+    static uint16_t checkInvalidFlag(uint16_t, uint16_t, uint16_t);
+    static uint16_t checkInvalidBaudrate(uint16_t, uint16_t, uint16_t);
+    static uint16_t checkInvalidOffset(uint16_t, uint16_t, uint16_t);
 
     const size_t offset;
     const size_t length;
@@ -161,37 +161,6 @@ namespace ics {
     setFunc(setFunc),
     data(setFunc(data, min, max)) // throw std::invalid_argument
   {}
-
-  constexpr uint16_t EepParam::checkInvalidRange(uint16_t input, uint16_t min, uint16_t max) {
-    return input < min ? throw std::invalid_argument {"Too small argument"} :
-           max < input ? throw std::invalid_argument {"Too small argument"} :
-           input;
-  }
-
-  constexpr uint16_t EepParam::checkInvalidEvenRange(uint16_t input, uint16_t min, uint16_t max) {
-    return input % 2 ?
-           throw std::invalid_argument {"Must even value"} :
-           checkInvalidRange(input, min, max); // throw std::invalid_argument
-  }
-
-  constexpr uint16_t EepParam::checkInvalidFlag(uint16_t input, uint16_t, uint16_t) {
-    return input & 0x60 ? throw std::invalid_argument {"Eepparam(flag): Must down bits 0x60"} :
-           !(input & 0x04) ? throw std::invalid_argument {"Eepparam(flag): Must up bits 0x04"} :
-           input;
-  }
-
-  constexpr uint16_t EepParam::checkInvalidBaudrate(uint16_t input, uint16_t, uint16_t) {
-    return input == RATE115200 ? input :
-           input == RATE625000 ? input :
-           input == RATE1250000 ? input :
-           throw std::invalid_argument {"baudrate not exist"};
-  }
-
-  constexpr uint16_t EepParam::checkInvalidOffset(uint16_t input, uint16_t min, uint16_t max) {
-    return input < max ? input : // this min < 0; min of uint16_t is 0
-           min < input ? input : // this min < 0; input must bigger than min.
-           throw std::invalid_argument {"Eeprom(offset): range over"}; // min < input < max is failed
-  }
 }
 
 #endif // LIBICS3_ICS3_EEPPARAM_H_
