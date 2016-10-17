@@ -38,7 +38,7 @@ ics::Core::Core(const char* path, speed_t baudrate)
       throw std::invalid_argument {"Not tty device"};
     if (tcgetattr(fd, &oldTio) < 0)
       throw std::runtime_error {"Cannot setup tty"};
-    struct termios newTio {getTermios()};
+    termios newTio {getTermios()};
     if (cfsetispeed(&newTio, baudrate) < 0)
       throw std::runtime_error {"Cannot set baudrate"};
     if (cfsetospeed(&newTio, baudrate) < 0)
@@ -51,8 +51,8 @@ ics::Core::Core(const char* path, speed_t baudrate)
   }
 }
 
-struct termios ics::Core::getTermios() noexcept {
-  struct termios newTio;
+termios ics::Core::getTermios() noexcept {
+  termios newTio;
   std::memset(&newTio, 0, sizeof(newTio));
   newTio.c_iflag = 0;
   newTio.c_oflag = 0;

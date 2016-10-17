@@ -13,7 +13,7 @@ namespace ics {
   class Eeprom;
   class ID;
 
-  enum struct ICSBaudrate : speed_t {
+  enum class ICSBaudrate : speed_t {
     RATE115200 = B115200,
     //RATE625000 = B625000,
     //RATE1250000 = B1250000

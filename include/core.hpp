@@ -12,7 +12,7 @@ namespace ics {
     void communicate(std::vector<unsigned char>&, std::vector<unsigned char>&) const;
   private:
     explicit Core(const char*, speed_t);
-    static struct termios getTermios() noexcept;
+    static termios getTermios() noexcept;
 
     int fd;
     termios oldTio;
