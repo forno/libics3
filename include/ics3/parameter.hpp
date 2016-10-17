@@ -9,9 +9,9 @@ namespace ics {
     static constexpr Parameter current() noexcept;
     static constexpr Parameter temperature() noexcept;
 
-    unsigned char get() const noexcept;
+    constexpr unsigned char get() const noexcept;
     void set(unsigned char);
-    unsigned char getSc() const noexcept;
+    constexpr unsigned char getSc() const noexcept;
   private:
     constexpr explicit Parameter(unsigned char, unsigned char, unsigned char, unsigned char) noexcept;
 
@@ -35,6 +35,14 @@ namespace ics {
 
   constexpr Parameter Parameter::temperature() noexcept {
     return Parameter {0x04, 1, 127, 80};
+  }
+
+  constexpr unsigned char Parameter::get() const noexcept {
+    return data;
+  }
+
+  constexpr unsigned char Parameter::getSc() const noexcept {
+    return sc;
   }
 
   constexpr Parameter::Parameter(unsigned char sc, unsigned char min, unsigned char max, unsigned char default_data) noexcept
