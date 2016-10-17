@@ -19,7 +19,7 @@ void ics::Core::communicate(std::vector<unsigned char>& tx, std::vector<unsigned
   write(fd, tx.data(), tx.size()); // send
   for (auto& receive : rx) read(fd, &receive, 1); // receive
 // check section
-  auto receive = {rx.begin()};
+  auto receive = rx.begin();
   for (const auto& send : tx) {
     if (send != *receive) throw std::runtime_error {"Loopback falied"};
     receive++;
