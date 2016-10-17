@@ -22,8 +22,8 @@ namespace ics {
   class ICS3 {
   public:
     explicit ICS3(const char*, ICSBaudrate = ICSBaudrate::RATE115200);
-    Angle free(const ID&, Angle = Angle::newRadian()) const;
-    Angle move(const ID&, Angle) const;
+    Angle free(const ID&, const Angle& = Angle::newRadian()) const;
+    Angle move(const ID&, const Angle&) const;
     Parameter get(const ID&, Parameter) const;
     void set(const ID&, const Parameter&) const;
     Eeprom getRom(const ID&) const;

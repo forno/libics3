@@ -24,7 +24,7 @@ ics::ICS3::ICS3(const char* path, ICSBaudrate baudrate)
   : core {Core::getReference(path, static_cast<speed_t>(baudrate))}
 {}
 
-ics::Angle ics::ICS3::free(const ID& id, Angle unit) const {
+ics::Angle ics::ICS3::free(const ID& id, const Angle& unit) const {
   static std::vector<unsigned char> tx(3), rx(6);
   tx[0] = 0x80 | id.get();
   tx[1] = 0;
@@ -33,7 +33,7 @@ ics::Angle ics::ICS3::free(const ID& id, Angle unit) const {
   return getReceiveAngle(rx, unit);
 }
 
-ics::Angle ics::ICS3::move(const ID& id, Angle angle) const {
+ics::Angle ics::ICS3::move(const ID& id, const Angle& angle) const {
   static std::vector<unsigned char> tx(3), rx(6);
   uint16_t send {angle.getRaw()};
   tx[0] = 0x80 | id.get();
