@@ -10,7 +10,7 @@ int main(int argc, char **argv) {
     std::cout << std::endl << "ID test section" << std::endl;
     ics::ID id {0};
     assert(id == 0);
-    assert(id == 0);
+    assert(id.get() == 0);
     ics::ID id31 {31};
     assert(id31 == 31);
     assert(id31.get() == 31);
