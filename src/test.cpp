@@ -9,33 +9,6 @@
 
 int main(int argc, char **argv) {
   {
-    std::cout << std::endl << "ICS3 test section" << std::endl;
-    ics::ID id(2);
-    ics::Angle degree = ics::Angle::newDegree();
-    try {
-      ics::ICS3 ics("/dev/ttyUSB0");
-      assert(7500 == degree.getRaw());
-      ics::Angle nowPos = ics.move(id, degree);
-      std::cout << nowPos.get() << std::endl;
-      std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-      degree.set(50);
-      nowPos = ics.move(id, degree);
-      std::cout << nowPos.get() << std::endl;
-      std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-      degree.set(-50);
-      nowPos = ics.move(id, degree);
-      std::cout << nowPos.get() << std::endl;
-      std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-      degree.set(0);
-      nowPos = ics.move(id, degree);
-      std::cout << nowPos.get() << std::endl;
-      nowPos = ics.free(id);
-      std::cout << nowPos.get() << std::endl;
-    } catch (std::runtime_error& e) {
-      std::cout << e.what() << std::endl;
-    }
-  }
-  {
     std::cout << std::endl << "ID test section" << std::endl;
     ics::ID id {0};
     assert(id == 0);
@@ -106,6 +79,33 @@ int main(int argc, char **argv) {
       current.set(70);
       std::cerr << "Never run this" << std::endl;
     } catch (const std::invalid_argument& e) {
+      std::cout << e.what() << std::endl;
+    }
+  }
+  {
+    std::cout << std::endl << "ICS3 test section" << std::endl;
+    ics::ID id(2);
+    ics::Angle degree = ics::Angle::newDegree();
+    try {
+      ics::ICS3 ics("/dev/ttyUSB0");
+      assert(7500 == degree.getRaw());
+      ics::Angle nowPos = ics.move(id, degree);
+      std::cout << nowPos.get() << std::endl;
+      std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+      degree.set(50);
+      nowPos = ics.move(id, degree);
+      std::cout << nowPos.get() << std::endl;
+      std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+      degree.set(-50);
+      nowPos = ics.move(id, degree);
+      std::cout << nowPos.get() << std::endl;
+      std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+      degree.set(0);
+      nowPos = ics.move(id, degree);
+      std::cout << nowPos.get() << std::endl;
+      nowPos = ics.free(id);
+      std::cout << nowPos.get() << std::endl;
+    } catch (std::runtime_error& e) {
       std::cout << e.what() << std::endl;
     }
   }
