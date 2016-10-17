@@ -151,14 +151,14 @@ namespace ics {
       uint16_t min,
       uint16_t max,
       void (EepParam::*setFunc)(uint16_t),
-      uint16_t default_data
+      uint16_t data
   ) noexcept
   : offset(offset),
     length(length),
     min(min),
     max(max),
     setFunc(setFunc),
-    data(default_data)
+    data(data)
   {}
 }
 
