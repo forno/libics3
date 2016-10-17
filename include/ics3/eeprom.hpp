@@ -14,13 +14,13 @@ namespace ics {
     friend ICS3;
     EepParam get(EepParam) const;
     void set(const EepParam&) noexcept;
-    template<typename Iterator> void write(Iterator) const noexcept;
+    template<typename Iterator> void write(Iterator&) const noexcept;
   private:
     explicit Eeprom(const std::array<unsigned char, 64>&);
     std::array<unsigned char, 64> data;
   };
 
-  template<typename Iterator> inline void Eeprom::write(Iterator dest) const noexcept {
+  template<typename Iterator> inline void Eeprom::write(Iterator& dest) const noexcept {
     std::copy(data.begin(), data.end(), dest);
   }
 }
