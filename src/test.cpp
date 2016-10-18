@@ -9,11 +9,11 @@ int main(int argc, char **argv) {
   {
     std::cout << std::endl << "ID test section" << std::endl;
     constexpr ics::ID id {0};
-    assert(id == 0);
-    assert(id.get() == 0);
+    static_assert(id == 0, "id 0 error");
+    static_assert(id.get() == 0, "id 0 error by get");
     constexpr ics::ID id31 {31};
-    assert(id31 == 31);
-    assert(id31.get() == 31);
+    static_assert(id31 == 31, "id 31 error");
+    static_assert(id31.get() == 31, "id 31 error by get");
     try {
       ics::ID id32 {32};
       assert(false);
