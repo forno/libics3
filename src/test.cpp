@@ -23,6 +23,17 @@ int main(int argc, char **argv) {
   }
   {
     std::cout << std::endl << "EepParam test section" << std::endl;
+    constexpr auto current = ics::EepParam::current();
+    static_assert(63 == current.get(), "current error");
+    constexpr auto strech = ics::EepParam::strech(244);
+    static_assert(244 == strech.get(), "strech error");
+    try {
+      ics::EepParam::flag(5);
+      assert(false);
+    } catch (std::invalid_argument& e) {
+      std::cout << e.what() << std::endl;
+    }
+
     auto speed = ics::EepParam::speed();
     assert(127 == speed.get());
     speed.set(100);
