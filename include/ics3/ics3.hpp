@@ -5,6 +5,7 @@
 #include<termios.h>
 
 #include"ics3/angle.hpp"
+#include"ics3/baudrate.hpp"
 
 namespace ics {
   // Forward declaration
@@ -13,15 +14,9 @@ namespace ics {
   class Eeprom;
   class ID;
 
-  enum class ICSBaudrate : speed_t {
-    RATE115200 = B115200,
-    //RATE625000 = B625000,
-    //RATE1250000 = B1250000
-  };
-
   class ICS3 {
   public:
-    explicit ICS3(const char*, ICSBaudrate = ICSBaudrate::RATE115200);
+    explicit ICS3(const char*, const Baudrate& = Baudrate::RATE115200());
     Angle free(const ID&, const Angle& = Angle::newRadian()) const;
     Angle move(const ID&, const Angle&) const;
     Parameter get(const ID&, Parameter) const;
