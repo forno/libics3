@@ -63,9 +63,12 @@ int main(int argc, char **argv) {
   }
   {
     std::cout << std::endl << "angle factory test section" << std::endl;
-    auto degree = ics::Angle::newDegree(90);
-    auto radian = ics::Angle::newRadian(M_PI / 2);
-    assert(degree.getRaw() == radian.getRaw());
+    constexpr auto degree1 = ics::Angle::newDegree(90);
+    constexpr auto radian1 = ics::Angle::newRadian(M_PI / 2);
+    assert(degree1.getRaw() == radian1.getRaw());
+    constexpr auto degree2 = ics::Angle::newDegree(30);
+    constexpr auto radian2 = ics::Angle::newRadian(M_PI / 6);
+    assert(degree2.getRaw() == radian2.getRaw());
   }
   {
     std::cout << std::endl << "parameter test section" << std::endl;
