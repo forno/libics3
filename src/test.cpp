@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
     static_assert(id31 == 31, "id 31 error");
     static_assert(id31.get() == 31, "id 31 error by get");
     try {
-      ics::ID id32 {32};
+      ics::ID id32 {32}; // if constexpr, compile error.
       assert(false);
     } catch (std::invalid_argument& e) {
       std::cout << e.what() << std::endl;
@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
     constexpr auto strech = ics::EepParam::strech(244);
     static_assert(244 == strech.get(), "strech error");
     try {
-      ics::EepParam::flag(5);
+      ics::EepParam::flag(10);
       assert(false);
     } catch (std::invalid_argument& e) {
       std::cout << e.what() << std::endl;
@@ -40,7 +40,7 @@ int main(int argc, char **argv) {
     assert(100 == speed.get());
     try {
       speed.set(200);
-      std::cerr << "Never run this" << std::endl;
+      assert(false);
     } catch (std::invalid_argument& e) {
       std::cout << e.what() << std::endl;
     }
@@ -49,10 +49,16 @@ int main(int argc, char **argv) {
     std::cout << std::endl << "angle test section" << std::endl;
     constexpr auto degree1 = ics::Angle::newDegree(90);
     constexpr auto radian1 = ics::Angle::newRadian(M_PI / 2);
-    assert(degree1.getRaw() == radian1.getRaw());
+    static_assert(degree1.getRaw() == radian1.getRaw(), "angles 1 error");
     constexpr auto degree2 = ics::Angle::newDegree(30);
     constexpr auto radian2 = ics::Angle::newRadian(M_PI / 6);
-    assert(degree2.getRaw() == radian2.getRaw());
+    static_assert(degree2.getRaw() == radian2.getRaw(), "angles 2 error");
+    try {
+      ics::Angle::newDegree(131);
+      assert(false);
+    } catch (std::invalid_argument& e) {
+      std::cout << e.what() << std::endl;
+    }
 
     auto degree = ics::Angle::newDegree();
     auto radian = ics::Angle::newRadian();
@@ -63,18 +69,18 @@ int main(int argc, char **argv) {
     degree.set(90);
     radian.set(M_PI / 2);
     assert(degree.getRaw() == radian.getRaw());
-    degree.set(60);
-    radian.set(M_PI / 3);
+    degree.set(-60);
+    radian.set(-M_PI / 3);
     assert(degree.getRaw() == radian.getRaw());
     try {
       degree.set(150);
-      std::cerr << "Never run this" << std::endl;
+      assert(false);
     } catch (const std::invalid_argument& e) {
       std::cout << e.what() << std::endl;
     }
     try {
       radian.set(M_PI);
-      std::cerr << "Never run this" << std::endl;
+      assert(false);
     } catch (const std::invalid_argument& e) {
       std::cout << e.what() << std::endl;
     }
@@ -87,7 +93,7 @@ int main(int argc, char **argv) {
     assert(30 == current.get());
     try {
       current.set(70);
-      std::cerr << "Never run this" << std::endl;
+      assert(false);
     } catch (const std::invalid_argument& e) {
       std::cout << e.what() << std::endl;
     }

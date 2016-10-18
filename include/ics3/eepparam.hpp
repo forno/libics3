@@ -175,8 +175,8 @@ namespace ics {
   }
 
   constexpr uint16_t EepParam::checkInvalidFlag(uint16_t input, uint16_t, uint16_t) {
-    return input & 0x60 ? throw std::invalid_argument {"Eepparam(flag): Must down bits 0x60"} :
-           !(input & 0x04) ? throw std::invalid_argument {"Eepparam(flag): Must up bits 0x04"} :
+    return !(input & 0x04) ? throw std::invalid_argument {"Eepparam(flag): Must up bits 0x04"} :
+           ~(input | ~0x60) ? throw std::invalid_argument {"Eepparam(flag): Must down bits 0x60"} :
            input;
   }
 
