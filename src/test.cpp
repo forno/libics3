@@ -81,18 +81,28 @@ int main(int argc, char **argv) {
     try {
       degree.set(150);
       assert(false);
-    } catch (const std::invalid_argument& e) {
+    } catch (std::invalid_argument& e) {
       std::cout << e.what() << std::endl;
     }
     try {
       radian.set(M_PI);
       assert(false);
-    } catch (const std::invalid_argument& e) {
+    } catch (std::invalid_argument& e) {
       std::cout << e.what() << std::endl;
     }
   }
   {
     std::cout << std::endl << "parameter test section" << std::endl;
+    constexpr auto stretch = ics::Parameter::stretch();
+    static_assert(30 == stretch.get(), "stretch error");
+    constexpr auto speed = ics::Parameter::speed(100);
+    static_assert(100 == speed.get(), "speed error");
+    try {
+      ics::Parameter::temperature(0);
+      assert(false);
+    } catch (std::invalid_argument& e) {
+      std::cout << e.what() << std::endl;
+    }
     auto current = ics::Parameter::current();
     assert(63 == current.get());
     current.set(30);
@@ -100,7 +110,7 @@ int main(int argc, char **argv) {
     try {
       current.set(70);
       assert(false);
-    } catch (const std::invalid_argument& e) {
+    } catch (std::invalid_argument& e) {
       std::cout << e.what() << std::endl;
     }
   }

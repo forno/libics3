@@ -6,16 +6,17 @@
 namespace ics {
   class Parameter {
   public:
-    static constexpr Parameter stretch() noexcept;
-    static constexpr Parameter speed() noexcept;
-    static constexpr Parameter current() noexcept;
-    static constexpr Parameter temperature() noexcept;
+    static constexpr Parameter stretch(unsigned char = 30);
+    static constexpr Parameter speed(unsigned char = 127);
+    static constexpr Parameter current(unsigned char = 63);
+    static constexpr Parameter temperature(unsigned char = 80);
 
     constexpr unsigned char get() const noexcept;
     void set(unsigned char);
     constexpr unsigned char getSc() const noexcept;
   private:
-    constexpr explicit Parameter(unsigned char, unsigned char, unsigned char, unsigned char) noexcept;
+    constexpr explicit Parameter(unsigned char, unsigned char, unsigned char, unsigned char);
+    static constexpr unsigned char chackInvalid(unsigned char, unsigned char, unsigned char);
 
     const unsigned char sc;
     const unsigned char min;
@@ -23,20 +24,20 @@ namespace ics {
     unsigned char data;
   };
 
-  constexpr Parameter Parameter::stretch() noexcept {
-    return Parameter {0x01, 1, 127, 30};
+  constexpr Parameter Parameter::stretch(unsigned char data) {
+    return Parameter {0x01, 1, 127, data};
   }
 
-  constexpr Parameter Parameter::speed() noexcept {
-    return Parameter {0x02, 1, 127, 127};
+  constexpr Parameter Parameter::speed(unsigned char data) {
+    return Parameter {0x02, 1, 127, data};
   }
 
-  constexpr Parameter Parameter::current() noexcept {
-    return Parameter {0x03, 0, 63, 63};
+  constexpr Parameter Parameter::current(unsigned char data) {
+    return Parameter {0x03, 0, 63, data};
   }
 
-  constexpr Parameter Parameter::temperature() noexcept {
-    return Parameter {0x04, 1, 127, 80};
+  constexpr Parameter Parameter::temperature(unsigned char data) {
+    return Parameter {0x04, 1, 127, data};
   }
 
   constexpr unsigned char Parameter::get() const noexcept {
@@ -44,21 +45,25 @@ namespace ics {
   }
 
   inline void Parameter::set(unsigned char input) {
-    data = input < min ? throw std::invalid_argument {"Too small value"} :
-           max < input ? throw std::invalid_argument {"Too big value"} :
-           input;
+    data = chackInvalid(input, min, max);
   }
 
   constexpr unsigned char Parameter::getSc() const noexcept {
     return sc;
   }
 
-  constexpr Parameter::Parameter(unsigned char sc, unsigned char min, unsigned char max, unsigned char default_data) noexcept
+  constexpr Parameter::Parameter(unsigned char sc, unsigned char min, unsigned char max, unsigned char default_data)
   : sc {sc},
     min {min},
     max {max},
-    data {default_data}
+    data {chackInvalid(default_data, min, max)}
   {}
+
+  constexpr unsigned char Parameter::chackInvalid(unsigned char input, unsigned char min, unsigned char max) {
+    return input < min ? throw std::invalid_argument {"Too small value"} :
+           max < input ? throw std::invalid_argument {"Too big value"} :
+           input;
+  }
 }
 
 #endif // LIBICS3_ICS3_PARAMETER_H_
