@@ -6,65 +6,65 @@
 namespace ics {
   class Parameter {
   public:
-    static constexpr Parameter stretch(unsigned char = 30);
-    static constexpr Parameter speed(unsigned char = 127);
-    static constexpr Parameter current(unsigned char = 63);
-    static constexpr Parameter temperature(unsigned char = 80);
+    static constexpr Parameter stretch(uint8_t = 30);
+    static constexpr Parameter speed(uint8_t = 127);
+    static constexpr Parameter current(uint8_t = 63);
+    static constexpr Parameter temperature(uint8_t = 80);
 
-    constexpr unsigned char get() const noexcept;
-    constexpr operator unsigned char() const noexcept;
-    void set(unsigned char);
-    constexpr unsigned char getSc() const noexcept;
+    constexpr uint8_t get() const noexcept;
+    constexpr operator uint8_t() const noexcept;
+    void set(uint8_t);
+    constexpr uint8_t getSc() const noexcept;
   private:
-    constexpr explicit Parameter(unsigned char, unsigned char, unsigned char, unsigned char);
-    static constexpr unsigned char chackInvalid(unsigned char, unsigned char, unsigned char);
+    constexpr explicit Parameter(uint8_t, uint8_t, uint8_t, uint8_t);
+    static constexpr uint8_t chackInvalid(uint8_t, uint8_t, uint8_t);
 
-    const unsigned char sc;
-    const unsigned char min;
-    const unsigned char max;
-    unsigned char data;
+    const uint8_t sc;
+    const uint8_t min;
+    const uint8_t max;
+    uint8_t data;
   };
 
-  constexpr Parameter Parameter::stretch(unsigned char data) {
+  constexpr Parameter Parameter::stretch(uint8_t data) {
     return Parameter {0x01, 1, 127, data};
   }
 
-  constexpr Parameter Parameter::speed(unsigned char data) {
+  constexpr Parameter Parameter::speed(uint8_t data) {
     return Parameter {0x02, 1, 127, data};
   }
 
-  constexpr Parameter Parameter::current(unsigned char data) {
+  constexpr Parameter Parameter::current(uint8_t data) {
     return Parameter {0x03, 0, 63, data};
   }
 
-  constexpr Parameter Parameter::temperature(unsigned char data) {
+  constexpr Parameter Parameter::temperature(uint8_t data) {
     return Parameter {0x04, 1, 127, data};
   }
 
-  constexpr unsigned char Parameter::get() const noexcept {
+  constexpr uint8_t Parameter::get() const noexcept {
     return data;
   }
 
-  constexpr Parameter::operator unsigned char() const noexcept {
+  constexpr Parameter::operator uint8_t() const noexcept {
     return get();
   }
 
-  inline void Parameter::set(unsigned char input) {
+  inline void Parameter::set(uint8_t input) {
     data = chackInvalid(input, min, max);
   }
 
-  constexpr unsigned char Parameter::getSc() const noexcept {
+  constexpr uint8_t Parameter::getSc() const noexcept {
     return sc;
   }
 
-  constexpr Parameter::Parameter(unsigned char sc, unsigned char min, unsigned char max, unsigned char default_data)
+  constexpr Parameter::Parameter(uint8_t sc, uint8_t min, uint8_t max, uint8_t default_data)
   : sc {sc},
     min {min},
     max {max},
     data {chackInvalid(default_data, min, max)}
   {}
 
-  constexpr unsigned char Parameter::chackInvalid(unsigned char input, unsigned char min, unsigned char max) {
+  constexpr uint8_t Parameter::chackInvalid(uint8_t input, uint8_t min, uint8_t max) {
     return input < min ? throw std::invalid_argument {"Too small value"} :
            max < input ? throw std::invalid_argument {"Too big value"} :
            input;
