@@ -10,7 +10,7 @@ ics::Core::~Core() noexcept {
   close(fd);
 }
 
-const ics::Core& ics::Core::getReference(const char* path, speed_t baudrate = B115200) {
+const ics::Core& ics::Core::getReference(const char* path, speed_t baudrate) {
   static const Core core {path, baudrate}; // update plan: mutable path and baudrate
   return core;
 }
