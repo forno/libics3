@@ -20,6 +20,12 @@ int main(int argc, char **argv) {
     } catch (std::invalid_argument& e) {
       std::cout << e.what() << std::endl;
     }
+    try {
+      ics::ID error {static_cast<unsigned char>(-1)}; // if constexpr, compile error.
+      assert(false);
+    } catch (std::invalid_argument& e) {
+      std::cout << e.what() << std::endl;
+    }
   }
   {
     std::cout << std::endl << "EepParam test section" << std::endl;
