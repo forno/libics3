@@ -1,6 +1,8 @@
 #ifndef LIBICS3_ICS3_ANGLE_H_
 #define LIBICS3_ICS3_ANGLE_H_
 
+#include"ics3/check_invalid.hpp"
+
 #include<stdexcept>
 #define _USE_MATH_DEFINES
 #include<cmath>
@@ -78,9 +80,7 @@ namespace ics {
   }
 
   constexpr uint16_t Angle::checkInvalidAngle(uint16_t raw) {
-    return raw < ics::Angle::MIN ? throw std::invalid_argument {"Too small angle"} :
-           ics::Angle::MAX < raw ? throw std::invalid_argument {"Too big angle"} :
-           raw;
+    return checkInvalid(raw, MIN, MAX);
   }
 }
 
