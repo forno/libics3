@@ -60,7 +60,7 @@ int main(int argc, char **argv) {
     constexpr auto radian2 = ics::Angle::newRadian(M_PI / 6);
     static_assert(degree2.getRaw() == radian2.getRaw(), "angles 2 error");
     try {
-      ics::Angle::newDegree(131);
+      ics::Angle::newDegree(136);
       assert(false);
     } catch (std::invalid_argument& e) {
       std::cout << e.what() << std::endl;
