@@ -1,6 +1,8 @@
 #ifndef LIBICS3_ICS3_EEPPARAM_H_
 #define LIBICS3_ICS3_EEPPARAM_H_
 
+#include<ics3/check_invalid.hpp>
+
 #include<array>
 #include<stdexcept>
 
@@ -163,9 +165,7 @@ namespace ics {
   {}
 
   constexpr uint16_t EepParam::checkInvalidRange(uint16_t input, uint16_t min, uint16_t max) {
-    return input < min ? throw std::invalid_argument {"Too small argument"} :
-           max < input ? throw std::invalid_argument {"Too small argument"} :
-           input;
+    return checkInvalid(input, min, max);
   }
 
   constexpr uint16_t EepParam::checkInvalidEvenRange(uint16_t input, uint16_t min, uint16_t max) {
