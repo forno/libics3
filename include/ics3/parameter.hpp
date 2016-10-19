@@ -10,6 +10,7 @@ namespace ics {
     static constexpr Parameter speed(uint8_t = 127);
     static constexpr Parameter current(uint8_t = 63);
     static constexpr Parameter temperature(uint8_t = 80);
+    static constexpr Parameter newParameter(const Parameter&, uint8_t);
 
     constexpr uint8_t get() const noexcept;
     constexpr operator uint8_t() const noexcept;
@@ -40,6 +41,10 @@ namespace ics {
 
   constexpr Parameter Parameter::temperature(uint8_t data) {
     return Parameter {0x04, 1, 127, data};
+  }
+
+  constexpr Parameter Parameter::newParameter(const Parameter& base, uint8_t data) {
+    return Parameter {base.sc, base.min, base.max, data};
   }
 
   constexpr uint8_t Parameter::get() const noexcept {
