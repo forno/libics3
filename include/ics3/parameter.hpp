@@ -3,6 +3,8 @@
 
 #include<stdexcept>
 
+#include"ics3/check_invalid.hpp"
+
 namespace ics {
   class Parameter {
   public:
@@ -19,7 +21,6 @@ namespace ics {
     constexpr uint8_t getSubcommand() const noexcept;
   private:
     explicit constexpr Parameter(uint8_t, uint8_t, uint8_t, uint8_t);
-    static constexpr uint8_t checkInvalid(uint8_t, uint8_t, uint8_t);
 
     const uint8_t sc;
     const uint8_t min;
@@ -74,12 +75,6 @@ namespace ics {
     max {max},
     data {checkInvalid(default_data, min, max)}
   {}
-
-  constexpr uint8_t Parameter::checkInvalid(uint8_t input, uint8_t min, uint8_t max) {
-    return input < min ? throw std::invalid_argument {"Too small value"} :
-           max < input ? throw std::invalid_argument {"Too big value"} :
-           input;
-  }
 }
 
 #endif // LIBICS3_ICS3_PARAMETER_H_
