@@ -12,6 +12,7 @@ namespace ics {
     static constexpr Parameter temperature(unsigned char = 80);
 
     constexpr unsigned char get() const noexcept;
+    constexpr operator unsigned char() const noexcept;
     void set(unsigned char);
     constexpr unsigned char getSc() const noexcept;
   private:
@@ -42,6 +43,10 @@ namespace ics {
 
   constexpr unsigned char Parameter::get() const noexcept {
     return data;
+  }
+
+  constexpr Parameter::operator unsigned char() const noexcept {
+    return get();
   }
 
   inline void Parameter::set(unsigned char input) {

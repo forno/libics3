@@ -95,8 +95,10 @@ int main(int argc, char **argv) {
     std::cout << std::endl << "parameter test section" << std::endl;
     constexpr auto stretch = ics::Parameter::stretch();
     static_assert(30 == stretch.get(), "stretch error");
+    static_assert(30 == stretch, "stretch error by cast");
     constexpr auto speed = ics::Parameter::speed(100);
     static_assert(100 == speed.get(), "speed error");
+    static_assert(100 == speed, "speed error by cast");
     try {
       ics::Parameter::temperature(0);
       assert(false);
@@ -106,7 +108,7 @@ int main(int argc, char **argv) {
     auto current = ics::Parameter::current();
     assert(63 == current.get());
     current.set(30);
-    assert(30 == current.get());
+    assert(30 == current);
     try {
       current.set(70);
       assert(false);
