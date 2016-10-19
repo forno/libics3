@@ -2,6 +2,7 @@
 #define LIBICS3_ICS3_ICS_H_
 
 #include"ics3/angle.hpp"
+#include"ics3/baudrate.hpp"
 #include"ics3/eepparam.hpp"
 #include"ics3/eeprom.hpp"
 #include"ics3/ics3.hpp"
