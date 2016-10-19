@@ -15,7 +15,7 @@ namespace ics {
     constexpr operator uint8_t() const noexcept;
     void set(uint8_t);
     Parameter& operator=(uint8_t);
-    constexpr uint8_t getSc() const noexcept;
+    constexpr uint8_t getSubcommand() const noexcept;
   private:
     explicit constexpr Parameter(uint8_t, uint8_t, uint8_t, uint8_t);
     static constexpr uint8_t checkInvalid(uint8_t, uint8_t, uint8_t);
@@ -59,7 +59,7 @@ namespace ics {
     return *this;
   }
 
-  constexpr uint8_t Parameter::getSc() const noexcept {
+  constexpr uint8_t Parameter::getSubcommand() const noexcept {
     return sc;
   }
 

@@ -45,7 +45,7 @@ ics::Angle ics::ICS3::move(const ID& id, const Angle& angle) const {
 ics::Parameter ics::ICS3::get(const ID& id, Parameter param) const {
   static std::vector<unsigned char> tx(2), rx(5);
   tx[0] = 0xA0 | id.get();
-  tx[1] = param.getSc();
+  tx[1] = param.getSubcommand();
   core.communicate(tx, rx); // throw std::runtime_error
   param.set(rx[4]);
   return param;
@@ -54,7 +54,7 @@ ics::Parameter ics::ICS3::get(const ID& id, Parameter param) const {
 void ics::ICS3::set(const ID& id, const Parameter& param) const {
   static std::vector<unsigned char> tx(3), rx(6);
   tx[0] = 0xC0 | id.get();
-  tx[1] = param.getSc();
+  tx[1] = param.getSubcommand();
   tx[2] = param.get();
   core.communicate(tx, rx); // throw std::runtime_error
 }
