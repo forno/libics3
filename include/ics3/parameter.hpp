@@ -14,10 +14,11 @@ namespace ics {
     constexpr uint8_t get() const noexcept;
     constexpr operator uint8_t() const noexcept;
     void set(uint8_t);
+    Parameter& operator=(uint8_t);
     constexpr uint8_t getSc() const noexcept;
   private:
-    constexpr explicit Parameter(uint8_t, uint8_t, uint8_t, uint8_t);
-    static constexpr uint8_t chackInvalid(uint8_t, uint8_t, uint8_t);
+    explicit constexpr Parameter(uint8_t, uint8_t, uint8_t, uint8_t);
+    static constexpr uint8_t checkInvalid(uint8_t, uint8_t, uint8_t);
 
     const uint8_t sc;
     const uint8_t min;
@@ -50,7 +51,12 @@ namespace ics {
   }
 
   inline void Parameter::set(uint8_t input) {
-    data = chackInvalid(input, min, max);
+    data = checkInvalid(input, min, max);
+  }
+
+  inline Parameter& Parameter::operator=(uint8_t rhs) {
+    set(rhs);
+    return *this;
   }
 
   constexpr uint8_t Parameter::getSc() const noexcept {
@@ -61,10 +67,10 @@ namespace ics {
   : sc {sc},
     min {min},
     max {max},
-    data {chackInvalid(default_data, min, max)}
+    data {checkInvalid(default_data, min, max)}
   {}
 
-  constexpr uint8_t Parameter::chackInvalid(uint8_t input, uint8_t min, uint8_t max) {
+  constexpr uint8_t Parameter::checkInvalid(uint8_t input, uint8_t min, uint8_t max) {
     return input < min ? throw std::invalid_argument {"Too small value"} :
            max < input ? throw std::invalid_argument {"Too big value"} :
            input;

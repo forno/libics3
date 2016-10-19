@@ -109,8 +109,16 @@ int main(int argc, char **argv) {
     assert(63 == current.get());
     current.set(30);
     assert(30 == current);
+    current = 10;
+    assert(10 == current);
     try {
       current.set(70);
+      assert(false);
+    } catch (std::invalid_argument& e) {
+      std::cout << e.what() << std::endl;
+    }
+    try {
+      current = 64;
       assert(false);
     } catch (std::invalid_argument& e) {
       std::cout << e.what() << std::endl;
