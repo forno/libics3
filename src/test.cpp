@@ -96,9 +96,11 @@ int main(int argc, char **argv) {
     constexpr auto stretch = ics::Parameter::stretch();
     static_assert(30 == stretch.get(), "stretch error");
     static_assert(30 == stretch, "stretch error by cast");
+    static_assert(0x01 == stretch.getSubcommand(), "stretch error by subcommand");
     constexpr auto speed = ics::Parameter::speed(100);
     static_assert(100 == speed.get(), "speed error");
     static_assert(100 == speed, "speed error by cast");
+    static_assert(0x02 == speed.getSubcommand(), "speed error by subcommand");
     try {
       ics::Parameter::temperature(0);
       assert(false);
@@ -107,6 +109,7 @@ int main(int argc, char **argv) {
     }
     auto current = ics::Parameter::current();
     assert(63 == current.get());
+    assert(0x03 == current.getSubcommand());
     current.set(30);
     assert(30 == current);
     current = 10;
