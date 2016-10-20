@@ -1,8 +1,6 @@
 #ifndef LIBICS3_ICS3_PARAMETER_H_
 #define LIBICS3_ICS3_PARAMETER_H_
 
-#include<stdexcept>
-
 #include"ics3/check_invalid.hpp"
 
 namespace ics {

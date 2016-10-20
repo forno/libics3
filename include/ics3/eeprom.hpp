@@ -2,7 +2,6 @@
 #define LIBICS3_ICS3_EEPROM_H_
 
 #include<array>
-#include<vector>
 #include<algorithm>
 
 #include"ics3/eepparam.hpp"

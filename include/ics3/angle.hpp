@@ -3,7 +3,6 @@
 
 #include"ics3/check_invalid.hpp"
 
-#include<stdexcept>
 #define _USE_MATH_DEFINES
 #include<cmath>
 #undef _USE_MATH_DEFINES
