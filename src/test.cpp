@@ -6,6 +6,7 @@
 #include "ics3/ics"
 
 void testAngle();
+void testBaudrate();
 void testEepParam();
 void testID();
 void testParameter();
@@ -13,6 +14,7 @@ void testICS3();
 
 int main(int argc, char **argv) {
   testAngle();
+  testBaudrate();
   testEepParam();
   testID();
   testParameter();
@@ -61,6 +63,24 @@ void testAngle() {
   } catch (std::invalid_argument& e) {
     std::cout << e.what() << std::endl;
   }
+}
+
+void testBaudrate() {
+  std::cout << std::endl << "Baudrate test section" << std::endl;
+  // constexpr test
+  constexpr auto baudrate115200 = ics::Baudrate::RATE115200();
+  constexpr struct {
+    static constexpr speed_t speed(speed_t baudrate, speed_t value) {
+      return baudrate != value ? throw std::invalid_argument {"Baudrate: speed error"} : baudrate;
+    }
+    static constexpr uint16_t romdata(uint16_t baudrate, uint16_t value) {
+      return baudrate != value ? throw std::invalid_argument {"Baudrate: romdata error"} : baudrate;
+    }
+  } checker;
+  checker.speed(baudrate115200, B115200);
+  checker.romdata(baudrate115200, 10);
+  static_assert(static_cast<uint16_t>(baudrate115200) == 10, "Baudrate: not equal 10");
+  static_assert(static_cast<speed_t>(baudrate115200) == B115200, "Baudrate: not equal B115200");
 }
 
 void testEepParam() {
