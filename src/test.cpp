@@ -30,6 +30,7 @@ void testAngle() {
   static_assert(defDeg == 0, "Angle default deg error");
   static_assert(defRad.get() == 0, "Angle default rad error");
   static_assert(defDeg.getRaw() == defRad.getRaw(), "Error: Angle have different default");
+  static_assert(defDeg.getRaw() == 7500, "Error: Angle default must is 7500");
   constexpr auto degree1 = ics::Angle::newDegree(90);
   constexpr auto radian1 = ics::Angle::newRadian(M_PI / 2);
   static_assert(degree1.getRaw() == radian1.getRaw(), "angles 1 error");
