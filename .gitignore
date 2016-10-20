@@ -30,3 +30,7 @@
 
 # Vi
 *.swp
+
+# Code testing
+build
+bin

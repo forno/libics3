@@ -1,9 +1,9 @@
 CXXFLAGS = -std=c++11 -Iinclude -Wall -Wextra -Winit-self -Wno-missing-field-initializers -Weffc++ -Winline
 OBJS = build/test.o build/eepparam.o build/eeprom.o build/core.o build/ics3.o
 
-test: bin build bin/test.out
+test: bin build bin/test
 
-bin/test.out: $(OBJS)
+bin/test: $(OBJS)
 	$(CXX) -o $@ $^
 
 build/%.o: src/%.cpp
