@@ -1,7 +1,8 @@
 #ifndef LIBICS3_ICS3_EEPPARAM_H_
 #define LIBICS3_ICS3_EEPPARAM_H_
 
-#include<ics3/check_invalid.hpp>
+#include"ics3/check_invalid.hpp"
+#include"ics3/baudrate.hpp"
 
 #include<array>
 #include<stdexcept>
@@ -15,11 +16,6 @@ namespace ics {
       PWMINH =    0x8,
       ROLL_MODE = 0x10,
       SLAVE =     0x80
-    };
-    enum Baudrate : uint16_t {
-      RATE115200 = 10,
-      RATE625000 = 1,
-      RATE1250000 = 0
     };
 
     static constexpr EepParam strech(uint16_t = 60);
@@ -181,9 +177,9 @@ namespace ics {
   }
 
   constexpr uint16_t EepParam::checkInvalidBaudrate(uint16_t input, uint16_t, uint16_t) {
-    return input == RATE115200 ? input :
-           input == RATE625000 ? input :
-           input == RATE1250000 ? input :
+    return input == Baudrate::RATE115200().getRomData() ? input :
+           //input == Baudrate::RATE625000().getRomData() ? input :
+           //input == Baudrate::RATE1250000().getRomData() ? input :
            throw std::invalid_argument {"baudrate not exist"};
   }
 
