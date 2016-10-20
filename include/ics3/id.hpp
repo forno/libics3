@@ -6,7 +6,7 @@
 namespace ics {
   class ID {
   public:
-    constexpr ID(unsigned char);
+    constexpr ID(unsigned char); // ID is non explicit constructor because only do check limit
     constexpr unsigned char get() const noexcept;
     constexpr operator unsigned char() const noexcept;
   private:
