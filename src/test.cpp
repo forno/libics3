@@ -12,7 +12,7 @@ void testID();
 void testParameter();
 void testICS3();
 
-int main(int argc, char **argv) {
+int main() {
   testAngle();
   testBaudrate();
   testEepParam();
