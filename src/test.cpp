@@ -25,6 +25,11 @@ int main(int argc, char **argv) {
 void testAngle() {
   std::cout << std::endl << "angle test section" << std::endl;
   // constexpr test
+  constexpr auto defDeg = ics::Angle::newDegree();
+  constexpr auto defRad = ics::Angle::newRadian();
+  static_assert(defDeg == 0, "Angle default deg error");
+  static_assert(defRad.get() == 0, "Angle default rad error");
+  static_assert(defDeg.getRaw() == defRad.getRaw(), "Error: Angle have different default");
   constexpr auto degree1 = ics::Angle::newDegree(90);
   constexpr auto radian1 = ics::Angle::newRadian(M_PI / 2);
   static_assert(degree1.getRaw() == radian1.getRaw(), "angles 1 error");
@@ -39,11 +44,8 @@ void testAngle() {
   }
 
   // runtime test
-  auto degree = ics::Angle::newDegree();
-  auto radian = ics::Angle::newRadian();
-  assert(degree.getRaw() == radian.getRaw());
-  degree.set(0);
-  radian.set(0);
+  auto degree = ics::Angle::newDegree(0);
+  auto radian = ics::Angle::newRadian(0);
   assert(degree.getRaw() == radian.getRaw());
   degree.set(90);
   radian.set(M_PI / 2);
