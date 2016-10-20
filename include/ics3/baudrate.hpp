@@ -7,6 +7,8 @@ namespace ics {
   class Baudrate {
   public:
     static constexpr Baudrate RATE115200() noexcept;
+    //static constexpr Baudrate RATE625000() noexcept;
+    //static constexpr Baudrate RATE1250000() noexcept;
     constexpr speed_t getSpeed() const noexcept;
     constexpr operator speed_t() const noexcept;
     constexpr uint16_t getRomData() const noexcept;
