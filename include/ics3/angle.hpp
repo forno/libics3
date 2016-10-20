@@ -20,7 +20,9 @@ namespace ics {
     Angle& operator=(const Angle&) noexcept;
 
     constexpr double get() const noexcept;
+    constexpr operator double() const noexcept;
     void set(double);
+    Angle& operator=(double);
     constexpr uint16_t getRaw() const noexcept;
     void setRaw(uint16_t);
   private:
@@ -57,8 +59,17 @@ namespace ics {
     return (rawData - 7500) / rawCalibration;
   }
 
+  constexpr Angle::operator double() const noexcept {
+    return get();
+  }
+
   inline void Angle::set(double angle) {
     setRaw(castToRaw(angle, rawCalibration)); // throw std::invalid_argument
+  }
+
+  inline Angle& Angle::operator=(double angle) {
+    set(angle);
+    return *this;
   }
 
   constexpr uint16_t Angle::getRaw() const noexcept {
