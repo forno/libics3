@@ -79,7 +79,7 @@ namespace ics {
   }
 
   constexpr uint16_t Angle::checkInvalidAngle(uint16_t raw) {
-    return checkInvalid(raw, MIN, MAX);
+    return checkInvalidRange(raw, MIN, MAX);
   }
 }
 

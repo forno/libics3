@@ -55,7 +55,7 @@ namespace ics {
   }
 
   inline void Parameter::set(uint8_t input) {
-    data = checkInvalid(input, min, max);
+    data = checkInvalidRange(input, min, max);
   }
 
   inline Parameter& Parameter::operator=(uint8_t rhs) {
@@ -71,7 +71,7 @@ namespace ics {
   : sc {sc},
     min {min},
     max {max},
-    data {checkInvalid(default_data, min, max)}
+    data {checkInvalidRange(default_data, min, max)}
   {}
 }
 

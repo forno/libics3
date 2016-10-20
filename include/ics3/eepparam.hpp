@@ -165,7 +165,7 @@ namespace ics {
   {}
 
   constexpr uint16_t EepParam::checkInvalidRange(uint16_t input, uint16_t min, uint16_t max) {
-    return checkInvalid(input, min, max);
+    return ics::checkInvalidRange(input, min, max);
   }
 
   constexpr uint16_t EepParam::checkInvalidEvenRange(uint16_t input, uint16_t min, uint16_t max) {
