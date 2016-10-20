@@ -20,6 +20,11 @@ namespace ics {
     std::array<unsigned char, 64> data;
   };
 
+  inline ics::EepParam ics::Eeprom::get(EepParam place) const {
+    place.read(data);
+    return place;
+  }
+
   inline void Eeprom::set(const EepParam& param) noexcept {
     param.write(data);
   }
