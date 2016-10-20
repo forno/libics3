@@ -6,7 +6,7 @@
 namespace ics {
   class Baudrate {
   public:
-    static constexpr Baudrate RATE115200() noexcept;
+    static constexpr const Baudrate RATE115200() noexcept;
     //static constexpr Baudrate RATE625000() noexcept;
     //static constexpr Baudrate RATE1250000() noexcept;
     constexpr speed_t getSpeed() const noexcept;
@@ -20,7 +20,7 @@ namespace ics {
     const uint16_t romdata;
   };
 
-  constexpr Baudrate Baudrate::RATE115200() noexcept {
+  constexpr const Baudrate Baudrate::RATE115200() noexcept {
     return Baudrate {B115200, 10};
   }
 
