@@ -32,7 +32,9 @@ make install
 You need to specify `cmake -Dlibics3_DIR=$HOME/libics3/lib/cmake/libics3`
 for CMake based third-party application to find libics3.
 
-Or, you can remove `CMAKE_INSTALL_PREFIX` parameter on this installation, and you maybe need `sudo` for `make install`.
+Or, you can remove `CMAKE_INSTALL_PREFIX` parameter on this installation,
+and you maybe need `sudo` for `make install` this way,
+and system can find to libics3 without your specify.
 
 ex)
 
