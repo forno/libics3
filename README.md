@@ -15,12 +15,12 @@ ex)[KRS series servo moters produced by KONDO KAGAKU co., ltd.](http://kondo-rob
 Reference [the libics3 wiki](https://github.com/forno/libics3/wiki)
 
 ## Installation
-- Download libics3 source code
+Download libics3 source code
 
 ```sh
 git clone https://github.com/forno/libics3.git
 ```
-- Build
+Build
 
 ```sh
 cd libics3
@@ -32,8 +32,15 @@ make install
 You need to specify `cmake -Dlibics3_DIR=$HOME/libics3/lib/cmake/libics3`
 for CMake based third-party application to find libics3.
 
-Or, you can change `CMAKE_INSTALL_PREFIX` parameter on this installation.
-ex) `cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local`
+Or, you can remove `CMAKE_INSTALL_PREFIX` parameter on this installation, and you maybe need `sudo` for `make install`.
+
+ex)
+
+```bash
+cmake ..
+make
+sudo make install
+```
 
 ## LICENSE
 This software is released under the BSD 2-Clause License, see LICENSE.txt.
