@@ -65,7 +65,7 @@ ics::Eeprom ics::ICS3::getRom(const ID& id) const {
   core.communicate(tx, rx); // throw std::runtime_error
   std::array<unsigned char, 64> rom;
   std::copy(rx.begin() + 2, rx.end(), rom.begin());
-  return Eeprom {rom};
+  return Eeprom {rom}; // need friend
 }
 
 void ics::ICS3::setRom(const ID& id, const Eeprom& rom) const {

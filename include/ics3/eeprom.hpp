@@ -11,7 +11,7 @@ namespace ics {
 
   class Eeprom {
   public:
-    friend ICS3;
+    friend ICS3; // for ICS3::getRom()
     EepParam get(EepParam) const;
     void set(const EepParam&) noexcept;
     template<typename Iter> void write(Iter&&) const noexcept;
