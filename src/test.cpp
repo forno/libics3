@@ -12,6 +12,8 @@ void testID();
 void testParameter();
 void testICS3();
 
+template<typename Iter> constexpr void dump(Iter&& begin, Iter&& end) noexcept;
+
 int main() {
   testAngle();
   testBaudrate();
@@ -168,28 +170,39 @@ void testParameter() {
 
 void testICS3() {
   std::cout << std::endl << "ICS3 test section" << std::endl;
-  auto id(2);
+  constexpr auto baudrate = ics::Baudrate::RATE115200();
+  constexpr ics::ID id {2};
   auto degree = ics::Angle::newDegree();
   try {
-    ics::ICS3 ics {"/dev/ttyUSB0"};
-    assert(7500 == degree.getRaw());
+    ics::ICS3 ics {"/dev/ttyUSB0", baudrate};
+    std::cout << "move to " << degree << " [deg]" << std::endl;
     auto nowPos = ics.move(id, degree);
-    std::cout << nowPos.get() << std::endl;
+    std::cout << "now pos is " << nowPos << std::endl;
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    degree.set(50);
+    degree = 50;
+    std::cout << "move to " << degree << " [deg]" << std::endl;
     nowPos = ics.move(id, degree);
-    std::cout << nowPos.get() << std::endl;
+    std::cout << "now pos is " << nowPos << std::endl;
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    degree.set(-50);
+    degree = -50;
+    std::cout << "move to " << degree << " [deg]" << std::endl;
     nowPos = ics.move(id, degree);
-    std::cout << nowPos.get() << std::endl;
+    std::cout << "now pos is " << nowPos << std::endl;
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    degree.set(0);
+    degree = 0;
+    std::cout << "move to " << degree << " [deg]" << std::endl;
     nowPos = ics.move(id, degree);
-    std::cout << nowPos.get() << std::endl;
+    std::cout << "now pos is " << nowPos << std::endl;
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    std::cout << "free torque" << std::endl;
     nowPos = ics.free(id);
-    std::cout << nowPos.get() << std::endl;
+    std::cout << "now pos is " << nowPos << std::endl;
   } catch (std::runtime_error& e) {
     std::cout << e.what() << std::endl;
   }
+}
+
+template<typename Iter> constexpr void dump(Iter&& begin, Iter&& end) noexcept {
+  while (begin != end) std::cout << *begin << ", ";
+  std::cout << std::endl;
 }
