@@ -9,10 +9,9 @@ namespace ics {
     static constexpr const Baudrate RATE115200() noexcept;
     //static constexpr Baudrate RATE625000() noexcept;
     //static constexpr Baudrate RATE1250000() noexcept;
-    constexpr speed_t getSpeed() const noexcept;
+    constexpr speed_t get() const noexcept;
     constexpr operator speed_t() const noexcept;
     constexpr uint16_t getRomData() const noexcept;
-    constexpr operator uint16_t() const noexcept;
   private:
     explicit constexpr Baudrate(speed_t, uint16_t) noexcept;
 
@@ -24,20 +23,16 @@ namespace ics {
     return Baudrate {B115200, 10};
   }
 
-  constexpr speed_t Baudrate::getSpeed() const noexcept {
+  constexpr speed_t Baudrate::get() const noexcept {
     return baudrate;
   }
 
   constexpr Baudrate::operator speed_t() const noexcept {
-    return getSpeed();
+    return get();
   }
 
   constexpr uint16_t Baudrate::getRomData() const noexcept {
     return romdata;
-  }
-
-  constexpr Baudrate::operator uint16_t() const noexcept {
-    return getRomData();
   }
 
   constexpr Baudrate::Baudrate(speed_t baudrate, uint16_t romdata) noexcept

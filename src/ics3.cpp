@@ -20,7 +20,7 @@ ics::Angle getReceiveAngle(std::vector<unsigned char>::iterator&& it, ics::Angle
 }
 
 ics::ICS3::ICS3(const char* path, const Baudrate& baudrate)
-: core {Core::getReference(path, baudrate.getSpeed())}
+: core {Core::getReference(path, baudrate.get())}
 {}
 
 ics::Angle ics::ICS3::free(const ID& id, const Angle& unit) const {
