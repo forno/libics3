@@ -15,12 +15,12 @@ ex)[KRS series servo moters produced by KONDO KAGAKU co., ltd.](http://kondo-rob
 Reference [the libics3 wiki](https://github.com/forno/libics3/wiki)
 
 ## Installation
-Download libics3 source code
+### Download libics3 source code
 
 ```sh
 git clone https://github.com/forno/libics3.git
 ```
-Build
+### Build
 
 ```sh
 cd libics3
