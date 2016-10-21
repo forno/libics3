@@ -27,16 +27,16 @@ void testAngle() {
   // constexpr test
   constexpr auto defDeg = ics::Angle::newDegree();
   constexpr auto defRad = ics::Angle::newRadian();
-  static_assert(defDeg == 0, "Angle default deg error");
-  static_assert(defRad.get() == 0, "Angle default rad error");
-  static_assert(defDeg.getRaw() == defRad.getRaw(), "Error: Angle have different default");
-  static_assert(defDeg.getRaw() == 7500, "Error: Angle default must is 7500");
+  static_assert(defDeg == 0, "Angle default cast error");
+  static_assert(defRad.get() == 0, "Angle default get() error");
+  static_assert(defDeg.getRaw() == 7500, "Angle default must is 7500");
+  static_assert(defDeg.getRaw() == defRad.getRaw(), "Angle have different default");
   constexpr auto degree1 = ics::Angle::newDegree(90);
   constexpr auto radian1 = ics::Angle::newRadian(M_PI / 2);
-  static_assert(degree1.getRaw() == radian1.getRaw(), "angles 1 error");
+  static_assert(degree1.getRaw() == radian1.getRaw(), "difference: 90 deg <-> pi/2 rad");
   constexpr auto degree2 = ics::Angle::newDegree(30);
   constexpr auto radian2 = ics::Angle::newRadian(M_PI / 6);
-  static_assert(degree2.getRaw() == radian2.getRaw(), "angles 2 error");
+  static_assert(degree2.getRaw() == radian2.getRaw(), "difference: 30 deg <-> pi/6 rad");
   try {
     ics::Angle::newDegree(136);
     assert(false);
