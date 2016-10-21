@@ -17,6 +17,7 @@ namespace ics {
     template<typename Iter> void write(Iter&&) const noexcept;
   private:
     explicit Eeprom(const std::array<unsigned char, 64>&);
+
     std::array<unsigned char, 64> data;
   };
 
