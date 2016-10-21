@@ -15,6 +15,7 @@ namespace ics {
     static constexpr Angle newSameUnit(const Angle&, double = 0.0);
     static constexpr Angle newCalibration(double, double = 0.0);
     static constexpr uint16_t MIN {3500};
+    static constexpr uint16_t MID {7500};
     static constexpr uint16_t MAX {11500};
 
     Angle& operator=(const Angle&) noexcept;
@@ -56,7 +57,7 @@ namespace ics {
   }
 
   constexpr double Angle::get() const noexcept {
-    return (rawData - 7500) / rawCalibration;
+    return (rawData - MID) / rawCalibration;
   }
 
   constexpr Angle::operator double() const noexcept {
@@ -86,7 +87,7 @@ namespace ics {
   {}
 
   constexpr uint16_t Angle::castToRaw(double angle, double calibration) noexcept {
-    return static_cast<uint16_t>(angle * calibration + 7500);
+    return static_cast<uint16_t>(angle * calibration + MID);
   }
 
   constexpr uint16_t Angle::checkInvalidAngle(uint16_t raw) {
