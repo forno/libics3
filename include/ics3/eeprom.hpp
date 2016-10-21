@@ -32,6 +32,12 @@ namespace ics {
   template<typename Iter> inline void Eeprom::write(Iter&& dest) const noexcept {
     std::copy(data.begin(), data.end(), dest);
   }
+
+  inline Eeprom::Eeprom(const std::array<unsigned char, 64>& src)
+  : data {}
+  {
+    std::copy(src.begin(), src.end(), data.begin());
+  }
 }
 
 #endif // LIBICS3_ICS3_EEPROM_H_
