@@ -214,6 +214,7 @@ void testIcsMove(ics::ICS3& ics, const ics::ID& id) {
 }
 
 void testIcsParam(ics::ICS3& ics, const ics::ID& id) {
+  std::cout << "ICS3 'get' and 'set' method test section"  << std::endl;
   auto defaultStretch = ics.get(id, ics::Parameter::stretch());
   std::cout << "default stretch is " << static_cast<int>(defaultStretch) << std::endl;
   constexpr uint8_t writeNumber {31};
