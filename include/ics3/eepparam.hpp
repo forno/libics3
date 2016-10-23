@@ -177,13 +177,13 @@ namespace ics {
 
   constexpr uint16_t EepParam::checkInvalidEvenRange(uint16_t input, uint16_t min, uint16_t max) {
     return input % 2 ?
-           throw std::invalid_argument {"Must even value"} :
+           throw std::out_of_range {"Must even value"} :
            checkInvalidRange(input, min, max); // throw std::invalid_argument
   }
 
   constexpr uint16_t EepParam::checkInvalidFlag(uint16_t input, uint16_t, uint16_t) {
-    return !(input & 0x04) ? throw std::invalid_argument {"Eepparam(flag): Must up bits 0x04"} :
-           ~(input | ~0x60) ? throw std::invalid_argument {"Eepparam(flag): Must down bits 0x60"} :
+    return !(input & 0x04) ? throw std::out_of_range {"Eepparam(flag): Must up bits 0x04"} :
+           ~(input | ~0x60) ? throw std::out_of_range {"Eepparam(flag): Must down bits 0x60"} :
            input;
   }
 
@@ -197,7 +197,7 @@ namespace ics {
   constexpr uint16_t EepParam::checkInvalidOffset(uint16_t input, uint16_t min, uint16_t max) {
     return input < max ? input : // this min < 0; min of uint16_t is 0
            min < input ? input : // this min < 0; input must bigger than min.
-           throw std::invalid_argument {"Eeprom(offset): range over"}; // min < input < max is failed
+           throw std::out_of_range {"Eeprom(offset): range over"}; // min < input < max is failed
   }
 }
 

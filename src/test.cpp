@@ -45,7 +45,7 @@ void testAngle() {
   try {
     ics::Angle::newDegree(136);
     assert(false);
-  } catch (std::invalid_argument& e) {
+  } catch (std::out_of_range& e) {
     std::cout << e.what() << std::endl;
   }
 
@@ -62,13 +62,13 @@ void testAngle() {
   try {
     degree.set(150);
     assert(false);
-  } catch (std::invalid_argument& e) {
+  } catch (std::out_of_range& e) {
     std::cout << e.what() << std::endl;
   }
   try {
     radian.set(M_PI);
     assert(false);
-  } catch (std::invalid_argument& e) {
+  } catch (std::out_of_range& e) {
     std::cout << e.what() << std::endl;
   }
 }
@@ -92,7 +92,7 @@ void testEepParam() {
   try {
     ics::EepParam::flag(10);
     assert(false);
-  } catch (std::invalid_argument& e) {
+  } catch (std::out_of_range& e) {
     std::cout << e.what() << std::endl;
   }
 
@@ -104,7 +104,7 @@ void testEepParam() {
   try {
     speed.set(200);
     assert(false);
-  } catch (std::invalid_argument& e) {
+  } catch (std::out_of_range& e) {
     std::cout << e.what() << std::endl;
   }
 }
@@ -120,13 +120,13 @@ void testID() {
   try {
     ics::ID id32 {32}; // if constexpr, compile error
     assert(false);
-  } catch (std::invalid_argument& e) {
+  } catch (std::out_of_range& e) {
     std::cout << e.what() << std::endl;
   }
   try {
     ics::ID error {static_cast<unsigned char>(-1)}; // if constexpr, compile error
     assert(false);
-  } catch (std::invalid_argument& e) {
+  } catch (std::out_of_range& e) {
     std::cout << e.what() << std::endl;
   }
 }
@@ -145,7 +145,7 @@ void testParameter() {
   try {
     ics::Parameter::temperature(0);
     assert(false);
-  } catch (std::invalid_argument& e) {
+  } catch (std::out_of_range& e) {
     std::cout << e.what() << std::endl;
   }
 
@@ -160,13 +160,13 @@ void testParameter() {
   try {
     current.set(70);
     assert(false);
-  } catch (std::invalid_argument& e) {
+  } catch (std::out_of_range& e) {
     std::cout << e.what() << std::endl;
   }
   try {
     current = 64;
     assert(false);
-  } catch (std::invalid_argument& e) {
+  } catch (std::out_of_range& e) {
     std::cout << e.what() << std::endl;
   }
 }
