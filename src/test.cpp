@@ -87,8 +87,8 @@ void testEepParam() {
   // constexpr test
   constexpr auto current = ics::EepParam::current();
   static_assert(63 == current.get(), "current error");
-  constexpr auto strech = ics::EepParam::strech(244);
-  static_assert(244 == strech.get(), "strech error");
+  constexpr auto stretch = ics::EepParam::stretch(244);
+  static_assert(244 == stretch.get(), "strech error");
   try {
     ics::EepParam::flag(10);
     assert(false);
