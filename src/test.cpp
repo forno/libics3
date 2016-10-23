@@ -221,7 +221,7 @@ void testIcsParam(ics::ICS3& ics, const ics::ID& id) {
   ics.set(id, ics::Parameter::stretch(writeNumber));
   auto newStretch = ics.get(id, defaultStretch);
   ics.set(id, defaultStretch); // before checking, restore data.
-  assert(newStretch == 31);
+  assert(newStretch == writeNumber);
   assert(defaultStretch == ics.get(id, defaultStretch));
 }
 
@@ -230,6 +230,15 @@ void testIcsEepRom(ics::ICS3& ics, const ics::ID& id) {
   auto rom = ics.getRom(id);
   auto defaultStretch = rom.get(ics::EepParam::stretch());
   std::cout << "default stretch is " << defaultStretch << std::endl;
+//  constexpr uint16_t writeNumber {62};
+//  auto setRom = rom;
+//  setRom.set(ics::EepParam::stretch(writeNumber));
+//  ics.setRom(id, setRom);
+//  auto newRom = ics.getRom(id);
+//  ics.setRom(id, rom); // before checking, restore data.
+//  assert(newRom.get(defaultStretch) == writeNumber);
+//  auto lastRom = ics.getRom(id);
+//  assert(defaultStretch == lastRom.get(defaultStretch));
 }
 
 template<typename Iter> constexpr void dump(Iter&& begin, Iter&& end) noexcept {
