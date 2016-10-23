@@ -4,7 +4,7 @@
 
 constexpr int byteSize {4};
 
-void ics::EepParam::write(std::array<unsigned char, 64>& dest) const noexcept {
+void ics::EepParam::write(std::array<uint8_t, 64>& dest) const noexcept {
   uint16_t mask {0xF};
   for (size_t i {offset + length - 1}; i >= offset; --i) {
     dest[i] = data & mask;
@@ -12,7 +12,7 @@ void ics::EepParam::write(std::array<unsigned char, 64>& dest) const noexcept {
   }
 }
 
-void ics::EepParam::read(const std::array<unsigned char, 64>& src) {
+void ics::EepParam::read(const std::array<uint8_t, 64>& src) {
   constexpr uint16_t mask {0xF};
   uint16_t result {0};
   for (size_t i {0}; i < length; ++i)

@@ -124,7 +124,7 @@ void testID() {
     std::cout << e.what() << std::endl;
   }
   try {
-    ics::ID error {static_cast<unsigned char>(-1)}; // if constexpr, compile error
+    ics::ID error {static_cast<uint8_t>(-1)}; // if constexpr, compile error
     assert(false);
   } catch (std::out_of_range& e) {
     std::cout << e.what() << std::endl;

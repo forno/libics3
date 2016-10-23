@@ -16,7 +16,7 @@ const ics::Core& ics::Core::getReference(const std::string& path, speed_t baudra
   return core;
 }
 
-void ics::Core::communicate(std::vector<unsigned char>& tx, std::vector<unsigned char>& rx) const {
+void ics::Core::communicate(std::vector<uint8_t>& tx, std::vector<uint8_t>& rx) const {
   write(fd, tx.data(), tx.size()); // send
   for (auto& receive : rx) read(fd, &receive, 1); // receive
 // check section
@@ -27,7 +27,7 @@ void ics::Core::communicate(std::vector<unsigned char>& tx, std::vector<unsigned
       ss << "Receive falied:" << receive - rx.begin() << ':' << static_cast<int>(send) << "<->" << static_cast<int>(*receive);
       throw std::runtime_error {ss.str()};
     }
-    receive++;
+    ++receive;
   }
   if ((tx[0] & 0x7F) != *receive) throw std::runtime_error {"Receive failed: fail make data"};
 }

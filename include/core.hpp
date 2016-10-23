@@ -10,7 +10,7 @@ namespace ics {
   public:
     ~Core() noexcept;
     static const Core& getReference(const std::string&, speed_t); 
-    void communicate(std::vector<unsigned char>&, std::vector<unsigned char>&) const;
+    void communicate(std::vector<uint8_t>&, std::vector<uint8_t>&) const;
   private:
     explicit Core(const std::string&, speed_t);
     static termios getTermios() noexcept;

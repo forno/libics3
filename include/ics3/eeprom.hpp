@@ -16,9 +16,9 @@ namespace ics {
     void set(const EepParam&) noexcept;
     template<typename Iter> void write(Iter&&) const noexcept;
   private:
-    explicit EepRom(const std::array<unsigned char, 64>&);
+    explicit EepRom(const std::array<uint8_t, 64>&);
 
-    std::array<unsigned char, 64> data;
+    std::array<uint8_t, 64> data;
   };
 
   inline ics::EepParam ics::EepRom::get(EepParam place) const {
@@ -34,7 +34,7 @@ namespace ics {
     std::copy(data.begin(), data.end(), dest);
   }
 
-  inline EepRom::EepRom(const std::array<unsigned char, 64>& src)
+  inline EepRom::EepRom(const std::array<uint8_t, 64>& src)
   : data {}
   {
     std::copy(src.begin(), src.end(), data.begin());

@@ -41,8 +41,8 @@ namespace ics {
     constexpr operator uint16_t() const noexcept;
     void set(uint16_t);
     EepParam& operator=(uint16_t);
-    void write(std::array<unsigned char, 64>&) const noexcept;
-    void read(const std::array<unsigned char, 64>&);
+    void write(std::array<uint8_t, 64>&) const noexcept;
+    void read(const std::array<uint8_t, 64>&);
   private:
     constexpr explicit EepParam(
         size_t,
