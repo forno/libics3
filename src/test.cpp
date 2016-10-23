@@ -11,6 +11,9 @@ void testEepParam();
 void testID();
 void testParameter();
 void testICS3();
+void testIcsMove(ics::ICS3&, const ics::ID&);
+void testIcsParam(ics::ICS3&, const ics::ID&);
+void testIcsEeprom(ics::ICS3&, const ics::ID&);
 
 template<typename Iter> constexpr void dump(Iter&& begin, Iter&& end) noexcept;
 
@@ -170,38 +173,43 @@ void testParameter() {
 
 void testICS3() {
   std::cout << std::endl << "ICS3 test section" << std::endl;
+  constexpr const char*const path = "/dev/ttyUSB0";
   constexpr auto baudrate = ics::Baudrate::RATE115200();
   constexpr ics::ID id {2};
-  auto degree = ics::Angle::newDegree();
   try {
-    ics::ICS3 ics {"/dev/ttyUSB0", baudrate};
-    std::cout << "move to " << degree << "[deg]" << std::endl;
-    auto nowPos = ics.move(id, degree);
-    std::cout << "now pos is " << nowPos << "[deg]" << std::endl;
-    std::this_thread::sleep_for(std::chrono::milliseconds(1500));
-    degree = 50;
-    std::cout << "move to " << degree << "[deg]" << std::endl;
-    nowPos = ics.move(id, degree);
-    std::cout << "now pos is " << nowPos << "[deg]" << std::endl;
-    std::this_thread::sleep_for(std::chrono::milliseconds(1500));
-    degree = -50;
-    std::cout << "move to " << degree << "[deg]" << std::endl;
-    nowPos = ics.move(id, degree);
-    std::cout << "now pos is " << nowPos << "[deg]" << std::endl;
-    std::this_thread::sleep_for(std::chrono::milliseconds(1500));
-    degree = 0;
-    std::cout << "move to " << degree << "[deg]" << std::endl;
-    nowPos = ics.move(id, degree);
-    std::cout << "now pos is " << nowPos << "[deg]" << std::endl;
-    std::this_thread::sleep_for(std::chrono::milliseconds(1500));
-    std::cout << "free torque" << std::endl;
-    nowPos = ics.free(id);
-    std::cout << "now pos is " << nowPos << "[deg]" << std::endl;
+    ics::ICS3 ics {path, baudrate};
+    testIcsMove(ics, id);
   } catch (std::runtime_error& e) {
     std::cout << e.what() << std::endl;
   }
 }
 
+void testIcsMove(ics::ICS3& ics, const ics::ID& id) {
+  std::cout << "ICS3 'move' and 'free' method test section"  << std::endl;
+  auto degree = ics::Angle::newDegree();
+  std::cout << "move to " << degree << "[deg]" << std::endl;
+  auto nowPos = ics.move(id, degree);
+  std::cout << "now pos is " << nowPos << "[deg]" << std::endl;
+  std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+  degree = 50;
+  std::cout << "move to " << degree << "[deg]" << std::endl;
+  nowPos = ics.move(id, degree);
+  std::cout << "now pos is " << nowPos << "[deg]" << std::endl;
+  std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+  degree = -50;
+  std::cout << "move to " << degree << "[deg]" << std::endl;
+  nowPos = ics.move(id, degree);
+  std::cout << "now pos is " << nowPos << "[deg]" << std::endl;
+  std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+  degree = 0;
+  std::cout << "move to " << degree << "[deg]" << std::endl;
+  nowPos = ics.move(id, degree);
+  std::cout << "now pos is " << nowPos << "[deg]" << std::endl;
+  std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+  std::cout << "free torque" << std::endl;
+  nowPos = ics.free(id);
+  std::cout << "now pos is " << nowPos << "[deg]" << std::endl;
+}
 template<typename Iter> constexpr void dump(Iter&& begin, Iter&& end) noexcept {
   while (begin != end) std::cout << *begin << ", ";
   std::cout << std::endl;
