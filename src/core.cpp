@@ -1,6 +1,7 @@
 #include"core.hpp"
 
 #include<stdexcept>
+#include<sstream>
 #include<fcntl.h> // for open FLAGS
 #include<unistd.h> // for tty checks
 #include<cstring> // for memset
@@ -21,10 +22,14 @@ void ics::Core::communicate(std::vector<unsigned char>& tx, std::vector<unsigned
 // check section
   auto receive = rx.begin();
   for (const auto& send : tx) {
-    if (send != *receive) throw std::runtime_error {"Loopback falied"};
+    if (send != *receive) {
+      std::stringstream ss;
+      ss << "Receive falied:" << receive - rx.begin() << ':' << static_cast<int>(send) << "<->" << static_cast<int>(*receive);
+      throw std::runtime_error {ss.str()};
+    }
     receive++;
   }
-  if ((tx[0] & 0x7F) != *receive) throw std::runtime_error {"Receive failed"};
+  if ((tx[0] & 0x7F) != *receive) throw std::runtime_error {"Receive failed: fail make data"};
 }
 
 ics::Core::Core(const char* path, speed_t baudrate)
