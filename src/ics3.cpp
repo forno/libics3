@@ -54,17 +54,17 @@ void ics::ICS3::set(const ID& id, const Parameter& param) const {
   core.communicate(tx, rx); // throw std::runtime_error
 }
 
-ics::Eeprom ics::ICS3::getRom(const ID& id) const {
+ics::EepRom ics::ICS3::getRom(const ID& id) const {
   static std::vector<unsigned char> tx(2), rx(68);
   tx[0] = 0xA0 | id.get();
   tx[1] = 0;
   core.communicate(tx, rx); // throw std::runtime_error
   std::array<unsigned char, 64> rom;
   std::copy(rx.begin() + 2, rx.end(), rom.begin());
-  return Eeprom {rom}; // need friend
+  return EepRom {rom}; // need friend
 }
 
-void ics::ICS3::setRom(const ID& id, const Eeprom& rom) const {
+void ics::ICS3::setRom(const ID& id, const EepRom& rom) const {
   static std::vector<unsigned char> tx(66), rx(68);
   tx[0] = 0xC0 | id.get();
   tx[2] = 0;

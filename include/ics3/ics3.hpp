@@ -11,7 +11,7 @@ namespace ics {
   // Forward declaration
   class Core;
   class Parameter;
-  class Eeprom;
+  class EepRom;
   class ID;
 
   class ICS3 {
@@ -21,8 +21,8 @@ namespace ics {
     Angle move(const ID&, Angle) const;
     Parameter get(const ID&, const Parameter&) const;
     void set(const ID&, const Parameter&) const;
-    Eeprom getRom(const ID&) const;
-    void setRom(const ID&, const Eeprom&) const;
+    EepRom getRom(const ID&) const;
+    void setRom(const ID&, const EepRom&) const;
   private:
     const Core& core;
   };

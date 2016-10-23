@@ -9,32 +9,32 @@
 namespace ics {
   class ICS3;
 
-  class Eeprom {
+  class EepRom {
   public:
     friend ICS3; // for ICS3::getRom()
     EepParam get(EepParam) const;
     void set(const EepParam&) noexcept;
     template<typename Iter> void write(Iter&&) const noexcept;
   private:
-    explicit Eeprom(const std::array<unsigned char, 64>&);
+    explicit EepRom(const std::array<unsigned char, 64>&);
 
     std::array<unsigned char, 64> data;
   };
 
-  inline ics::EepParam ics::Eeprom::get(EepParam place) const {
+  inline ics::EepParam ics::EepRom::get(EepParam place) const {
     place.read(data);
     return place;
   }
 
-  inline void Eeprom::set(const EepParam& param) noexcept {
+  inline void EepRom::set(const EepParam& param) noexcept {
     param.write(data);
   }
 
-  template<typename Iter> inline void Eeprom::write(Iter&& dest) const noexcept {
+  template<typename Iter> inline void EepRom::write(Iter&& dest) const noexcept {
     std::copy(data.begin(), data.end(), dest);
   }
 
-  inline Eeprom::Eeprom(const std::array<unsigned char, 64>& src)
+  inline EepRom::EepRom(const std::array<unsigned char, 64>& src)
   : data {}
   {
     std::copy(src.begin(), src.end(), data.begin());
