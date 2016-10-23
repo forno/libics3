@@ -150,7 +150,7 @@ namespace ics {
     data = (*setFunc)(input, min, max); // throw std::invalid_argument
   }
 
-  EepParam& EepParam::operator=(uint16_t input) {
+  inline EepParam& EepParam::operator=(uint16_t input) {
     set(input);
     return *this;
   }
