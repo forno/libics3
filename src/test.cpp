@@ -180,6 +180,7 @@ void testICS3() {
     ics::ICS3 ics {path, baudrate};
     testIcsMove(ics, id);
     testIcsParam(ics, id);
+    testIcsEeprom(ics, id);
   } catch (std::runtime_error& e) {
     std::cout << e.what() << std::endl;
   }
@@ -223,7 +224,12 @@ void testIcsParam(ics::ICS3& ics, const ics::ID& id) {
   assert(defaultStretch == ics.get(id, defaultStretch));
 }
 
-void testIcsEeprom(ics::ICS3& ics, const ics::ID& id);
+void testIcsEeprom(ics::ICS3& ics, const ics::ID& id) {
+  std::cout << "ics 'getRom' and 'setRom' test section" << std::endl;
+  auto rom = ics.getRom(id);
+  auto defaultStretch = rom.get(ics::EepParam::stretch());
+  std::cout << "default stretch is " << defaultStretch << std::endl;
+}
 
 template<typename Iter> constexpr void dump(Iter&& begin, Iter&& end) noexcept {
   while (begin != end) std::cout << *begin << ", ";
