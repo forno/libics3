@@ -242,6 +242,6 @@ void testIcsEepRom(ics::ICS3& ics, const ics::ID& id) {
 }
 
 template<typename Iter> constexpr void dump(Iter&& begin, Iter&& end) noexcept {
-  while (begin != end) std::cout << *begin << ", ";
+  while (begin != end) std::cout << static_cast<int>(*begin++) << ", ";
   std::cout << std::endl;
 }
