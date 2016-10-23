@@ -10,7 +10,7 @@
 namespace ics {
   class ICS3;
   class Angle {
-    friend ICS3;
+    friend ICS3; // for touch setRaw
   public:
     static constexpr Angle newDegree(double = 0.0);
     static constexpr Angle newRadian(double = 0.0);
