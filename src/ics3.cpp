@@ -9,37 +9,33 @@
 #include<array>
 #include<cassert>
 
-ics::Angle getReceiveAngle(std::vector<unsigned char>::iterator&& it, ics::Angle unit) {
-  uint16_t receive {static_cast<uint16_t>((*it << 7) | *++it)};
-  try {
-    unit.setRaw(receive);
-  } catch (...) {
-    throw std::runtime_error {"Receive angle error"};
-  }
-  return unit;
+inline uint16_t getReceiveAngle(const std::vector<unsigned char>& rx) noexcept {
+  return static_cast<uint16_t>((rx[4] << 7) | rx[5]);
 }
 
 ics::ICS3::ICS3(const char* path, const Baudrate& baudrate)
 : core {Core::getReference(path, baudrate.get())}
 {}
 
-ics::Angle ics::ICS3::free(const ID& id, const Angle& unit) const {
+ics::Angle ics::ICS3::free(const ID& id, Angle unit) const {
   static std::vector<unsigned char> tx(3), rx(6);
   tx[0] = 0x80 | id.get();
   tx[1] = 0;
   tx[2] = 0;
   core.communicate(tx, rx); // throw std::runtime_error
-  return getReceiveAngle(rx.begin() + 4, unit);
+  unit.rawData = getReceiveAngle(rx);
+  return unit;
 }
 
-ics::Angle ics::ICS3::move(const ID& id, const Angle& angle) const {
+ics::Angle ics::ICS3::move(const ID& id, Angle angle) const {
   static std::vector<unsigned char> tx(3), rx(6);
   uint16_t send {angle.getRaw()};
   tx[0] = 0x80 | id.get();
   tx[1] = 0x7F & (send >> 7);
   tx[2] = 0x7F & send;
   core.communicate(tx, rx); // throw std::runtime_error
-  return getReceiveAngle(rx.begin() + 4, angle);
+  angle.rawData = getReceiveAngle(rx);
+  return angle;
 }
 
 ics::Parameter ics::ICS3::get(const ID& id, const Parameter& place) const {
