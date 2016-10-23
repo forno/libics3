@@ -3,15 +3,16 @@
 
 #include<vector>
 #include<termios.h>
+#include<string>
 
 namespace ics {
   class Core {
   public:
     ~Core() noexcept;
-    static const Core& getReference(const char*, speed_t); 
+    static const Core& getReference(const std::string&, speed_t); 
     void communicate(std::vector<unsigned char>&, std::vector<unsigned char>&) const;
   private:
-    explicit Core(const char*, speed_t);
+    explicit Core(const std::string&, speed_t);
     static termios getTermios() noexcept;
 
     int fd;

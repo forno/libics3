@@ -11,7 +11,7 @@ ics::Core::~Core() noexcept {
   close(fd);
 }
 
-const ics::Core& ics::Core::getReference(const char* path, speed_t baudrate) {
+const ics::Core& ics::Core::getReference(const std::string& path, speed_t baudrate) {
   static const Core core {path, baudrate}; // update plan: mutable path and baudrate
   return core;
 }
@@ -32,8 +32,8 @@ void ics::Core::communicate(std::vector<unsigned char>& tx, std::vector<unsigned
   if ((tx[0] & 0x7F) != *receive) throw std::runtime_error {"Receive failed: fail make data"};
 }
 
-ics::Core::Core(const char* path, speed_t baudrate)
-: fd {open(path, O_RDWR | O_NOCTTY)},
+ics::Core::Core(const std::string& path, speed_t baudrate)
+: fd {open(path.c_str(), O_RDWR | O_NOCTTY)},
   oldTio {}
 {
   if (fd < 0)
