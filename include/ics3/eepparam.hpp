@@ -18,7 +18,7 @@ namespace ics {
       SLAVE =     0x80
     };
 
-    static constexpr EepParam strech(uint16_t = 60);
+    static constexpr EepParam stretch(uint16_t = 60);
     static constexpr EepParam speed(uint16_t = 127);
     static constexpr EepParam punch(uint16_t = 1);
     static constexpr EepParam deadBand(uint16_t = 2);
@@ -64,7 +64,7 @@ namespace ics {
     uint16_t data;
   };
 
-  constexpr EepParam EepParam::strech(uint16_t data) {
+  constexpr EepParam EepParam::stretch(uint16_t data) {
     return EepParam {2, 2, 2, 254, &EepParam::checkInvalidEvenRange, data};
   }
 
