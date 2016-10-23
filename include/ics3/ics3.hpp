@@ -1,6 +1,7 @@
 #ifndef LIBICS3_ICS3_ICS3_H_
 #define LIBICS3_ICS3_ICS3_H_
 
+#include<string>
 #include<termios.h>
 
 #include"ics3/angle.hpp"
@@ -15,7 +16,7 @@ namespace ics {
 
   class ICS3 {
   public:
-    explicit ICS3(const char*, const Baudrate& = Baudrate::RATE115200());
+    explicit ICS3(const std::string&, const Baudrate& = Baudrate::RATE115200());
     Angle free(const ID&, Angle = Angle::newRadian()) const;
     Angle move(const ID&, Angle) const;
     Parameter get(const ID&, const Parameter&) const;

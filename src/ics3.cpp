@@ -13,7 +13,7 @@ inline uint16_t getReceiveAngle(const std::vector<unsigned char>& rx) noexcept {
   return static_cast<uint16_t>((rx[4] << 7) | rx[5]);
 }
 
-ics::ICS3::ICS3(const char* path, const Baudrate& baudrate)
+ics::ICS3::ICS3(const std::string& path, const Baudrate& baudrate)
 : core {Core::getReference(path, baudrate.get())}
 {}
 
