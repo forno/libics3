@@ -175,28 +175,28 @@ void testICS3() {
   auto degree = ics::Angle::newDegree();
   try {
     ics::ICS3 ics {"/dev/ttyUSB0", baudrate};
-    std::cout << "move to " << degree << " [deg]" << std::endl;
+    std::cout << "move to " << degree << "[deg]" << std::endl;
     auto nowPos = ics.move(id, degree);
-    std::cout << "now pos is " << nowPos << std::endl;
+    std::cout << "now pos is " << nowPos << "[deg]" << std::endl;
     std::this_thread::sleep_for(std::chrono::milliseconds(1500));
     degree = 50;
-    std::cout << "move to " << degree << " [deg]" << std::endl;
+    std::cout << "move to " << degree << "[deg]" << std::endl;
     nowPos = ics.move(id, degree);
-    std::cout << "now pos is " << nowPos << std::endl;
+    std::cout << "now pos is " << nowPos << "[deg]" << std::endl;
     std::this_thread::sleep_for(std::chrono::milliseconds(1500));
     degree = -50;
-    std::cout << "move to " << degree << " [deg]" << std::endl;
+    std::cout << "move to " << degree << "[deg]" << std::endl;
     nowPos = ics.move(id, degree);
-    std::cout << "now pos is " << nowPos << std::endl;
+    std::cout << "now pos is " << nowPos << "[deg]" << std::endl;
     std::this_thread::sleep_for(std::chrono::milliseconds(1500));
     degree = 0;
-    std::cout << "move to " << degree << " [deg]" << std::endl;
+    std::cout << "move to " << degree << "[deg]" << std::endl;
     nowPos = ics.move(id, degree);
-    std::cout << "now pos is " << nowPos << std::endl;
+    std::cout << "now pos is " << nowPos << "[deg]" << std::endl;
     std::this_thread::sleep_for(std::chrono::milliseconds(1500));
     std::cout << "free torque" << std::endl;
     nowPos = ics.free(id);
-    std::cout << "now pos is " << nowPos << std::endl;
+    std::cout << "now pos is " << nowPos << "[deg]" << std::endl;
   } catch (std::runtime_error& e) {
     std::cout << e.what() << std::endl;
   }
