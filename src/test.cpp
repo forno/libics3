@@ -179,6 +179,7 @@ void testICS3() {
   try {
     ics::ICS3 ics {path, baudrate};
     testIcsMove(ics, id);
+    testIcsParam(ics, id);
   } catch (std::runtime_error& e) {
     std::cout << e.what() << std::endl;
   }
@@ -210,6 +211,19 @@ void testIcsMove(ics::ICS3& ics, const ics::ID& id) {
   nowPos = ics.free(id);
   std::cout << "now pos is " << nowPos << "[deg]" << std::endl;
 }
+
+void testIcsParam(ics::ICS3& ics, const ics::ID& id) {
+  auto defaultStretch = ics.get(id, ics::Parameter::stretch());
+  std::cout << "default stretch is " << static_cast<int>(defaultStretch) << std::endl;
+  constexpr uint8_t writeNumber {31};
+  ics.set(id, ics::Parameter::stretch(writeNumber));
+  auto newStretch = ics.get(id, defaultStretch);
+  ics.set(id, defaultStretch); // before checking, restore data.
+  assert(newStretch == 31);
+}
+
+void testIcsEeprom(ics::ICS3& ics, const ics::ID& id);
+
 template<typename Iter> constexpr void dump(Iter&& begin, Iter&& end) noexcept {
   while (begin != end) std::cout << *begin << ", ";
   std::cout << std::endl;
