@@ -6,7 +6,7 @@ constexpr int byteSize {4};
 constexpr uint16_t mask {0xF};
 
 void ics::EepParam::write(std::array<uint8_t, 64>& dest) const noexcept {
-  uint16_t nowData = data;
+  uint16_t nowData {data};
   for (size_t i {offset + length - 1}; i >= offset; --i) {
     dest[i] = nowData & mask;
     nowData >>= byteSize;
