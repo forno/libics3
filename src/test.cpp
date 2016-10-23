@@ -220,6 +220,7 @@ void testIcsParam(ics::ICS3& ics, const ics::ID& id) {
   auto newStretch = ics.get(id, defaultStretch);
   ics.set(id, defaultStretch); // before checking, restore data.
   assert(newStretch == 31);
+  assert(defaultStretch == ics.get(id, defaultStretch));
 }
 
 void testIcsEeprom(ics::ICS3& ics, const ics::ID& id);
