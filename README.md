@@ -2,7 +2,7 @@
 The c++ library of ICS3.x communication for drive servo motors on Linux.
 
 ## Description
-libics3 is c++ API for drive servo motors
+libics3 is c++ library for drive servo motors
 that suport ICS3.5 or after serial communication.
 
 ex)[KRS series servo moters produced by KONDO KAGAKU co., ltd.](http://kondo-robot.com/product-category/servomotor/krs)
