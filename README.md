@@ -1,5 +1,5 @@
 # The libics3
-The c++ API of ICS3.x communication for drive servo motors on Linux.
+The c++ library of ICS3.x communication for drive servo motors on Linux.
 
 ## Description
 libics3 is c++ API for drive servo motors
