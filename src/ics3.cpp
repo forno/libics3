@@ -17,16 +17,6 @@ ics::ICS3::ICS3(const std::string& path, const Baudrate& baudrate)
 : core {Core::getReference(path, baudrate.get())}
 {}
 
-ics::Angle ics::ICS3::free(const ID& id, Angle unit) const {
-  static std::vector<uint8_t> tx(3), rx(6);
-  tx[0] = 0x80 | id.get();
-  tx[1] = 0;
-  tx[2] = 0;
-  core.communicate(tx, rx); // throw std::runtime_error
-  unit.rawData = getReceiveAngle(rx);
-  return unit;
-}
-
 ics::Angle ics::ICS3::move(const ID& id, Angle angle) const {
   static std::vector<uint8_t> tx(3), rx(6);
   uint16_t send {angle.getRaw()};
@@ -36,6 +26,16 @@ ics::Angle ics::ICS3::move(const ID& id, Angle angle) const {
   core.communicate(tx, rx); // throw std::runtime_error
   angle.rawData = getReceiveAngle(rx);
   return angle;
+}
+
+ics::Angle ics::ICS3::free(const ID& id, Angle unit) const {
+  static std::vector<uint8_t> tx(3), rx(6);
+  tx[0] = 0x80 | id.get();
+  tx[1] = 0;
+  tx[2] = 0;
+  core.communicate(tx, rx); // throw std::runtime_error
+  unit.rawData = getReceiveAngle(rx);
+  return unit;
 }
 
 ics::Parameter ics::ICS3::get(const ID& id, const Parameter& place) const {
