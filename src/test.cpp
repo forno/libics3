@@ -236,7 +236,6 @@ void testIcsEepRom(ics::ICS3& ics, const ics::ID& id) {
   ics.setRom(id, setRom);
   auto newRom = ics.getRom(id);
   ics.setRom(id, rom); // before checking, restore data.
-  auto checkRom = ics.getRom(id);
   assert(newRom.get(defaultStretch) == writeNumber);
   auto lastRom = ics.getRom(id);
   assert(defaultStretch == lastRom.get(defaultStretch));
