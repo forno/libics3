@@ -23,24 +23,11 @@ Reference [the libics3 wiki](https://github.com/forno/libics3/wiki)
 git clone https://github.com/forno/libics3.git
 ```
 ### Build
+#### Normal method
 
 ```sh
 cd libics3
 mkdir build && cd build
-cmake .. -DCMAKE_INSTALL_PREFIX=$HOME/libics3
-make
-make install
-```
-You need to specify `-Dlibics3_DIR=$HOME/libics3/lib/cmake/libics3`
-with `cmake` for CMake based third-party application to find libics3.
-
-Or, you can remove `CMAKE_INSTALL_PREFIX` parameter on this installation,
-and you maybe need `sudo` for `make install` this way,
-and system can find to libics3 without your specify.
-
-ex)
-
-```bash
 cmake ..
 make
 sudo make install
