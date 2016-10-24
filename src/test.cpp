@@ -217,7 +217,7 @@ void testIcsParam(ics::ICS3& ics, const ics::ID& id) {
   std::cout << "ICS3 'get' and 'set' method test section"  << std::endl;
   auto defaultStretch = ics.get(id, ics::Parameter::stretch());
   std::cout << "default stretch is " << static_cast<int>(defaultStretch) << std::endl;
-  constexpr uint8_t writeNumber {31};
+  constexpr uint8_t writeNumber {29};
   ics.set(id, ics::Parameter::stretch(writeNumber));
   auto newStretch = ics.get(id, defaultStretch);
   ics.set(id, defaultStretch); // before checking, restore data.
@@ -230,12 +230,13 @@ void testIcsEepRom(ics::ICS3& ics, const ics::ID& id) {
   auto rom = ics.getRom(id);
   auto defaultStretch = rom.get(ics::EepParam::stretch());
   std::cout << "default stretch is " << defaultStretch << std::endl;
-  constexpr uint16_t writeNumber {62};
   auto setRom = rom;
+  constexpr uint16_t writeNumber {62};
   setRom.set(ics::EepParam::stretch(writeNumber));
   ics.setRom(id, setRom);
   auto newRom = ics.getRom(id);
   ics.setRom(id, rom); // before checking, restore data.
+  auto checkRom = ics.getRom(id);
   assert(newRom.get(defaultStretch) == writeNumber);
   auto lastRom = ics.getRom(id);
   assert(defaultStretch == lastRom.get(defaultStretch));

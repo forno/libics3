@@ -63,7 +63,7 @@ termios ics::Core::getTermios() noexcept {
   newTio.c_oflag = 0;
   newTio.c_cflag = CS8 | CREAD | CLOCAL | PARENB;
   newTio.c_lflag = 0;
-  newTio.c_cc[VMIN] = 0;
+  newTio.c_cc[VMIN] = 1;
   newTio.c_cc[VTIME] = 1;
   return newTio;
 }
