@@ -15,7 +15,7 @@ namespace ics {
     explicit Core(const std::string&, speed_t);
     static termios getTermios() noexcept;
 
-    int fd;
+    const int fd;
     termios oldTio;
   };
 }
