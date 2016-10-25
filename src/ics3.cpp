@@ -38,12 +38,12 @@ ics::Angle ics::ICS3::free(const ID& id, Angle unit) const {
   return unit;
 }
 
-ics::Parameter ics::ICS3::get(const ID& id, const Parameter& place) const {
+ics::Parameter ics::ICS3::get(const ID& id, Parameter place) const {
   static std::vector<uint8_t> tx(2), rx(5);
   tx[0] = 0xA0 | id.get();
   tx[1] = place.getSubcommand();
   core.communicate(tx, rx); // throw std::runtime_error
-  return Parameter::newParameter(place, rx[4]);
+  return place = rx[4];
 }
 
 void ics::ICS3::set(const ID& id, const Parameter& param) const {
