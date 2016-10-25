@@ -2,8 +2,8 @@
 #define LIBICS3_ICS3_CORE_H_
 
 #include<vector>
-#include<termios.h>
 #include<string>
+#include<termios.h>
 
 namespace ics {
   class Core {

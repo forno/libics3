@@ -1,10 +1,9 @@
 #ifndef LIBICS3_ICS3_EEPROM_H_
 #define LIBICS3_ICS3_EEPROM_H_
 
-#include<array>
-#include<algorithm>
-
 #include"ics3/eepparam.hpp"
+
+#include<algorithm>
 
 namespace ics {
   class ICS3;

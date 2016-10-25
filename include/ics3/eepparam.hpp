@@ -5,7 +5,6 @@
 #include"ics3/baudrate.hpp"
 
 #include<array>
-#include<stdexcept>
 
 namespace ics {
   class EepParam {

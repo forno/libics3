@@ -3,10 +3,6 @@
 
 #include"ics3/check_invalid.hpp"
 
-#define _USE_MATH_DEFINES
-#include<cmath>
-#undef _USE_MATH_DEFINES
-
 namespace ics {
   class ICS3;
   class Angle {
@@ -19,6 +15,7 @@ namespace ics {
     static constexpr uint16_t MIN {3500};
     static constexpr uint16_t MID {7500};
     static constexpr uint16_t MAX {11500};
+    static constexpr double PI {3.141592653589793};
 
     Angle& operator=(const Angle&) noexcept;
     constexpr double get() const noexcept;
@@ -41,7 +38,7 @@ namespace ics {
   }
 
   constexpr Angle Angle::newRadian(double angle) {
-    return Angle {16000.0 / 3.0 / M_PI, angle};
+    return Angle {16000.0 / 3.0 / PI, angle};
   }
 
   constexpr Angle Angle::newSameUnit(const Angle& unit, double angle) {

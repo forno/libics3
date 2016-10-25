@@ -1,11 +1,10 @@
 #ifndef LIBICS3_ICS3_ICS3_H_
 #define LIBICS3_ICS3_ICS3_H_
 
-#include<string>
-#include<termios.h>
-
 #include"ics3/angle.hpp"
 #include"ics3/baudrate.hpp"
+
+#include<string>
 
 namespace ics {
   // Forward declaration

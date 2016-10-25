@@ -5,8 +5,6 @@
 #include"ics3/parameter.hpp"
 #include"ics3/id.hpp"
 
-#include<stdexcept>
-
 inline uint16_t getReceiveAngle(const std::vector<uint8_t>& rx) noexcept {
   return static_cast<uint16_t>((rx[4] << 7) | rx[5]);
 }

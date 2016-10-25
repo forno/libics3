@@ -1,9 +1,9 @@
+#include "ics3/ics"
+
 #include<iostream>
 #include<cassert>
 #include<thread>
 #include<chrono>
-
-#include "ics3/ics"
 
 void testAngle();
 void testBaudrate();

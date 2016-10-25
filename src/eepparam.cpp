@@ -1,7 +1,5 @@
 #include"ics3/eepparam.hpp"
 
-#include<stdexcept>
-
 constexpr int byteSize {4};
 constexpr uint16_t mask {0xF};
 
