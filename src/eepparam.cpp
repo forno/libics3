@@ -1,7 +1,7 @@
 #include"ics3/eepparam.hpp"
 
-constexpr int byteSize {4};
-constexpr uint16_t mask {0xF};
+static constexpr int byteSize {4};
+static constexpr uint16_t mask {0xF};
 
 void ics::EepParam::write(std::array<uint8_t, 64>& dest) const noexcept {
   uint16_t nowData {data};
