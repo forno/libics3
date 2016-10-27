@@ -20,7 +20,7 @@ ics::Angle ics::ICS3::move(const ID& id, Angle angle) const {
   tx[1] = 0x7F & (send >> 7);
   tx[2] = 0x7F & send;
   core.communicate(tx, rx); // throw std::runtime_error
-  angle.rawData = getReceiveAngle(rx);
+  angle.rawData = getReceiveAngle(rx); // need friend
   return angle;
 }
 
@@ -28,7 +28,7 @@ ics::Angle ics::ICS3::free(const ID& id, Angle unit) const {
   static std::vector<uint8_t> tx(3), rx(6);
   tx[0] = 0x80 | id.get(); // tx[1] == tx[2] == 0
   core.communicate(tx, rx); // throw std::runtime_error
-  unit.rawData = getReceiveAngle(rx);
+  unit.rawData = getReceiveAngle(rx); // need friend
   return unit;
 }
 
