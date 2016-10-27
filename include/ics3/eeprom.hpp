@@ -13,7 +13,7 @@ namespace ics {
     friend ICS3; // for ICS3::getRom()
     EepParam get(EepParam) const;
     void set(const EepParam&) noexcept;
-    template<typename Iter> void write(Iter&&) const noexcept;
+    template<typename Iter> void write(Iter&&) const;
   private:
     explicit EepRom(const std::array<uint8_t, 64>&);
 
@@ -21,7 +21,7 @@ namespace ics {
   };
 
   inline ics::EepParam ics::EepRom::get(EepParam place) const {
-    place.read(data);
+    place.read(data); // throw std::out_of_range
     return place;
   }
 
@@ -29,7 +29,7 @@ namespace ics {
     param.write(data);
   }
 
-  template<typename Iter> inline void EepRom::write(Iter&& dest) const noexcept {
+  template<typename Iter> inline void EepRom::write(Iter&& dest) const {
     std::copy(data.begin(), data.end(), dest);
   }
 
