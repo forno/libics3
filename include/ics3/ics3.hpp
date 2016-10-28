@@ -23,7 +23,7 @@ namespace ics {
     EepRom getRom(const ID&) const;
     void setRom(const ID&, const EepRom&) const;
   private:
-    const Core& core;
+    Core& core;
   };
 }
 

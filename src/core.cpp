@@ -7,16 +7,31 @@
 #include<cstring> // for memset
 
 ics::Core::~Core() noexcept {
+  if (fd < 0) return;
   tcsetattr(fd, TCSANOW, &oldTio);
   close(fd);
 }
 
-const ics::Core& ics::Core::getReference(const std::string& path, speed_t baudrate) {
-  static const Core core {path, baudrate}; // update plan: mutable path and baudrate
+ics::Core::Core(Core&& rhs)
+: fd {rhs.fd},
+  oldTio {rhs.oldTio}
+{
+  rhs.fd = -1;
+}
+
+ics::Core& ics::Core::operator=(Core&& rhs) {
+  fd = rhs.fd;
+  oldTio = rhs.oldTio;
+  rhs.fd = -1;
+  return *this;
+}
+
+ics::Core& ics::Core::getReference(const std::string& path, speed_t baudrate) {
+  static Core core {path, baudrate}; // update plan: mutable path and baudrate
   return core;
 }
 
-void ics::Core::communicate(std::vector<uint8_t>& tx, std::vector<uint8_t>& rx) const {
+void ics::Core::communicate(std::vector<uint8_t>& tx, std::vector<uint8_t>& rx) {
   write(fd, tx.data(), tx.size()); // send
   for (auto& receive : rx) read(fd, &receive, 1); // receive
 // check section
