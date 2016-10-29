@@ -93,7 +93,7 @@ void testEepParam() {
   try {
     ics::EepParam::flag(10);
     assert(false);
-  } catch (std::out_of_range& e) {
+  } catch (std::invalid_argument& e) {
     std::cout << e.what() << std::endl;
   }
 
