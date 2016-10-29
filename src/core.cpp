@@ -37,7 +37,7 @@ std::shared_ptr<ics::Core> ics::Core::getCore(const std::string& path, speed_t b
   return objPtr;
 }
 
-void ics::Core::communicate(std::vector<uint8_t>& tx, std::vector<uint8_t>& rx) {
+void ics::Core::communicate(const std::vector<uint8_t>& tx, std::vector<uint8_t>& rx) {
   write(fd, tx.data(), tx.size()); // send
   for (auto& receive : rx) read(fd, &receive, 1); // receive
 // check section
