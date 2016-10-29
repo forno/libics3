@@ -13,31 +13,29 @@ ics::ICS3::ICS3(const std::string& path, const Baudrate& baudrate)
 : core {Core::getCore(path, baudrate.getSpeed())}
 {}
 
-ics::Angle ics::ICS3::move(const ID& id, Angle angle) {
+ics::Angle ics::ICS3::move(const ID& id, const Angle& angle) {
   static std::vector<uint8_t> tx(3), rx(6);
-  uint16_t send {angle.getRaw()};
+  const uint16_t send {angle.getRaw()};
   tx[0] = 0x80 | id.get();
   tx[1] = 0x7F & (send >> 7);
   tx[2] = 0x7F & send;
   core->communicate(tx, rx); // throw std::runtime_error
-  angle.rawData = getReceiveAngle(rx); // need friend
-  return angle;
+  return Angle::newSameUnit(angle, getReceiveAngle(rx));
 }
 
-ics::Angle ics::ICS3::free(const ID& id, Angle unit) {
+ics::Angle ics::ICS3::free(const ID& id, const Angle& unit) {
   static std::vector<uint8_t> tx(3), rx(6);
   tx[0] = 0x80 | id.get(); // tx[1] == tx[2] == 0
   core->communicate(tx, rx); // throw std::runtime_error
-  unit.rawData = getReceiveAngle(rx); // need friend
-  return unit;
+  return Angle::newSameUnit(unit, getReceiveAngle(rx));
 }
 
-ics::Parameter ics::ICS3::get(const ID& id, Parameter type) {
+ics::Parameter ics::ICS3::get(const ID& id, const Parameter& type) {
   static std::vector<uint8_t> tx(2), rx(5);
   tx[0] = 0xA0 | id.get();
   tx[1] = type.getSubcommand();
   core->communicate(tx, rx); // throw std::runtime_error
-  return type = rx[4];
+  return Parameter::newParameter(type, rx[4]);
 }
 
 void ics::ICS3::set(const ID& id, const Parameter& param) {

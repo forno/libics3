@@ -17,9 +17,9 @@ namespace ics {
   class ICS3 {
   public:
     explicit ICS3(const std::string&, const Baudrate& = Baudrate::RATE115200());
-    Angle move(const ID&, Angle);
-    Angle free(const ID&, Angle = Angle::newRadian());
-    Parameter get(const ID&, Parameter);
+    Angle move(const ID&, const Angle&);
+    Angle free(const ID&, const Angle& = Angle::newRadian());
+    Parameter get(const ID&, const Parameter&);
     void set(const ID&, const Parameter&);
     EepRom getRom(const ID&);
     void setRom(const ID&, const EepRom&);
