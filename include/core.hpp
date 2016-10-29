@@ -3,6 +3,7 @@
 
 #include<vector>
 #include<string>
+#include<memory>
 #include<termios.h>
 
 namespace ics {
@@ -14,7 +15,7 @@ namespace ics {
     Core(Core&&);
     Core& operator=(Core&&);
 
-    static Core& getReference(const std::string&, speed_t);
+    static std::shared_ptr<Core> getCore(const std::string&, speed_t);
     void communicate(std::vector<uint8_t>&, std::vector<uint8_t>&);
   private:
     explicit Core(const std::string&, speed_t);

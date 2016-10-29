@@ -5,6 +5,7 @@
 #include"ics3/baudrate.hpp"
 
 #include<string>
+#include<memory>
 
 namespace ics {
   // Forward declaration
@@ -23,7 +24,7 @@ namespace ics {
     EepRom getRom(const ID&);
     void setRom(const ID&, const EepRom&);
   private:
-    Core& core;
+    std::shared_ptr<Core> core;
   };
 }
 

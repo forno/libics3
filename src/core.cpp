@@ -5,6 +5,7 @@
 #include<fcntl.h> // for open FLAGS
 #include<unistd.h> // for tty checks
 #include<cstring> // for memset
+#include<unordered_map> // for cash
 
 ics::Core::~Core() noexcept {
   if (fd < 0) return;
@@ -26,9 +27,14 @@ ics::Core& ics::Core::operator=(Core&& rhs) {
   return *this;
 }
 
-ics::Core& ics::Core::getReference(const std::string& path, speed_t baudrate) {
-  static Core core {path, baudrate}; // update plan: mutable path and baudrate
-  return core;
+std::shared_ptr<ics::Core> ics::Core::getCore(const std::string& path, speed_t baudrate) {
+  static std::unordered_map<std::string, std::weak_ptr<Core>> cache;
+  auto objPtr = cache[path].lock();
+  if (!objPtr) {
+    objPtr = std::shared_ptr<Core> {new Core {path, baudrate}};
+    cache[path] = objPtr;
+  }
+  return objPtr;
 }
 
 void ics::Core::communicate(std::vector<uint8_t>& tx, std::vector<uint8_t>& rx) {
