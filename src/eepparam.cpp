@@ -18,5 +18,5 @@ void ics::EepParam::read(const std::array<uint8_t, 64>& src) {
     result <<= byteSize;
     result |= src[i] & mask;
   }
-  set(result); // throw std::invalid_argument
+  set(result); // throw std::invalid_argument, std::out_of_range
 }

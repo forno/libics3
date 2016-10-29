@@ -146,7 +146,7 @@ namespace ics {
   }
 
   inline void EepParam::set(uint16_t input) {
-    data = (*setFunc)(input, min, max); // throw std::invalid_argument
+    data = (*setFunc)(input, min, max); // throw std::invalid_argument, std::out_of_range
   }
 
   inline EepParam& EepParam::operator=(uint16_t input) {
@@ -167,7 +167,7 @@ namespace ics {
     min(min),
     max(max),
     setFunc(setFunc),
-    data(setFunc(data, min, max)) // throw std::invalid_argument
+    data(setFunc(data, min, max)) // throw std::invalid_argument, std::out_of_range
   {}
 
   constexpr uint16_t EepParam::checkInvalidRange(uint16_t input, uint16_t min, uint16_t max) {
@@ -177,12 +177,12 @@ namespace ics {
   constexpr uint16_t EepParam::checkInvalidEvenRange(uint16_t input, uint16_t min, uint16_t max) {
     return input % 2 ?
            throw std::out_of_range {"Must even value"} :
-           checkInvalidRange(input, min, max); // throw std::invalid_argument
+           checkInvalidRange(input, min, max); // throw std::out_of_range
   }
 
   constexpr uint16_t EepParam::checkInvalidFlag(uint16_t input, uint16_t, uint16_t) {
-    return !(input & 0x04) ? throw std::out_of_range {"Eepparam(flag): Must up bits 0x04"} :
-           ~(input | ~0x60) ? throw std::out_of_range {"Eepparam(flag): Must down bits 0x60"} :
+    return !(input & 0x04) ? throw std::invalid_argument {"Eepparam(flag): Must up bits 0x04"} :
+           ~(input | ~0x60) ? throw std::invalid_argument {"Eepparam(flag): Must down bits 0x60"} :
            input;
   }
 
