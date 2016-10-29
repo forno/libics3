@@ -77,9 +77,9 @@ void testBaudrate() {
   std::cout << std::endl << "Baudrate test section" << std::endl;
   // constexpr test
   constexpr auto baudrate115200 = ics::Baudrate::RATE115200();
-  static_assert(baudrate115200 == B115200, "Baudrate: not equal B115200");
-  static_assert(baudrate115200.getRomData() == 10, "Baudrate: romdata error");
-  static_assert(baudrate115200.get() == B115200, "Baudrate: get method error");
+  static_assert(baudrate115200 == 10, "Baudrate: not equal B115200");
+  static_assert(baudrate115200.get() == 10, "Baudrate: romdata error");
+  static_assert(baudrate115200.getSpeed() == B115200, "Baudrate: getSpeed method error");
 }
 
 void testEepParam() {

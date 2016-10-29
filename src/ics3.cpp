@@ -13,7 +13,7 @@ ics::ICS3::ICS3(const std::string& path, const Baudrate& baudrate)
 : core {Core::getReference(path, baudrate.get())}
 {}
 
-ics::Angle ics::ICS3::move(const ID& id, Angle angle) const {
+ics::Angle ics::ICS3::move(const ID& id, Angle angle) {
   static std::vector<uint8_t> tx(3), rx(6);
   uint16_t send {angle.getRaw()};
   tx[0] = 0x80 | id.get();
@@ -24,7 +24,7 @@ ics::Angle ics::ICS3::move(const ID& id, Angle angle) const {
   return angle;
 }
 
-ics::Angle ics::ICS3::free(const ID& id, Angle unit) const {
+ics::Angle ics::ICS3::free(const ID& id, Angle unit) {
   static std::vector<uint8_t> tx(3), rx(6);
   tx[0] = 0x80 | id.get(); // tx[1] == tx[2] == 0
   core.communicate(tx, rx); // throw std::runtime_error
@@ -32,7 +32,7 @@ ics::Angle ics::ICS3::free(const ID& id, Angle unit) const {
   return unit;
 }
 
-ics::Parameter ics::ICS3::get(const ID& id, Parameter type) const {
+ics::Parameter ics::ICS3::get(const ID& id, Parameter type) {
   static std::vector<uint8_t> tx(2), rx(5);
   tx[0] = 0xA0 | id.get();
   tx[1] = type.getSubcommand();
@@ -40,7 +40,7 @@ ics::Parameter ics::ICS3::get(const ID& id, Parameter type) const {
   return type = rx[4];
 }
 
-void ics::ICS3::set(const ID& id, const Parameter& param) const {
+void ics::ICS3::set(const ID& id, const Parameter& param) {
   static std::vector<uint8_t> tx(3), rx(6);
   tx[0] = 0xC0 | id.get();
   tx[1] = param.getSubcommand();
@@ -48,7 +48,7 @@ void ics::ICS3::set(const ID& id, const Parameter& param) const {
   core.communicate(tx, rx); // throw std::runtime_error
 }
 
-ics::EepRom ics::ICS3::getRom(const ID& id) const {
+ics::EepRom ics::ICS3::getRom(const ID& id) {
   static std::vector<uint8_t> tx(2), rx(68);
   tx[0] = 0xA0 | id.get(); // tx[1] == 0
   core.communicate(tx, rx); // throw std::runtime_error
@@ -57,7 +57,7 @@ ics::EepRom ics::ICS3::getRom(const ID& id) const {
   return EepRom {romData}; // need friend
 }
 
-void ics::ICS3::setRom(const ID& id, const EepRom& rom) const {
+void ics::ICS3::setRom(const ID& id, const EepRom& rom) {
   static std::vector<uint8_t> tx(66), rx(68);
   tx[0] = 0xC0 | id.get(); // tx[1] == 0
   rom.write(tx.begin() + 2);

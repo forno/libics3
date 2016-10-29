@@ -20,9 +20,9 @@ namespace ics {
     std::array<uint8_t, 64> data;
   };
 
-  inline ics::EepParam ics::EepRom::get(EepParam place) const {
-    place.read(data); // throw std::out_of_range
-    return place;
+  inline ics::EepParam ics::EepRom::get(EepParam type) const {
+    type.read(data); // throw std::out_of_range
+    return type;
   }
 
   inline void EepRom::set(const EepParam& param) noexcept {

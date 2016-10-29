@@ -10,9 +10,9 @@ namespace ics {
   class EepParam {
   public:
     enum Flag : uint16_t {
-      REVERSE =   0x1,
-      FREE =      0x2,
-      PWMINH =    0x8,
+      REVERSE =   0x01,
+      FREE =      0x02,
+      PWMINH =    0x08,
       ROLL_MODE = 0x10,
       SLAVE =     0x80
     };
@@ -118,7 +118,7 @@ namespace ics {
   }
 
   constexpr EepParam EepParam::userOffset(uint16_t data) {
-    return EepParam {52, 2, static_cast<uint16_t>(-127), 127, &EepParam::checkInvalidOffset, data};
+    return EepParam {52, 2, 0x81, 127, &EepParam::checkInvalidOffset, data}; // 0x81 is -127 on uint8_t type
   }
 
   constexpr EepParam EepParam::id(uint16_t data) {
@@ -187,15 +187,15 @@ namespace ics {
   }
 
   constexpr uint16_t EepParam::checkInvalidBaudrate(uint16_t input, uint16_t, uint16_t) {
-    return input == Baudrate::RATE115200().getRomData() ? input :
-           //input == Baudrate::RATE625000().getRomData() ? input :
-           //input == Baudrate::RATE1250000().getRomData() ? input :
+    return input == Baudrate::RATE115200().get() ? input :
+           //input == Baudrate::RATE625000().get() ? input :
+           //input == Baudrate::RATE1250000().get() ? input :
            throw std::invalid_argument {"baudrate not exist"};
   }
 
   constexpr uint16_t EepParam::checkInvalidOffset(uint16_t input, uint16_t min, uint16_t max) {
-    return input < max ? input : // this min < 0; min of uint16_t is 0
-           min < input ? input : // this min < 0; input must bigger than min.
+    return input < max ? input : // this min < 0; min value is 0
+           min < input ? input : // this min < 0; input must is bigger than min.
            throw std::out_of_range {"Eeprom(offset): range over"}; // min < input < max is failed
   }
 }

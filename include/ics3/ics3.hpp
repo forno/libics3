@@ -16,12 +16,12 @@ namespace ics {
   class ICS3 {
   public:
     explicit ICS3(const std::string&, const Baudrate& = Baudrate::RATE115200());
-    Angle move(const ID&, Angle) const;
-    Angle free(const ID&, Angle = Angle::newRadian()) const;
-    Parameter get(const ID&, Parameter) const;
-    void set(const ID&, const Parameter&) const;
-    EepRom getRom(const ID&) const;
-    void setRom(const ID&, const EepRom&) const;
+    Angle move(const ID&, Angle);
+    Angle free(const ID&, Angle = Angle::newRadian());
+    Parameter get(const ID&, Parameter);
+    void set(const ID&, const Parameter&);
+    EepRom getRom(const ID&);
+    void setRom(const ID&, const EepRom&);
   private:
     Core& core;
   };
