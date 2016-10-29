@@ -37,10 +37,8 @@ namespace ics {
   }
 
   inline EepRom::EepRom(const std::array<uint8_t, 64>& src)
-  : data {}
-  {
-    std::copy(src.begin(), src.end(), data.begin());
-  }
+  : data(src)
+  {}
 }
 
 #endif // LIBICS3_ICS3_EEPROM_H_
