@@ -69,7 +69,7 @@ void ics::Core::communicate(const std::vector<uint8_t>& tx, std::vector<uint8_t>
   for (const auto& send : tx) {
     if (send != *receive) {
       std::stringstream ss;
-      ss << "Receive falied(loopback):" << receive - rx.begin() << ':' << static_cast<int>(send) << "<->" << static_cast<int>(*receive);
+      ss << "Receive falied(loopback):" << receive - rx.cbegin() << ':' << static_cast<int>(send) << "<->" << static_cast<int>(*receive);
       throw std::runtime_error {ss.str()};
     }
     ++receive;
@@ -85,7 +85,7 @@ void ics::Core::communicateID(const std::vector<uint8_t>& tx, std::vector<uint8_
   for (const auto& send : tx) {
     if (send != *receive) {
       std::stringstream ss;
-      ss << "Receive falied(loopback):" << receive - rx.begin() << ':' << static_cast<int>(send) << "<->" << static_cast<int>(*receive);
+      ss << "Receive falied(loopback):" << receive - rx.cbegin() << ':' << static_cast<int>(send) << "<->" << static_cast<int>(*receive);
       throw std::runtime_error {ss.str()};
     }
     ++receive;
