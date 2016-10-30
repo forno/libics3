@@ -69,12 +69,12 @@ void ics::Core::communicate(const std::vector<uint8_t>& tx, std::vector<uint8_t>
   for (const auto& send : tx) {
     if (send != *receive) {
       std::stringstream ss;
-      ss << "Receive falied:" << receive - rx.begin() << ':' << static_cast<int>(send) << "<->" << static_cast<int>(*receive);
+      ss << "Receive falied(loopback):" << receive - rx.begin() << ':' << static_cast<int>(send) << "<->" << static_cast<int>(*receive);
       throw std::runtime_error {ss.str()};
     }
     ++receive;
   }
-  if ((tx[0] & 0x7F) != *receive) throw std::runtime_error {"Receive failed: fail make data"};
+  if ((tx[0] & 0x7F) != *receive) throw std::runtime_error {"Receive failed: invalid target data"};
 }
 
 termios ics::Core::getTermios() noexcept {
