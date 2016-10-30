@@ -5,7 +5,7 @@
 #include<fcntl.h> // for open FLAGS
 #include<unistd.h> // for tty checks
 #include<cstring> // for memset
-#include<unordered_map> // for cash
+#include<unordered_map> // for cashe
 
 ics::Core::Core(const std::string& path, speed_t baudrate)
 : fd {open(path.c_str(), O_RDWR | O_NOCTTY)},
