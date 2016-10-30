@@ -7,6 +7,30 @@
 #include<cstring> // for memset
 #include<unordered_map> // for cash
 
+ics::Core::Core(const std::string& path, speed_t baudrate)
+: fd {open(path.c_str(), O_RDWR | O_NOCTTY)},
+  oldTio {}
+{
+  if (fd < 0)
+    throw std::runtime_error {"Cannot open deveice"};
+  try {
+    if (!isatty(fd))
+      throw std::invalid_argument {"Not tty device"};
+    if (tcgetattr(fd, &oldTio) < 0)
+      throw std::runtime_error {"Cannot setup tty"};
+    auto newTio = getTermios();
+    if (cfsetispeed(&newTio, baudrate) < 0)
+      throw std::runtime_error {"Cannot set baudrate"};
+    if (cfsetospeed(&newTio, baudrate) < 0)
+      throw std::runtime_error {"Cannot set baudrate"};
+    if (tcsetattr(fd, TCSANOW, &newTio) < 0)
+      throw std::runtime_error {"Cannot setup tty"};
+  } catch (...) {
+    close(fd);
+    throw;
+  }
+}
+
 ics::Core::~Core() noexcept {
   if (fd < 0) return;
   tcsetattr(fd, TCSANOW, &oldTio);
@@ -31,7 +55,7 @@ std::shared_ptr<ics::Core> ics::Core::getCore(const std::string& path, speed_t b
   static std::unordered_map<std::string, std::weak_ptr<Core>> cache;
   auto objPtr = cache[path].lock();
   if (!objPtr) {
-    objPtr = std::shared_ptr<Core> {new Core {path, baudrate}};
+    objPtr = std::make_shared<Core>(path, baudrate);
     cache[path] = objPtr;
   }
   return objPtr;
@@ -51,30 +75,6 @@ void ics::Core::communicate(const std::vector<uint8_t>& tx, std::vector<uint8_t>
     ++receive;
   }
   if ((tx[0] & 0x7F) != *receive) throw std::runtime_error {"Receive failed: fail make data"};
-}
-
-ics::Core::Core(const std::string& path, speed_t baudrate)
-: fd {open(path.c_str(), O_RDWR | O_NOCTTY)},
-  oldTio {}
-{
-  if (fd < 0)
-    throw std::runtime_error {"Cannot open deveice"};
-  try {
-    if (!isatty(fd))
-      throw std::invalid_argument {"Not tty device"};
-    if (tcgetattr(fd, &oldTio) < 0)
-      throw std::runtime_error {"Cannot setup tty"};
-    auto newTio = getTermios();
-    if (cfsetispeed(&newTio, baudrate) < 0)
-      throw std::runtime_error {"Cannot set baudrate"};
-    if (cfsetospeed(&newTio, baudrate) < 0)
-      throw std::runtime_error {"Cannot set baudrate"};
-    if (tcsetattr(fd, TCSANOW, &newTio) < 0)
-      throw std::runtime_error {"Cannot setup tty"};
-  } catch (...) {
-    close(fd);
-    throw;
-  }
 }
 
 termios ics::Core::getTermios() noexcept {
