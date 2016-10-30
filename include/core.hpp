@@ -12,8 +12,8 @@ namespace ics {
     ~Core() noexcept;
     Core(const Core&) = delete;
     Core& operator=(const Core&) = delete;
-    Core(Core&&);
-    Core& operator=(Core&&);
+    Core(Core&&) noexcept;
+    Core& operator=(Core&&) noexcept;
 
     static std::shared_ptr<Core> getCore(const std::string&, speed_t);
     void communicate(const std::vector<uint8_t>&, std::vector<uint8_t>&);

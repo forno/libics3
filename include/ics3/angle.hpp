@@ -17,6 +17,7 @@ namespace ics {
     static constexpr uint16_t MAX {11500};
     static constexpr double PI {3.141592653589793};
 
+    Angle(const Angle&) noexcept = default;
     Angle& operator=(const Angle&) noexcept;
     constexpr double get() const noexcept;
     constexpr operator double() const noexcept;

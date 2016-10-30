@@ -13,14 +13,14 @@ ics::Core::~Core() noexcept {
   close(fd);
 }
 
-ics::Core::Core(Core&& rhs)
+ics::Core::Core(Core&& rhs) noexcept
 : fd {rhs.fd},
   oldTio {rhs.oldTio}
 {
   rhs.fd = -1;
 }
 
-ics::Core& ics::Core::operator=(Core&& rhs) {
+ics::Core& ics::Core::operator=(Core&& rhs) noexcept {
   fd = rhs.fd;
   oldTio = rhs.oldTio;
   rhs.fd = -1;
