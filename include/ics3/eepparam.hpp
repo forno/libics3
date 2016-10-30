@@ -35,6 +35,7 @@ namespace ics {
     static constexpr EepParam strech1(uint16_t = 60);
     static constexpr EepParam strech2(uint16_t = 60);
     static constexpr EepParam strech3(uint16_t = 60);
+    static constexpr EepParam newEepParam(const EepParam&, uint16_t);
 
     constexpr uint16_t get() const noexcept;
     constexpr operator uint16_t() const noexcept;
@@ -135,6 +136,10 @@ namespace ics {
 
   constexpr EepParam EepParam::strech3(uint16_t data) {
     return EepParam {62, 2, 2, 254, &EepParam::checkInvalidEvenRange, data};
+  }
+
+  constexpr EepParam EepParam::newEepParam(const EepParam& type, uint16_t data) {
+    return EepParam {type.offset, type.length, type.min, type.max, type.setFunc, data};
   }
 
   constexpr uint16_t EepParam::get() const noexcept {
