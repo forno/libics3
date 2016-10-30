@@ -18,6 +18,7 @@ namespace ics {
 
     static std::shared_ptr<Core> getCore(const std::string&, speed_t);
     void communicate(const std::vector<uint8_t>&, std::vector<uint8_t>&);
+    void communicateID(const std::vector<uint8_t>&, std::vector<uint8_t>&);
   private:
     static termios getTermios() noexcept;
 

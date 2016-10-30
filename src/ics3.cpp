@@ -63,3 +63,16 @@ void ics::ICS3::setRom(const ID& id, const EepRom& rom) {
   rom.write(tx.begin() + 2);
   core->communicate(tx, rx); // throw std::runtime_error
 }
+
+ics::ID ics::ICS3::getID() {
+  static std::vector<uint8_t> tx {0xFF, 0x00, 0x00, 0x00};
+  static std::vector<uint8_t> rx(5);
+  core->communicateID(tx, rx);
+  return ID {static_cast<uint8_t>(0x1F & rx[4])};
+}
+
+void ics::ICS3::setID(const ID& id) {
+  static std::vector<uint8_t> tx(4, 1), rx(5);
+  tx[0] = 0xE0 | id.get(); // tx[1] == tx[2] == tx[3] == 1
+  core->communicateID(tx, rx);
+}

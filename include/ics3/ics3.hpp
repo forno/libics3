@@ -23,6 +23,8 @@ namespace ics {
     void set(const ID&, const Parameter&);
     EepRom getRom(const ID&);
     void setRom(const ID&, const EepRom&);
+    ID getID();
+    void setID(const ID&);
   private:
     std::shared_ptr<Core> core;
   };

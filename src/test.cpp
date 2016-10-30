@@ -14,6 +14,7 @@ void testICS3();
 void testIcsMove(ics::ICS3&, const ics::ID&);
 void testIcsParam(ics::ICS3&, const ics::ID&);
 void testIcsEepRom(ics::ICS3&, const ics::ID&);
+void testIcsID(ics::ICS3&);
 
 template<typename Iter>
 constexpr void dump(Iter&& begin, Iter&& end) noexcept;
@@ -182,7 +183,7 @@ void testParameter() {
 
 void testICS3() {
   std::cout << std::endl << "ICS3 test section" << std::endl;
-  constexpr const char*const path = "/dev/ttyUSB0";
+  constexpr const char* const path = "/dev/ttyUSB0";
   constexpr auto baudrate = ics::Baudrate::RATE115200();
   constexpr ics::ID id {2};
   try {
@@ -190,6 +191,7 @@ void testICS3() {
     testIcsMove(ics, id);
     testIcsParam(ics, id);
     testIcsEepRom(ics, id);
+    testIcsID(ics);
   } catch (std::runtime_error& e) {
     std::cout << e.what() << std::endl;
   }
@@ -248,6 +250,22 @@ void testIcsEepRom(ics::ICS3& ics, const ics::ID& id) {
   assert(newRom.get(defaultStretch) == writeNumber);
   auto lastRom = ics.getRom(id);
   assert(defaultStretch == lastRom.get(defaultStretch));
+}
+
+void testIcsID(ics::ICS3& ics) {
+  std::cout << "ics 'getID' and 'setID' test section" << std::endl;
+  auto defaultID = ics.getID();
+  std::cout << "default id is " << static_cast<int>(defaultID.get()) << std::endl;
+  constexpr ics::ID newID {20};
+  std::this_thread::sleep_for(std::chrono::milliseconds(500)); // need stop time
+  ics.setID(newID);
+  std::this_thread::sleep_for(std::chrono::milliseconds(500)); // need stop time
+  auto checkID = ics.getID();
+  std::this_thread::sleep_for(std::chrono::milliseconds(500)); // need stop time
+  ics.setID(defaultID); // before checking, restore data.
+  std::this_thread::sleep_for(std::chrono::milliseconds(500)); // need stop time
+  assert(newID.get() == checkID.get());
+  assert(defaultID.get() == ics.getID().get());
 }
 
 template<typename Iter>

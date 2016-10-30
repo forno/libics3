@@ -65,7 +65,7 @@ void ics::Core::communicate(const std::vector<uint8_t>& tx, std::vector<uint8_t>
   write(fd, tx.data(), tx.size()); // send
   for (auto& receive : rx) read(fd, &receive, 1); // receive
 // check section
-  auto receive = rx.begin();
+  auto receive = rx.cbegin();
   for (const auto& send : tx) {
     if (send != *receive) {
       std::stringstream ss;
@@ -75,6 +75,22 @@ void ics::Core::communicate(const std::vector<uint8_t>& tx, std::vector<uint8_t>
     ++receive;
   }
   if ((tx[0] & 0x7F) != *receive) throw std::runtime_error {"Receive failed: invalid target data"};
+}
+
+void ics::Core::communicateID(const std::vector<uint8_t>& tx, std::vector<uint8_t>& rx) {
+  write(fd, tx.data(), tx.size()); // send
+  for (auto& receive : rx) read(fd, &receive, 1); // receive
+// check section
+  auto receive = rx.cbegin();
+  for (const auto& send : tx) {
+    if (send != *receive) {
+      std::stringstream ss;
+      ss << "Receive falied(loopback):" << receive - rx.begin() << ':' << static_cast<int>(send) << "<->" << static_cast<int>(*receive);
+      throw std::runtime_error {ss.str()};
+    }
+    ++receive;
+  }
+  if ((tx[0] & 0xE0) != (*receive & 0xE0)) throw std::runtime_error {"Receive failed: invalid target data"};
 }
 
 termios ics::Core::getTermios() noexcept {
