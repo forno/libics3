@@ -9,8 +9,8 @@ namespace ics {
   class ICS3;
 
   class EepRom {
-  public:
     friend ICS3; // for ICS3::getRom()
+  public:
     EepParam get(EepParam) const;
     void set(const EepParam&) noexcept;
 
@@ -37,7 +37,7 @@ namespace ics {
   }
 
   inline EepRom::EepRom(const std::array<uint8_t, 64>& src)
-  : data(src)
+  : data(src) // for Ubuntu14.04 compiler
   {}
 }
 

@@ -39,7 +39,7 @@ ics::Core::~Core() noexcept {
 
 ics::Core::Core(Core&& rhs) noexcept
 : fd {rhs.fd},
-  oldTio(rhs.oldTio)
+  oldTio(rhs.oldTio) // for Ubuntu14.04 compiler
 {
   rhs.fd = -1;
 }
