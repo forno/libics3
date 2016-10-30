@@ -102,8 +102,16 @@ void testEepParam() {
   assert(127 == speed.get());
   speed.set(100);
   assert(100 == speed.get());
+  auto speed2 = ics::EepParam::newEepParam(speed, 60);
+  assert(60 == speed2.get());
   try {
     speed.set(200);
+    assert(false);
+  } catch (std::out_of_range& e) {
+    std::cout << e.what() << std::endl;
+  }
+  try {
+    ics::EepParam::newEepParam(speed2, 130);
     assert(false);
   } catch (std::out_of_range& e) {
     std::cout << e.what() << std::endl;
