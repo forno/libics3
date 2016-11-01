@@ -53,8 +53,9 @@ ics::Core& ics::Core::operator=(Core&& rhs) noexcept {
 
 std::shared_ptr<ics::Core> ics::Core::getCore(const std::string& path, speed_t baudrate) {
   static std::unordered_map<std::string, std::weak_ptr<Core>> cache;
-  auto objPtr = cache[path].lock();
-  if (!objPtr) {
+  auto objPtr = cache[path].lock(); // try get
+  for (const auto& data : cache) if (data.second.expired()) cache.erase(data.first); // clean cashe
+  if (!objPtr) { // get failed
     objPtr = std::make_shared<Core>(path, baudrate);
     cache[path] = objPtr;
   }
