@@ -14,7 +14,7 @@ ics::ICS3::ICS3(const std::string& path, const Baudrate& baudrate)
 {}
 
 ics::Angle ics::ICS3::move(const ID& id, Angle angle) {
-  static std::vector<uint8_t> tx(3), rx(6);
+  static std::vector<uint8_t> tx(3), rx(6); // cache for runtime speed
   const uint16_t send {angle.getRaw()};
   tx[0] = 0x80 | id.get();
   tx[1] = 0x7F & (send >> 7);
@@ -25,7 +25,7 @@ ics::Angle ics::ICS3::move(const ID& id, Angle angle) {
 }
 
 ics::Angle ics::ICS3::free(const ID& id, Angle unit) {
-  static std::vector<uint8_t> tx(3), rx(6);
+  static std::vector<uint8_t> tx(3), rx(6); // cache for runtime speed
   tx[0] = 0x80 | id.get(); // tx[1] == tx[2] == 0
   core->communicate(tx, rx); // throw std::runtime_error
   unit.rawData = getReceiveAngle(rx); // avoid invalid check. need friend
@@ -33,7 +33,7 @@ ics::Angle ics::ICS3::free(const ID& id, Angle unit) {
 }
 
 ics::Parameter ics::ICS3::get(const ID& id, const Parameter& type) {
-  static std::vector<uint8_t> tx(2), rx(5);
+  std::vector<uint8_t> tx(2), rx(5);
   tx[0] = 0xA0 | id.get();
   tx[1] = type.getSubcommand();
   core->communicate(tx, rx); // throw std::runtime_error
@@ -41,7 +41,7 @@ ics::Parameter ics::ICS3::get(const ID& id, const Parameter& type) {
 }
 
 void ics::ICS3::set(const ID& id, const Parameter& param) {
-  static std::vector<uint8_t> tx(3), rx(6);
+  std::vector<uint8_t> tx(3), rx(6);
   tx[0] = 0xC0 | id.get();
   tx[1] = param.getSubcommand();
   tx[2] = param.get();
@@ -49,30 +49,30 @@ void ics::ICS3::set(const ID& id, const Parameter& param) {
 }
 
 ics::EepRom ics::ICS3::getRom(const ID& id) {
-  static std::vector<uint8_t> tx(2), rx(68);
+  std::vector<uint8_t> tx(2), rx(68);
   tx[0] = 0xA0 | id.get(); // tx[1] == 0
   core->communicate(tx, rx); // throw std::runtime_error
   std::array<uint8_t, 64> romData;
-  std::copy(rx.begin() + 4, rx.end(), romData.begin());
+  std::copy(rx.cbegin() + 4, rx.cend(), romData.begin());
   return EepRom {romData}; // need friend
 }
 
 void ics::ICS3::setRom(const ID& id, const EepRom& rom) {
-  static std::vector<uint8_t> tx(66), rx(68);
+  std::vector<uint8_t> tx(66), rx(68);
   tx[0] = 0xC0 | id.get(); // tx[1] == 0
   rom.write(tx.begin() + 2);
   core->communicate(tx, rx); // throw std::runtime_error
 }
 
 ics::ID ics::ICS3::getID() {
-  static const std::vector<uint8_t> tx {0xFF, 0x00, 0x00, 0x00};
-  static std::vector<uint8_t> rx(5);
+  const std::vector<uint8_t> tx {0xFF, 0x00, 0x00, 0x00};
+  std::vector<uint8_t> rx(5);
   core->communicateID(tx, rx);
   return ID {static_cast<uint8_t>(0x1F & rx[4])};
 }
 
 void ics::ICS3::setID(const ID& id) {
-  static std::vector<uint8_t> tx(4, 1), rx(5);
+  std::vector<uint8_t> tx(4, 1), rx(5);
   tx[0] = 0xE0 | id.get(); // tx[1] == tx[2] == tx[3] == 1
   core->communicateID(tx, rx);
 }
