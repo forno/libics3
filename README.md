@@ -1,4 +1,4 @@
-# The libics3
+# The libics3 [![Build Status](https://travis-ci.org/forno/libics3.svg?branch=master)](https://travis-ci.org/forno/libics3)
 The c++ library of ICS3.x communication for drive servo motors on Linux.
 
 ## Description
