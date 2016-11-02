@@ -67,11 +67,11 @@ namespace ics {
     return sc;
   }
 
-  constexpr Parameter::Parameter(uint8_t sc, uint8_t min, uint8_t max, uint8_t default_data)
+  constexpr Parameter::Parameter(uint8_t sc, uint8_t min, uint8_t max, uint8_t defaultData)
   : sc {sc},
     min {min},
     max {max},
-    data {checkInvalidRange(default_data, min, max)}
+    data {checkInvalidRange(defaultData, min, max)}
   {}
 }
 
