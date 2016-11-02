@@ -44,6 +44,10 @@ void testAngle() {
   constexpr auto degree2 = ics::Angle::newDegree(30);
   constexpr auto radian2 = ics::Angle::newRadian(ics::Angle::PI / 6);
   static_assert(degree2.getRaw() == radian2.getRaw(), "difference: 30 deg <-> pi/6 rad");
+  constexpr auto degree_cast = ics::Angle::newDegree(50);
+  constexpr auto cast1 = static_cast<double>(degree_cast);
+  constexpr double cast2 {degree_cast};
+  static_assert(cast1 == cast2, "difference: angle cast to doubles. miss? impossible lol");
   try {
     ics::Angle::newDegree(136);
     assert(false);
