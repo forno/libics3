@@ -39,10 +39,10 @@ void testAngle() {
   static_assert(defDeg.getRaw() == 7500, "Angle default must is 7500");
   static_assert(defDeg.getRaw() == defRad.getRaw(), "Angle have different default");
   constexpr auto degree1 = ics::Angle::newDegree(90);
-  constexpr auto radian1 = ics::Angle::newRadian(M_PI / 2);
+  constexpr auto radian1 = ics::Angle::newRadian(ics::Angle::PI / 2);
   static_assert(degree1.getRaw() == radian1.getRaw(), "difference: 90 deg <-> pi/2 rad");
   constexpr auto degree2 = ics::Angle::newDegree(30);
-  constexpr auto radian2 = ics::Angle::newRadian(M_PI / 6);
+  constexpr auto radian2 = ics::Angle::newRadian(ics::Angle::PI / 6);
   static_assert(degree2.getRaw() == radian2.getRaw(), "difference: 30 deg <-> pi/6 rad");
   try {
     ics::Angle::newDegree(136);
@@ -56,10 +56,10 @@ void testAngle() {
   auto radian = ics::Angle::newRadian(0);
   assert(degree.getRaw() == radian.getRaw());
   degree.set(90);
-  radian.set(M_PI / 2);
+  radian.set(ics::Angle::PI / 2);
   assert(degree.getRaw() == radian.getRaw());
   degree.set(-60);
-  radian.set(-M_PI / 3);
+  radian.set(-ics::Angle::PI / 3);
   assert(degree.getRaw() == radian.getRaw());
   try {
     degree.set(150);
@@ -68,7 +68,7 @@ void testAngle() {
     std::cout << e.what() << std::endl;
   }
   try {
-    radian.set(M_PI);
+    radian.set(ics::Angle::PI);
     assert(false);
   } catch (const std::out_of_range& e) {
     std::cout << e.what() << std::endl;
