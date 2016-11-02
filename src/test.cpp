@@ -17,7 +17,7 @@ void testIcsEepRom(ics::ICS3&, const ics::ID&);
 void testIcsID(ics::ICS3&);
 
 template<typename Iter>
-void dump(Iter&& begin, Iter&& end) noexcept;
+void dump(const Iter& begin, const Iter& end) noexcept;
 
 int main() {
   testAngle();
@@ -273,7 +273,7 @@ void testIcsID(ics::ICS3& ics) {
 }
 
 template<typename Iter>
-void dump(Iter&& begin, Iter&& end) noexcept {
+void dump(const Iter& begin, const Iter& end) noexcept {
   while (begin != end) std::cout << static_cast<int>(*begin++) << ", ";
   std::cout << std::endl;
 }
