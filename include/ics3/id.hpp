@@ -14,7 +14,7 @@ namespace ics {
   };
 
   constexpr ID::ID(uint8_t id)
-  : data {id < 32 ? id : throw std::out_of_range {"Too big arguments"}}
+  : data {id < 32 ? id : throw std::invalid_argument {"invalid ID: must be 0 <= id <= 31"}}
   {}
 
   constexpr uint8_t ID::get() const noexcept {

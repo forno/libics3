@@ -134,13 +134,13 @@ void testID() {
   try {
     ics::ID id32 {32}; // if constexpr, compile error
     assert(false);
-  } catch (const std::out_of_range& e) {
+  } catch (const std::invalid_argument& e) {
     std::cout << e.what() << std::endl;
   }
   try {
     ics::ID error {static_cast<uint8_t>(-1)}; // if constexpr, compile error
     assert(false);
-  } catch (const std::out_of_range& e) {
+  } catch (const std::invalid_argument& e) {
     std::cout << e.what() << std::endl;
   }
 }
