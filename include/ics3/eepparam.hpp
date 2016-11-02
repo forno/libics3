@@ -16,6 +16,8 @@ namespace ics {
       ROLL_MODE = 0x10,
       SLAVE =     0x80
     };
+    static constexpr int byteSize {4};
+    static constexpr uint16_t mask {0xF};
 
     static constexpr EepParam stretch(uint16_t = 60);
     static constexpr EepParam speed(uint16_t = 127);
@@ -159,6 +161,23 @@ namespace ics {
     return *this;
   }
 
+  inline void EepParam::write(std::array<uint8_t, 64>& dest) const noexcept {
+    uint16_t nowData {data};
+    for (size_t i {offset + length - 1}; i >= offset; --i) {
+      dest[i] = nowData & mask;
+      nowData >>= byteSize;
+    }
+  }
+
+  inline void EepParam::read(const std::array<uint8_t, 64>& src) {
+    uint16_t result {0};
+    const size_t loopend = offset + length;
+    for (size_t i {offset}; i < loopend; ++i) {
+      result <<= byteSize;
+      result |= src[i] & mask;
+    }
+    set(result); // throw std::invalid_argument, std::out_of_range
+  }
   constexpr EepParam::EepParam(
       size_t offset,
       size_t length,
