@@ -47,7 +47,7 @@ void testAngle() {
   try {
     ics::Angle::newDegree(136);
     assert(false);
-  } catch (std::out_of_range& e) {
+  } catch (const std::out_of_range& e) {
     std::cout << e.what() << std::endl;
   }
 
@@ -64,13 +64,13 @@ void testAngle() {
   try {
     degree.set(150);
     assert(false);
-  } catch (std::out_of_range& e) {
+  } catch (const std::out_of_range& e) {
     std::cout << e.what() << std::endl;
   }
   try {
     radian.set(M_PI);
     assert(false);
-  } catch (std::out_of_range& e) {
+  } catch (const std::out_of_range& e) {
     std::cout << e.what() << std::endl;
   }
 }
@@ -94,7 +94,7 @@ void testEepParam() {
   try {
     ics::EepParam::flag(10);
     assert(false);
-  } catch (std::invalid_argument& e) {
+  } catch (const std::invalid_argument& e) {
     std::cout << e.what() << std::endl;
   }
 
@@ -108,13 +108,13 @@ void testEepParam() {
   try {
     speed.set(200);
     assert(false);
-  } catch (std::out_of_range& e) {
+  } catch (const std::out_of_range& e) {
     std::cout << e.what() << std::endl;
   }
   try {
     ics::EepParam::newEepParam(speed2, 130);
     assert(false);
-  } catch (std::out_of_range& e) {
+  } catch (const std::out_of_range& e) {
     std::cout << e.what() << std::endl;
   }
 }
@@ -130,13 +130,13 @@ void testID() {
   try {
     ics::ID id32 {32}; // if constexpr, compile error
     assert(false);
-  } catch (std::out_of_range& e) {
+  } catch (const std::out_of_range& e) {
     std::cout << e.what() << std::endl;
   }
   try {
     ics::ID error {static_cast<uint8_t>(-1)}; // if constexpr, compile error
     assert(false);
-  } catch (std::out_of_range& e) {
+  } catch (const std::out_of_range& e) {
     std::cout << e.what() << std::endl;
   }
 }
@@ -155,7 +155,7 @@ void testParameter() {
   try {
     ics::Parameter::temperature(0);
     assert(false);
-  } catch (std::out_of_range& e) {
+  } catch (const std::out_of_range& e) {
     std::cout << e.what() << std::endl;
   }
 
@@ -170,13 +170,13 @@ void testParameter() {
   try {
     current.set(70);
     assert(false);
-  } catch (std::out_of_range& e) {
+  } catch (const std::out_of_range& e) {
     std::cout << e.what() << std::endl;
   }
   try {
     current = 64;
     assert(false);
-  } catch (std::out_of_range& e) {
+  } catch (const std::out_of_range& e) {
     std::cout << e.what() << std::endl;
   }
 }
@@ -192,7 +192,7 @@ void testICS3() {
     testIcsParam(ics, id);
     testIcsEepRom(ics, id);
     testIcsID(ics);
-  } catch (std::runtime_error& e) {
+  } catch (const std::runtime_error& e) {
     std::cout << e.what() << std::endl;
   }
 }
