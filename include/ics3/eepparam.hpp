@@ -54,8 +54,7 @@ namespace ics {
         type,
         type,
         type (*)(type, type, type),
-        type
-    );
+        type);
     static constexpr type checkInvalidRange(type, type, type);
     static constexpr type checkInvalidEvenRange(type, type, type);
     static constexpr type checkInvalidFlag(type, type, type);
@@ -186,8 +185,7 @@ namespace ics {
       type min,
       type max,
       type (*setFunc)(type, type, type),
-      type data
-  )
+      type data)
   : offset(offset),
     length(length),
     min(min),
