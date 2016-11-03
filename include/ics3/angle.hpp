@@ -88,7 +88,7 @@ namespace ics {
   {}
 
   constexpr Angle::rawType Angle::castToRaw(type calibration, type angle) noexcept {
-    return static_cast<rawType>((calibration * angle) + MID);
+    return (calibration * angle) + MID;
   }
 
   constexpr Angle::rawType Angle::checkInvalidAngle(rawType raw) {
