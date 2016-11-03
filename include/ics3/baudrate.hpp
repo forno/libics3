@@ -21,7 +21,7 @@ namespace ics {
   };
 
   constexpr Baudrate Baudrate::RATE115200() noexcept {
-    return Baudrate {10, B115200};
+    return {10, B115200};
   }
 
   constexpr Baudrate::type Baudrate::get() const noexcept {
