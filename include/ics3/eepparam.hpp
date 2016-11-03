@@ -48,7 +48,7 @@ namespace ics {
     void write(std::array<uint8_t, 64>&) const noexcept;
     void read(const std::array<uint8_t, 64>&);
   private:
-    constexpr explicit EepParam(
+    constexpr EepParam( // non explicit, user cannot touch this
         size_type,
         size_type,
         type,
