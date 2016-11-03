@@ -50,10 +50,10 @@ void ics::ICS3::set(const ID& id, const Parameter& param) {
 }
 
 ics::EepRom ics::ICS3::getRom(const ID& id) {
-  Core::Container tx(2), rx(68);
-  tx[0] = getCmd(0xA0, id); // tx[1] == 0
+  const Core::Container tx {getCmd(0xA0, id), 0};
+  Core::Container rx(68);
   core->communicate(tx, rx); // throw std::runtime_error
-  std::array<uint8_t, 64> romData;
+  EepRom::Container romData;
   std::copy(rx.cbegin() + 4, rx.cend(), romData.begin());
   return EepRom {romData}; // need friend
 }
