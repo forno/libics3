@@ -44,10 +44,8 @@ ics::Parameter ics::ICS3::get(const ID& id, const Parameter& type) {
 }
 
 void ics::ICS3::set(const ID& id, const Parameter& param) {
-  Core::Container tx(3), rx(6);
-  tx[0] = getCmd(0xC0, id);
-  tx[1] = param.getSubcommand();
-  tx[2] = param.get();
+  const Core::Container tx {getCmd(0xC0, id), param.getSubcommand(), param.get()};
+  Core::Container rx(6);
   core->communicate(tx, rx); // throw std::runtime_error
 }
 
