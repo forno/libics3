@@ -72,7 +72,7 @@ ics::ID ics::ICS3::getID() {
 }
 
 void ics::ICS3::setID(const ID& id) {
-  auto cmd = static_cast<Core::value>(0xE0 | id.get());
+  const auto cmd = static_cast<Core::value>(0xE0 | id.get());
   const Core::IDContainerTx tx {cmd, 1, 1, 1};
   Core::IDContainerRx rx;
   core->communicateID(tx, rx);
