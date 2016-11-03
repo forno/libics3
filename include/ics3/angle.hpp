@@ -28,7 +28,7 @@ namespace ics {
     constexpr rawType getRaw() const noexcept;
     void setRaw(rawType);
   private:
-    constexpr explicit Angle(type, type);
+    constexpr Angle(type, type); // non explicit, user cannot touch this
     static constexpr rawType castToRaw(type, type) noexcept;
     static constexpr rawType checkInvalidAngle(rawType);
 
