@@ -12,6 +12,8 @@ namespace ics {
   public:
     using value = uint8_t;
     using Container = std::vector<value>;
+    using IDContainerTx = std::array<value, 4>;
+    using IDContainerRx = std::array<value, 5>;
     explicit Core(const std::string&, speed_t); // touch by only libics3
     ~Core() noexcept;
     Core(const Core&) = delete;
@@ -21,7 +23,7 @@ namespace ics {
 
     static std::shared_ptr<Core> getCore(const std::string&, speed_t);
     void communicate(const Container&, Container&);
-    void communicateID(const Container&, Container&);
+    void communicateID(const IDContainerTx&, IDContainerRx&);
   private:
     static termios getTermios() noexcept;
 
