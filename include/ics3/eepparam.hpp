@@ -10,6 +10,7 @@ namespace ics {
   class EepParam {
   public:
     using type = uint16_t;
+    using size_type = std::size_t;
     enum Flag : type {
       REVERSE =   0x01,
       FREE =      0x02,
@@ -48,8 +49,8 @@ namespace ics {
     void read(const std::array<uint8_t, 64>&);
   private:
     constexpr explicit EepParam(
-        size_t,
-        size_t,
+        size_type,
+        size_type,
         type,
         type,
         type (*)(type, type, type),
@@ -61,8 +62,8 @@ namespace ics {
     static constexpr type checkInvalidBaudrate(type, type, type);
     static constexpr type checkInvalidOffset(type, type, type);
 
-    const size_t offset;
-    const size_t length;
+    const size_type offset;
+    const size_type length;
     const type min;
     const type max;
     type (*const setFunc)(type, type, type);
@@ -164,7 +165,7 @@ namespace ics {
 
   inline void EepParam::write(std::array<uint8_t, 64>& dest) const noexcept {
     type nowData {data};
-    for (size_t i {offset + length - 1}; i >= offset; --i) {
+    for (size_type i {offset + length - 1}; i >= offset; --i) {
       dest[i] = nowData & mask;
       nowData >>= byteSize;
     }
@@ -172,16 +173,16 @@ namespace ics {
 
   inline void EepParam::read(const std::array<uint8_t, 64>& src) {
     type result {0};
-    const size_t loopend = offset + length;
-    for (size_t i {offset}; i < loopend; ++i) {
+    const size_type loopend = offset + length;
+    for (size_type i {offset}; i < loopend; ++i) {
       result <<= byteSize;
       result |= src[i] & mask;
     }
     set(result); // throw std::invalid_argument, std::out_of_range
   }
   constexpr EepParam::EepParam(
-      size_t offset,
-      size_t length,
+      size_type offset,
+      size_type length,
       type min,
       type max,
       type (*setFunc)(type, type, type),
