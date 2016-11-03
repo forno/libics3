@@ -9,7 +9,7 @@ static inline ics::Angle::rawType getReceiveAngle(const ics::Core::Container& rx
   return (rx[4] << 7) | rx[5];
 }
 
-static inline ics::Core::value getCmd(const int head, const ics::ID& id) {
+static inline ics::Core::value getCmd(const ics::Core::value head, const ics::ID& id) {
   return head | id.get();
 }
 
@@ -19,7 +19,7 @@ ics::ICS3::ICS3(const std::string& path, const Baudrate& baudrate)
 
 ics::Angle ics::ICS3::move(const ID& id, Angle angle) {
   static Core::Container tx(3), rx(6); // cache for runtime speed
-  const uint16_t send {angle.getRaw()};
+  const auto send = angle.getRaw();
   tx[0] = getCmd(0x80, id);
   tx[1] = 0x7F & (send >> 7);
   tx[2] = 0x7F & send;
@@ -55,7 +55,7 @@ ics::EepRom ics::ICS3::getRom(const ID& id) {
   core->communicate(tx, rx); // throw std::runtime_error
   EepRom::Container romData;
   std::copy(rx.cbegin() + 4, rx.cend(), romData.begin());
-  return EepRom {romData}; // need friend
+  return {romData}; // need friend
 }
 
 void ics::ICS3::setRom(const ID& id, const EepRom& rom) {
@@ -69,7 +69,7 @@ ics::ID ics::ICS3::getID() {
   constexpr Core::IDContainerTx tx {0xFF, 0x00, 0x00, 0x00};
   Core::IDContainerRx rx;
   core->communicateID(tx, rx);
-  return ID {static_cast<ID::type>(0x1F & rx[4])};
+  return {static_cast<ID::type>(0x1F & rx[4])};
 }
 
 void ics::ICS3::setID(const ID& id) {

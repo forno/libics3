@@ -28,7 +28,7 @@ namespace ics {
     constexpr rawType getRaw() const noexcept;
     void setRaw(rawType);
   private:
-    constexpr explicit Angle(type, type);
+    constexpr Angle(type, type); // non explicit, user cannot touch this
     static constexpr rawType castToRaw(type, type) noexcept;
     static constexpr rawType checkInvalidAngle(rawType);
 
@@ -37,19 +37,19 @@ namespace ics {
   };
 
   constexpr Angle Angle::newDegree(type angle) {
-    return Angle {800.0 / 27.0, angle};
+    return {800.0 / 27.0, angle};
   }
 
   constexpr Angle Angle::newRadian(type angle) {
-    return Angle {16000.0 / 3.0 / PI, angle};
+    return {16000.0 / 3.0 / PI, angle};
   }
 
   constexpr Angle Angle::newSameUnit(const Angle& unit, type angle) {
-    return Angle {unit.rawCalibration, angle};
+    return {unit.rawCalibration, angle};
   }
 
   constexpr Angle Angle::newCalibration(type calibration, type angle) {
-    return Angle {calibration, angle};
+    return {calibration, angle};
   }
 
   inline Angle& Angle::operator=(const Angle& rhs) noexcept {
@@ -88,7 +88,7 @@ namespace ics {
   {}
 
   constexpr Angle::rawType Angle::castToRaw(type calibration, type angle) noexcept {
-    return static_cast<rawType>((calibration * angle) + MID);
+    return (calibration * angle) + MID;
   }
 
   constexpr Angle::rawType Angle::checkInvalidAngle(rawType raw) {
