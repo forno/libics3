@@ -62,7 +62,7 @@ std::shared_ptr<ics::Core> ics::Core::getCore(const std::string& path, speed_t b
   return objPtr;
 }
 
-void ics::Core::communicate(const std::vector<uint8_t>& tx, std::vector<uint8_t>& rx) {
+void ics::Core::communicate(const Container& tx, Container& rx) {
   write(fd, tx.data(), tx.size()); // send
   for (auto& receive : rx) read(fd, &receive, 1); // receive
 // check section
@@ -78,7 +78,7 @@ void ics::Core::communicate(const std::vector<uint8_t>& tx, std::vector<uint8_t>
   if ((tx[0] & 0x7F) != *receive) throw std::runtime_error {"Receive failed: invalid target data"};
 }
 
-void ics::Core::communicateID(const std::vector<uint8_t>& tx, std::vector<uint8_t>& rx) {
+void ics::Core::communicateID(const Container& tx, Container& rx) {
   write(fd, tx.data(), tx.size()); // send
   for (auto& receive : rx) read(fd, &receive, 1); // receive
 // check section

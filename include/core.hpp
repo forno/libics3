@@ -9,6 +9,7 @@
 namespace ics {
   class Core {
   public:
+    using Container = std::vector<uint8_t>;
     explicit Core(const std::string&, speed_t); // touch by only libics3
     ~Core() noexcept;
     Core(const Core&) = delete;
@@ -17,8 +18,8 @@ namespace ics {
     Core& operator=(Core&&) noexcept;
 
     static std::shared_ptr<Core> getCore(const std::string&, speed_t);
-    void communicate(const std::vector<uint8_t>&, std::vector<uint8_t>&);
-    void communicateID(const std::vector<uint8_t>&, std::vector<uint8_t>&);
+    void communicate(const Container&, Container&);
+    void communicateID(const Container&, Container&);
   private:
     static termios getTermios() noexcept;
 
