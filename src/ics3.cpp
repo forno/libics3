@@ -69,7 +69,7 @@ ics::ID ics::ICS3::getID() {
   constexpr Core::IDContainerTx tx {0xFF, 0x00, 0x00, 0x00};
   Core::IDContainerRx rx;
   core->communicateID(tx, rx);
-  return ID {static_cast<ID::type>(0x1F & rx[4])};
+  return {static_cast<ID::type>(0x1F & rx[4])};
 }
 
 void ics::ICS3::setID(const ID& id) {
