@@ -33,8 +33,7 @@ ics::Core::Core(const std::string& path, speed_t baudrate)
 
 ics::Core::~Core() noexcept {
   if (fd < 0) return;
-  tcsetattr(fd, TCSANOW, &oldTio);
-  close(fd);
+  closeThis();
 }
 
 ics::Core::Core(Core&& rhs) noexcept
@@ -45,6 +44,7 @@ ics::Core::Core(Core&& rhs) noexcept
 }
 
 ics::Core& ics::Core::operator=(Core&& rhs) noexcept {
+  closeThis();
   fd = rhs.fd;
   oldTio = rhs.oldTio;
   rhs.fd = -1;
@@ -62,7 +62,7 @@ std::shared_ptr<ics::Core> ics::Core::getCore(const std::string& path, speed_t b
   return objPtr;
 }
 
-void ics::Core::communicate(const std::vector<uint8_t>& tx, std::vector<uint8_t>& rx) {
+void ics::Core::communicate(const Container& tx, Container& rx) {
   write(fd, tx.data(), tx.size()); // send
   for (auto& receive : rx) read(fd, &receive, 1); // receive
 // check section
@@ -78,7 +78,7 @@ void ics::Core::communicate(const std::vector<uint8_t>& tx, std::vector<uint8_t>
   if ((tx[0] & 0x7F) != *receive) throw std::runtime_error {"Receive failed: invalid target data"};
 }
 
-void ics::Core::communicateID(const std::vector<uint8_t>& tx, std::vector<uint8_t>& rx) {
+void ics::Core::communicateID(const IDContainerTx& tx, IDContainerRx& rx) {
   write(fd, tx.data(), tx.size()); // send
   for (auto& receive : rx) read(fd, &receive, 1); // receive
 // check section
@@ -92,6 +92,11 @@ void ics::Core::communicateID(const std::vector<uint8_t>& tx, std::vector<uint8_
     ++receive;
   }
   if ((tx[0] & 0xE0) != (*receive & 0xE0)) throw std::runtime_error {"Receive failed: invalid target data"};
+}
+
+void ics::Core::closeThis() noexcept {
+  tcsetattr(fd, TCSANOW, &oldTio);
+  close(fd);
 }
 
 termios ics::Core::getTermios() noexcept {

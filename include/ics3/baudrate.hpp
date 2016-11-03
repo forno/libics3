@@ -6,28 +6,29 @@
 namespace ics {
   class Baudrate {
   public:
-    static constexpr const Baudrate RATE115200() noexcept;
+    using type = uint8_t;
+    static constexpr Baudrate RATE115200() noexcept;
     //static constexpr Baudrate RATE625000() noexcept;
     //static constexpr Baudrate RATE1250000() noexcept;
-    constexpr uint16_t get() const noexcept;
-    constexpr operator uint16_t() const noexcept;
+    constexpr type get() const noexcept;
+    constexpr operator type() const noexcept;
     constexpr speed_t getSpeed() const noexcept;
   private:
-    explicit constexpr Baudrate(uint16_t, speed_t) noexcept;
+    explicit constexpr Baudrate(type, speed_t) noexcept;
 
-    const uint16_t romdata;
+    const type romdata;
     const speed_t baudrate;
   };
 
-  constexpr const Baudrate Baudrate::RATE115200() noexcept {
+  constexpr Baudrate Baudrate::RATE115200() noexcept {
     return Baudrate {10, B115200};
   }
 
-  constexpr uint16_t Baudrate::get() const noexcept {
+  constexpr Baudrate::type Baudrate::get() const noexcept {
     return romdata;
   }
 
-  constexpr Baudrate::operator uint16_t() const noexcept {
+  constexpr Baudrate::operator Baudrate::type() const noexcept {
     return get();
   }
 
@@ -35,7 +36,7 @@ namespace ics {
     return baudrate;
   }
 
-  constexpr Baudrate::Baudrate(uint16_t romdata, speed_t baudrate) noexcept
+  constexpr Baudrate::Baudrate(type romdata, speed_t baudrate) noexcept
   : romdata {romdata},
     baudrate {baudrate}
   {}

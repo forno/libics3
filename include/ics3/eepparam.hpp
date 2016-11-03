@@ -9,7 +9,9 @@
 namespace ics {
   class EepParam {
   public:
-    enum Flag : uint16_t {
+    using type = uint16_t;
+    using size_type = std::size_t;
+    enum Flag : type {
       REVERSE =   0x01,
       FREE =      0x02,
       PWMINH =    0x08,
@@ -17,175 +19,173 @@ namespace ics {
       SLAVE =     0x80
     };
     static constexpr int byteSize {4};
-    static constexpr uint16_t mask {0xF};
+    static constexpr type mask {0xF};
 
-    static constexpr EepParam stretch(uint16_t = 60);
-    static constexpr EepParam speed(uint16_t = 127);
-    static constexpr EepParam punch(uint16_t = 1);
-    static constexpr EepParam deadBand(uint16_t = 2);
-    static constexpr EepParam dumping(uint16_t = 40);
-    static constexpr EepParam selfTimer(uint16_t = 250);
-    static constexpr EepParam flag(uint16_t = 0x8C);
-    static constexpr EepParam pulseMax(uint16_t = 11500);
-    static constexpr EepParam pulseMin(uint16_t = 3500);
-    static constexpr EepParam baudrate(uint16_t = 10);
-    static constexpr EepParam temperature(uint16_t = 80);
-    static constexpr EepParam current(uint16_t = 63);
-    static constexpr EepParam response(uint16_t = 0);
-    static constexpr EepParam userOffset(uint16_t = 0);
-    static constexpr EepParam id(uint16_t = 0);
-    static constexpr EepParam strech1(uint16_t = 60);
-    static constexpr EepParam strech2(uint16_t = 60);
-    static constexpr EepParam strech3(uint16_t = 60);
-    static constexpr EepParam newEepParam(const EepParam&, uint16_t);
+    static constexpr EepParam stretch(type = 60);
+    static constexpr EepParam speed(type = 127);
+    static constexpr EepParam punch(type = 1);
+    static constexpr EepParam deadBand(type = 2);
+    static constexpr EepParam dumping(type = 40);
+    static constexpr EepParam selfTimer(type = 250);
+    static constexpr EepParam flag(type = 0x8C);
+    static constexpr EepParam pulseMax(type = 11500);
+    static constexpr EepParam pulseMin(type = 3500);
+    static constexpr EepParam baudrate(type = 10);
+    static constexpr EepParam temperature(type = 80);
+    static constexpr EepParam current(type = 63);
+    static constexpr EepParam response(type = 0);
+    static constexpr EepParam userOffset(type = 0);
+    static constexpr EepParam id(type = 0);
+    static constexpr EepParam strech1(type = 60);
+    static constexpr EepParam strech2(type = 60);
+    static constexpr EepParam strech3(type = 60);
+    static constexpr EepParam newEepParam(const EepParam&, type);
 
-    constexpr uint16_t get() const noexcept;
-    constexpr operator uint16_t() const noexcept;
-    void set(uint16_t);
-    EepParam& operator=(uint16_t);
+    constexpr type get() const noexcept;
+    constexpr operator type() const noexcept;
+    void set(type);
+    EepParam& operator=(type);
     void write(std::array<uint8_t, 64>&) const noexcept;
     void read(const std::array<uint8_t, 64>&);
   private:
     constexpr explicit EepParam(
-        size_t,
-        size_t,
-        uint16_t,
-        uint16_t,
-        uint16_t (*)(uint16_t, uint16_t, uint16_t),
-        uint16_t
-    );
-    static constexpr uint16_t checkInvalidRange(uint16_t, uint16_t, uint16_t);
-    static constexpr uint16_t checkInvalidEvenRange(uint16_t, uint16_t, uint16_t);
-    static constexpr uint16_t checkInvalidFlag(uint16_t, uint16_t, uint16_t);
-    static constexpr uint16_t checkInvalidBaudrate(uint16_t, uint16_t, uint16_t);
-    static constexpr uint16_t checkInvalidOffset(uint16_t, uint16_t, uint16_t);
+        size_type,
+        size_type,
+        type,
+        type,
+        type (*)(type, type, type),
+        type);
+    static constexpr type checkInvalidRange(type, type, type);
+    static constexpr type checkInvalidEvenRange(type, type, type);
+    static constexpr type checkInvalidFlag(type, type, type);
+    static constexpr type checkInvalidBaudrate(type, type, type);
+    static constexpr type checkInvalidOffset(type, type, type);
 
-    const size_t offset;
-    const size_t length;
-    const uint16_t min;
-    const uint16_t max;
-    uint16_t (*const setFunc)(uint16_t, uint16_t, uint16_t);
-    uint16_t data;
+    const size_type offset;
+    const size_type length;
+    const type min;
+    const type max;
+    type (*const setFunc)(type, type, type);
+    type data;
   };
 
-  constexpr EepParam EepParam::stretch(uint16_t data) {
+  constexpr EepParam EepParam::stretch(type data) {
     return EepParam {2, 2, 2, 254, &EepParam::checkInvalidEvenRange, data};
   }
 
-  constexpr EepParam EepParam::speed(uint16_t data) {
+  constexpr EepParam EepParam::speed(type data) {
     return EepParam {4, 2, 1, 127, &EepParam::checkInvalidRange, data};
   }
 
-  constexpr EepParam EepParam::punch(uint16_t data) {
+  constexpr EepParam EepParam::punch(type data) {
     return EepParam {6, 2, 0, 10, &EepParam::checkInvalidRange, data};
   }
 
-  constexpr EepParam EepParam::deadBand(uint16_t data) {
+  constexpr EepParam EepParam::deadBand(type data) {
     return EepParam {8, 2, 0, 5, &EepParam::checkInvalidRange, data};
   }
 
-  constexpr EepParam EepParam::dumping(uint16_t data) {
+  constexpr EepParam EepParam::dumping(type data) {
     return EepParam {10, 2, 1, 255, &EepParam::checkInvalidRange, data};
   }
 
-  constexpr EepParam EepParam::selfTimer(uint16_t data) {
+  constexpr EepParam EepParam::selfTimer(type data) {
     return EepParam {12, 2, 10, 255, &EepParam::checkInvalidRange, data};
   }
 
-  constexpr EepParam EepParam::flag(uint16_t data) {
+  constexpr EepParam EepParam::flag(type data) {
     return EepParam {14, 2, 0, 255, &EepParam::checkInvalidFlag, data};
   }
 
-  constexpr EepParam EepParam::pulseMax(uint16_t data) {
+  constexpr EepParam EepParam::pulseMax(type data) {
     return EepParam {16, 4, 3500, 11500, &EepParam::checkInvalidRange, data};
   }
 
-  constexpr EepParam EepParam::pulseMin(uint16_t data) {
+  constexpr EepParam EepParam::pulseMin(type data) {
     return EepParam {20, 4, 3500, 11500, &EepParam::checkInvalidRange, data};
   }
 
-  constexpr EepParam EepParam::baudrate(uint16_t data) {
+  constexpr EepParam EepParam::baudrate(type data) {
     return EepParam {26, 2, 0, 10, &EepParam::checkInvalidBaudrate, data};
   }
 
-  constexpr EepParam EepParam::temperature(uint16_t data) {
+  constexpr EepParam EepParam::temperature(type data) {
     return EepParam {28, 2, 1, 127, &EepParam::checkInvalidRange, data};
   }
 
-  constexpr EepParam EepParam::current(uint16_t data) {
+  constexpr EepParam EepParam::current(type data) {
     return EepParam {30, 2, 1, 63, &EepParam::checkInvalidRange, data};
   }
 
-  constexpr EepParam EepParam::response(uint16_t data) {
+  constexpr EepParam EepParam::response(type data) {
     return EepParam {50, 2, 1, 5, &EepParam::checkInvalidRange, data};
   }
 
-  constexpr EepParam EepParam::userOffset(uint16_t data) {
+  constexpr EepParam EepParam::userOffset(type data) {
     return EepParam {52, 2, 0x81, 127, &EepParam::checkInvalidOffset, data}; // 0x81 is -127 on uint8_t type
   }
 
-  constexpr EepParam EepParam::id(uint16_t data) {
+  constexpr EepParam EepParam::id(type data) {
     return EepParam {56, 2, 0, 31, &EepParam::checkInvalidRange, data};
   }
 
-  constexpr EepParam EepParam::strech1(uint16_t data) {
+  constexpr EepParam EepParam::strech1(type data) {
     return EepParam {58, 2, 2, 254, &EepParam::checkInvalidEvenRange, data};
   }
 
-  constexpr EepParam EepParam::strech2(uint16_t data) {
+  constexpr EepParam EepParam::strech2(type data) {
     return EepParam {60, 2, 2, 254, &EepParam::checkInvalidEvenRange, data};
   }
 
-  constexpr EepParam EepParam::strech3(uint16_t data) {
+  constexpr EepParam EepParam::strech3(type data) {
     return EepParam {62, 2, 2, 254, &EepParam::checkInvalidEvenRange, data};
   }
 
-  constexpr EepParam EepParam::newEepParam(const EepParam& type, uint16_t data) {
-    return EepParam {type.offset, type.length, type.min, type.max, type.setFunc, data};
+  constexpr EepParam EepParam::newEepParam(const EepParam& paramType, type data) {
+    return EepParam {paramType.offset, paramType.length, paramType.min, paramType.max, paramType.setFunc, data};
   }
 
-  constexpr uint16_t EepParam::get() const noexcept {
+  constexpr EepParam::type EepParam::get() const noexcept {
     return data;
   }
 
-  constexpr EepParam::operator uint16_t() const noexcept {
+  constexpr EepParam::operator type() const noexcept {
     return get();
   }
 
-  inline void EepParam::set(uint16_t input) {
+  inline void EepParam::set(type input) {
     data = (*setFunc)(input, min, max); // throw std::invalid_argument, std::out_of_range
   }
 
-  inline EepParam& EepParam::operator=(uint16_t input) {
+  inline EepParam& EepParam::operator=(type input) {
     set(input);
     return *this;
   }
 
   inline void EepParam::write(std::array<uint8_t, 64>& dest) const noexcept {
-    uint16_t nowData {data};
-    for (size_t i {offset + length - 1}; i >= offset; --i) {
+    type nowData {data};
+    for (size_type i {offset + length - 1}; i >= offset; --i) {
       dest[i] = nowData & mask;
       nowData >>= byteSize;
     }
   }
 
   inline void EepParam::read(const std::array<uint8_t, 64>& src) {
-    uint16_t result {0};
-    const size_t loopend = offset + length;
-    for (size_t i {offset}; i < loopend; ++i) {
+    type result {0};
+    const size_type loopend = offset + length;
+    for (size_type i {offset}; i < loopend; ++i) {
       result <<= byteSize;
       result |= src[i] & mask;
     }
     set(result); // throw std::invalid_argument, std::out_of_range
   }
   constexpr EepParam::EepParam(
-      size_t offset,
-      size_t length,
-      uint16_t min,
-      uint16_t max,
-      uint16_t (*setFunc)(uint16_t, uint16_t, uint16_t),
-      uint16_t data
-  )
+      size_type offset,
+      size_type length,
+      type min,
+      type max,
+      type (*setFunc)(type, type, type),
+      type data)
   : offset(offset),
     length(length),
     min(min),
@@ -194,30 +194,30 @@ namespace ics {
     data(setFunc(data, min, max)) // throw std::invalid_argument, std::out_of_range
   {}
 
-  constexpr uint16_t EepParam::checkInvalidRange(uint16_t input, uint16_t min, uint16_t max) {
+  constexpr EepParam::type EepParam::checkInvalidRange(type input, type min, type max) {
     return ics::checkInvalidRange(input, min, max);
   }
 
-  constexpr uint16_t EepParam::checkInvalidEvenRange(uint16_t input, uint16_t min, uint16_t max) {
+  constexpr EepParam::type EepParam::checkInvalidEvenRange(type input, type min, type max) {
     return input % 2 ?
            throw std::out_of_range {"Must even value"} :
            checkInvalidRange(input, min, max); // throw std::out_of_range
   }
 
-  constexpr uint16_t EepParam::checkInvalidFlag(uint16_t input, uint16_t, uint16_t) {
+  constexpr EepParam::type EepParam::checkInvalidFlag(type input, type, type) {
     return !(input & 0x04) ? throw std::invalid_argument {"Eepparam(flag): Must up bits 0x04"} :
            ~(input | ~0x60) ? throw std::invalid_argument {"Eepparam(flag): Must down bits 0x60"} :
            input;
   }
 
-  constexpr uint16_t EepParam::checkInvalidBaudrate(uint16_t input, uint16_t, uint16_t) {
+  constexpr EepParam::type EepParam::checkInvalidBaudrate(type input, type, type) {
     return input == Baudrate::RATE115200().get() ? input :
            //input == Baudrate::RATE625000().get() ? input :
            //input == Baudrate::RATE1250000().get() ? input :
            throw std::invalid_argument {"baudrate not exist"};
   }
 
-  constexpr uint16_t EepParam::checkInvalidOffset(uint16_t input, uint16_t min, uint16_t max) {
+  constexpr EepParam::type EepParam::checkInvalidOffset(type input, type min, type max) {
     return input < max ? input : // this min < 0; min value is 0
            min < input ? input : // this min < 0; input must is bigger than min.
            throw std::out_of_range {"Eeprom(offset): range over"}; // min < input < max is failed

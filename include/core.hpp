@@ -2,6 +2,7 @@
 #define LIBICS3_ICS3_CORE_H_
 
 #include<vector>
+#include<array>
 #include<string>
 #include<memory>
 #include<termios.h>
@@ -9,6 +10,10 @@
 namespace ics {
   class Core {
   public:
+    using value = uint8_t;
+    using Container = std::vector<value>;
+    using IDContainerTx = std::array<value, 4>;
+    using IDContainerRx = std::array<value, 5>;
     explicit Core(const std::string&, speed_t); // touch by only libics3
     ~Core() noexcept;
     Core(const Core&) = delete;
@@ -17,9 +22,11 @@ namespace ics {
     Core& operator=(Core&&) noexcept;
 
     static std::shared_ptr<Core> getCore(const std::string&, speed_t);
-    void communicate(const std::vector<uint8_t>&, std::vector<uint8_t>&);
-    void communicateID(const std::vector<uint8_t>&, std::vector<uint8_t>&);
+    void communicate(const Container&, Container&);
+    void communicateID(const IDContainerTx&, IDContainerRx&);
   private:
+    void closeThis() noexcept;
+
     static termios getTermios() noexcept;
 
     int fd;
