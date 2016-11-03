@@ -20,7 +20,7 @@ namespace ics {
     template<typename Iter>
     void write(Iter&&) const;
   private:
-    explicit EepRom(const Container&);
+    EepRom(const Container&); // non explicit, user cannot touch this
 
     std::array<uint8_t, length> data;
   };
