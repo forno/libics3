@@ -50,7 +50,7 @@ void ics::ICS3::set(const ID& id, const Parameter& param) {
 }
 
 ics::EepRom ics::ICS3::getRom(const ID& id) {
-  const Core::Container tx {getCmd(0xA0, id), 0};
+  const Core::Container tx {getCmd(0xA0, id), 0x00};
   Core::Container rx(68);
   core->communicate(tx, rx); // throw std::runtime_error
   EepRom::Container romData;
@@ -73,7 +73,7 @@ ics::ID ics::ICS3::getID() {
 }
 
 void ics::ICS3::setID(const ID& id) {
-  const Core::IDContainerTx tx {getCmd(0xE0, id), 1, 1, 1};
+  const Core::IDContainerTx tx {getCmd(0xE0, id), 0x01, 0x01, 0x01};
   Core::IDContainerRx rx;
   core->communicateID(tx, rx);
 }
