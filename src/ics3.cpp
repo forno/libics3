@@ -6,7 +6,7 @@
 #include"ics3/id.hpp"
 
 static inline ics::Angle::rawType getReceiveAngle(const ics::Core::Container& rx) noexcept {
-  return static_cast<ics::Angle::rawType>((rx[4] << 7) | rx[5]);
+  return (rx[4] << 7) | rx[5];
 }
 
 static inline ics::Core::value getCmd(const int head, const ics::ID& id) {
@@ -69,7 +69,7 @@ ics::ID ics::ICS3::getID() {
   constexpr Core::IDContainerTx tx {0xFF, 0x00, 0x00, 0x00};
   Core::IDContainerRx rx;
   core->communicateID(tx, rx);
-  return ID {static_cast<uint8_t>(0x1F & rx[4])};
+  return ID {static_cast<ID::type>(0x1F & rx[4])};
 }
 
 void ics::ICS3::setID(const ID& id) {
