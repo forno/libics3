@@ -19,7 +19,7 @@ namespace ics {
     Parameter& operator=(type);
     constexpr type getSubcommand() const noexcept;
   private:
-    explicit constexpr Parameter(type, type, type, type);
+    constexpr Parameter(type, type, type, type); // non explicit, user cannot touch this
 
     const type sc;
     const type min;
