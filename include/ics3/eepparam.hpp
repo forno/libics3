@@ -70,79 +70,79 @@ namespace ics {
   };
 
   constexpr EepParam EepParam::stretch(type data) {
-    return EepParam {2, 2, 2, 254, &EepParam::checkInvalidEvenRange, data};
+    return {2, 2, 2, 254, &EepParam::checkInvalidEvenRange, data};
   }
 
   constexpr EepParam EepParam::speed(type data) {
-    return EepParam {4, 2, 1, 127, &EepParam::checkInvalidRange, data};
+    return {4, 2, 1, 127, &EepParam::checkInvalidRange, data};
   }
 
   constexpr EepParam EepParam::punch(type data) {
-    return EepParam {6, 2, 0, 10, &EepParam::checkInvalidRange, data};
+    return {6, 2, 0, 10, &EepParam::checkInvalidRange, data};
   }
 
   constexpr EepParam EepParam::deadBand(type data) {
-    return EepParam {8, 2, 0, 5, &EepParam::checkInvalidRange, data};
+    return {8, 2, 0, 5, &EepParam::checkInvalidRange, data};
   }
 
   constexpr EepParam EepParam::dumping(type data) {
-    return EepParam {10, 2, 1, 255, &EepParam::checkInvalidRange, data};
+    return {10, 2, 1, 255, &EepParam::checkInvalidRange, data};
   }
 
   constexpr EepParam EepParam::selfTimer(type data) {
-    return EepParam {12, 2, 10, 255, &EepParam::checkInvalidRange, data};
+    return {12, 2, 10, 255, &EepParam::checkInvalidRange, data};
   }
 
   constexpr EepParam EepParam::flag(type data) {
-    return EepParam {14, 2, 0, 255, &EepParam::checkInvalidFlag, data};
+    return {14, 2, 0, 255, &EepParam::checkInvalidFlag, data};
   }
 
   constexpr EepParam EepParam::pulseMax(type data) {
-    return EepParam {16, 4, 3500, 11500, &EepParam::checkInvalidRange, data};
+    return {16, 4, 3500, 11500, &EepParam::checkInvalidRange, data};
   }
 
   constexpr EepParam EepParam::pulseMin(type data) {
-    return EepParam {20, 4, 3500, 11500, &EepParam::checkInvalidRange, data};
+    return {20, 4, 3500, 11500, &EepParam::checkInvalidRange, data};
   }
 
   constexpr EepParam EepParam::baudrate(type data) {
-    return EepParam {26, 2, 0, 10, &EepParam::checkInvalidBaudrate, data};
+    return {26, 2, 0, 10, &EepParam::checkInvalidBaudrate, data};
   }
 
   constexpr EepParam EepParam::temperature(type data) {
-    return EepParam {28, 2, 1, 127, &EepParam::checkInvalidRange, data};
+    return {28, 2, 1, 127, &EepParam::checkInvalidRange, data};
   }
 
   constexpr EepParam EepParam::current(type data) {
-    return EepParam {30, 2, 1, 63, &EepParam::checkInvalidRange, data};
+    return {30, 2, 1, 63, &EepParam::checkInvalidRange, data};
   }
 
   constexpr EepParam EepParam::response(type data) {
-    return EepParam {50, 2, 1, 5, &EepParam::checkInvalidRange, data};
+    return {50, 2, 1, 5, &EepParam::checkInvalidRange, data};
   }
 
   constexpr EepParam EepParam::userOffset(type data) {
-    return EepParam {52, 2, 0x81, 127, &EepParam::checkInvalidOffset, data}; // 0x81 is -127 on uint8_t type
+    return {52, 2, 0x81, 127, &EepParam::checkInvalidOffset, data}; // 0x81 is -127 on uint8_t type
   }
 
   constexpr EepParam EepParam::id(type data) {
-    return EepParam {56, 2, 0, 31, &EepParam::checkInvalidRange, data};
+    return {56, 2, 0, 31, &EepParam::checkInvalidRange, data};
   }
 
   constexpr EepParam EepParam::strech1(type data) {
-    return EepParam {58, 2, 2, 254, &EepParam::checkInvalidEvenRange, data};
+    return {58, 2, 2, 254, &EepParam::checkInvalidEvenRange, data};
   }
 
   constexpr EepParam EepParam::strech2(type data) {
-    return EepParam {60, 2, 2, 254, &EepParam::checkInvalidEvenRange, data};
+    return {60, 2, 2, 254, &EepParam::checkInvalidEvenRange, data};
   }
 
   constexpr EepParam EepParam::strech3(type data) {
-    return EepParam {62, 2, 2, 254, &EepParam::checkInvalidEvenRange, data};
+    return {62, 2, 2, 254, &EepParam::checkInvalidEvenRange, data};
   }
 
   constexpr EepParam EepParam::newEepParam(const EepParam& paramType, type data) {
-    return EepParam {paramType.offset, paramType.length, paramType.min, paramType.max, paramType.setFunc, data};
+    return {paramType.offset, paramType.length, paramType.min, paramType.max, paramType.setFunc, data};
   }
 
   constexpr EepParam::type EepParam::get() const noexcept {
