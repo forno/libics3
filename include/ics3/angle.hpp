@@ -8,13 +8,14 @@ namespace ics {
   class Angle {
     friend ICS3; // for touch setRaw
   public:
+    using rawType = uint16_t;
     static constexpr Angle newDegree(double = 0.0);
     static constexpr Angle newRadian(double = 0.0);
     static constexpr Angle newSameUnit(const Angle&, double = 0.0);
     static constexpr Angle newCalibration(double, double = 0.0);
-    static constexpr uint16_t MIN {3500};
-    static constexpr uint16_t MID {7500};
-    static constexpr uint16_t MAX {11500};
+    static constexpr rawType MIN {3500};
+    static constexpr rawType MID {7500};
+    static constexpr rawType MAX {11500};
     static constexpr double PI {3.141592653589793};
 
     Angle(const Angle&) noexcept = default;
@@ -23,14 +24,14 @@ namespace ics {
     constexpr operator double() const noexcept;
     void set(double);
     Angle& operator=(double);
-    constexpr uint16_t getRaw() const noexcept;
-    void setRaw(uint16_t);
+    constexpr rawType getRaw() const noexcept;
+    void setRaw(rawType);
   private:
     constexpr explicit Angle(double, double);
-    static constexpr uint16_t castToRaw(double, double) noexcept;
-    static constexpr uint16_t checkInvalidAngle(uint16_t);
+    static constexpr rawType castToRaw(double, double) noexcept;
+    static constexpr rawType checkInvalidAngle(rawType);
 
-    uint16_t rawData;
+    rawType rawData;
     const double rawCalibration;
   };
 
@@ -72,11 +73,11 @@ namespace ics {
     return *this;
   }
 
-  constexpr uint16_t Angle::getRaw() const noexcept {
+  constexpr Angle::rawType Angle::getRaw() const noexcept {
     return rawData;
   }
 
-  inline void Angle::setRaw(uint16_t raw) {
+  inline void Angle::setRaw(rawType raw) {
     rawData = checkInvalidAngle(raw); // throw std::out_of_range
   }
 
@@ -85,11 +86,11 @@ namespace ics {
     rawCalibration {calibration}
   {}
 
-  constexpr uint16_t Angle::castToRaw(double calibration, double angle) noexcept {
-    return static_cast<uint16_t>((calibration * angle) + MID);
+  constexpr Angle::rawType Angle::castToRaw(double calibration, double angle) noexcept {
+    return static_cast<rawType>((calibration * angle) + MID);
   }
 
-  constexpr uint16_t Angle::checkInvalidAngle(uint16_t raw) {
+  constexpr Angle::rawType Angle::checkInvalidAngle(rawType raw) {
     return checkInvalidRange(raw, MIN, MAX);
   }
 }
