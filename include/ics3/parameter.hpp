@@ -6,68 +6,69 @@
 namespace ics {
   class Parameter {
   public:
-    static constexpr Parameter stretch(uint8_t = 30);
-    static constexpr Parameter speed(uint8_t = 127);
-    static constexpr Parameter current(uint8_t = 63);
-    static constexpr Parameter temperature(uint8_t = 80);
-    static constexpr Parameter newParameter(const Parameter&, uint8_t);
+    using type = uint8_t;
+    static constexpr Parameter stretch(type = 30);
+    static constexpr Parameter speed(type = 127);
+    static constexpr Parameter current(type = 63);
+    static constexpr Parameter temperature(type = 80);
+    static constexpr Parameter newParameter(const Parameter&, type);
 
-    constexpr uint8_t get() const noexcept;
-    constexpr operator uint8_t() const noexcept;
-    void set(uint8_t);
-    Parameter& operator=(uint8_t);
-    constexpr uint8_t getSubcommand() const noexcept;
+    constexpr type get() const noexcept;
+    constexpr operator type() const noexcept;
+    void set(type);
+    Parameter& operator=(type);
+    constexpr type getSubcommand() const noexcept;
   private:
-    explicit constexpr Parameter(uint8_t, uint8_t, uint8_t, uint8_t);
+    explicit constexpr Parameter(type, type, type, type);
 
-    const uint8_t sc;
-    const uint8_t min;
-    const uint8_t max;
-    uint8_t data;
+    const type sc;
+    const type min;
+    const type max;
+    type data;
   };
 
-  constexpr Parameter Parameter::stretch(uint8_t data) {
+  constexpr Parameter Parameter::stretch(type data) {
     return Parameter {0x01, 1, 127, data};
   }
 
-  constexpr Parameter Parameter::speed(uint8_t data) {
+  constexpr Parameter Parameter::speed(type data) {
     return Parameter {0x02, 1, 127, data};
   }
 
-  constexpr Parameter Parameter::current(uint8_t data) {
+  constexpr Parameter Parameter::current(type data) {
     return Parameter {0x03, 0, 63, data};
   }
 
-  constexpr Parameter Parameter::temperature(uint8_t data) {
+  constexpr Parameter Parameter::temperature(type data) {
     return Parameter {0x04, 1, 127, data};
   }
 
-  constexpr Parameter Parameter::newParameter(const Parameter& base, uint8_t data) {
+  constexpr Parameter Parameter::newParameter(const Parameter& base, type data) {
     return Parameter {base.sc, base.min, base.max, data};
   }
 
-  constexpr uint8_t Parameter::get() const noexcept {
+  constexpr Parameter::type Parameter::get() const noexcept {
     return data;
   }
 
-  constexpr Parameter::operator uint8_t() const noexcept {
+  constexpr Parameter::operator type() const noexcept {
     return get();
   }
 
-  inline void Parameter::set(uint8_t input) {
+  inline void Parameter::set(type input) {
     data = checkInvalidRange(input, min, max);
   }
 
-  inline Parameter& Parameter::operator=(uint8_t rhs) {
+  inline Parameter& Parameter::operator=(type rhs) {
     set(rhs);
     return *this;
   }
 
-  constexpr uint8_t Parameter::getSubcommand() const noexcept {
+  constexpr Parameter::type Parameter::getSubcommand() const noexcept {
     return sc;
   }
 
-  constexpr Parameter::Parameter(uint8_t sc, uint8_t min, uint8_t max, uint8_t defaultData)
+  constexpr Parameter::Parameter(type sc, type min, type max, type defaultData)
   : sc {sc},
     min {min},
     max {max},
