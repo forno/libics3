@@ -13,7 +13,6 @@ namespace ics {
   public:
     EepParam get(EepParam) const;
     void set(const EepParam&) noexcept;
-
     template<typename Iter>
     void write(Iter&&) const;
   private:
@@ -33,7 +32,7 @@ namespace ics {
 
   template<typename Iter>
   inline void EepRom::write(Iter&& dest) const {
-    std::copy(data.begin(), data.end(), dest);
+    std::copy(data.cbegin(), data.cend(), dest);
   }
 
   inline EepRom::EepRom(const std::array<uint8_t, 64>& src)
