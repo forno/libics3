@@ -28,23 +28,23 @@ namespace ics {
   };
 
   constexpr Parameter Parameter::stretch(type data) {
-    return Parameter {0x01, 1, 127, data};
+    return {0x01, 1, 127, data};
   }
 
   constexpr Parameter Parameter::speed(type data) {
-    return Parameter {0x02, 1, 127, data};
+    return {0x02, 1, 127, data};
   }
 
   constexpr Parameter Parameter::current(type data) {
-    return Parameter {0x03, 0, 63, data};
+    return {0x03, 0, 63, data};
   }
 
   constexpr Parameter Parameter::temperature(type data) {
-    return Parameter {0x04, 1, 127, data};
+    return {0x04, 1, 127, data};
   }
 
   constexpr Parameter Parameter::newParameter(const Parameter& base, type data) {
-    return Parameter {base.sc, base.min, base.max, data};
+    return {base.sc, base.min, base.max, data};
   }
 
   constexpr Parameter::type Parameter::get() const noexcept {
