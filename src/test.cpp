@@ -274,7 +274,7 @@ void testIcsID(ics::ICS3& ics) {
 }
 
 template<typename Iter>
-void dump(const Iter& begin, const Iter& end) noexcept {
+inline void dump(const Iter& begin, const Iter& end) noexcept {
   while (begin != end) std::cout << static_cast<int>(*begin++) << ", ";
   std::cout << std::endl;
 }
