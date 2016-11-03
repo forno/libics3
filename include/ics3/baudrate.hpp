@@ -14,7 +14,7 @@ namespace ics {
     constexpr operator type() const noexcept;
     constexpr speed_t getSpeed() const noexcept;
   private:
-    explicit constexpr Baudrate(type, speed_t) noexcept;
+    constexpr Baudrate(type, speed_t) noexcept; // non explicit, user cannot touch this
 
     const type romdata;
     const speed_t baudrate;
