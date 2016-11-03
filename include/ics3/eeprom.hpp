@@ -13,13 +13,14 @@ namespace ics {
   public:
     using size_type = std::size_t;
     static constexpr size_type length {64};
+    using Container = std::array<uint8_t, length>;
 
     EepParam get(EepParam) const;
     void set(const EepParam&) noexcept;
     template<typename Iter>
     void write(Iter&&) const;
   private:
-    explicit EepRom(const std::array<uint8_t, length>&);
+    explicit EepRom(const Container&);
 
     std::array<uint8_t, length> data;
   };
@@ -38,7 +39,7 @@ namespace ics {
     std::copy(data.cbegin(), data.cend(), dest);
   }
 
-  inline EepRom::EepRom(const std::array<uint8_t, length>& src)
+  inline EepRom::EepRom(const Container& src)
   : data(src) // for Ubuntu14.04 compiler
   {}
 }
