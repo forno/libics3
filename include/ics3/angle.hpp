@@ -64,7 +64,7 @@ namespace ics {
   }
 
   inline void Angle::set(double angle) {
-    setRaw(castToRaw(angle, rawCalibration)); // throw std::out_of_range
+    setRaw(castToRaw(rawCalibration, angle)); // throw std::out_of_range
   }
 
   inline Angle& Angle::operator=(double angle) {
@@ -81,12 +81,12 @@ namespace ics {
   }
 
   constexpr Angle::Angle(double calibration, double angle)
-  : rawData {checkInvalidAngle(castToRaw(angle, calibration))}, // throw std::out_of_range
+  : rawData {checkInvalidAngle(castToRaw(calibration, angle))}, // throw std::out_of_range
     rawCalibration {calibration}
   {}
 
-  constexpr uint16_t Angle::castToRaw(double angle, double calibration) noexcept {
-    return static_cast<uint16_t>(angle * calibration + MID);
+  constexpr uint16_t Angle::castToRaw(double calibration, double angle) noexcept {
+    return static_cast<uint16_t>((calibration * angle) + MID);
   }
 
   constexpr uint16_t Angle::checkInvalidAngle(uint16_t raw) {
