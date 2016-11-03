@@ -6,22 +6,23 @@
 namespace ics {
   class ID {
   public:
-    constexpr ID(uint8_t); // ID is non explicit constructor because only do check limit
-    constexpr uint8_t get() const noexcept;
-    constexpr operator uint8_t() const noexcept;
+    using type = uint8_t;
+    constexpr ID(type); // ID is non explicit constructor because only do check limit
+    constexpr type get() const noexcept;
+    constexpr operator type() const noexcept;
   private:
-    const uint8_t data;
+    const type data;
   };
 
-  constexpr ID::ID(uint8_t id)
+  constexpr ID::ID(type id)
   : data {id < 32 ? id : throw std::invalid_argument {"invalid ID: must be 0 <= id <= 31"}}
   {}
 
-  constexpr uint8_t ID::get() const noexcept {
+  constexpr ID::type ID::get() const noexcept {
     return data;
   }
 
-  constexpr ID::operator uint8_t() const noexcept {
+  constexpr ID::operator type() const noexcept {
     return get();
   }
 }
