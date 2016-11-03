@@ -139,7 +139,7 @@ void testID() {
     std::cout << e.what() << std::endl;
   }
   try {
-    ics::ID error {static_cast<uint8_t>(-1)}; // if constexpr, compile error
+    ics::ID error {static_cast<ics::ID::type>(-1)}; // if constexpr, compile error
     assert(false);
   } catch (const std::invalid_argument& e) {
     std::cout << e.what() << std::endl;
@@ -188,7 +188,7 @@ void testParameter() {
 
 void testICS3() {
   std::cout << std::endl << "ICS3 test section" << std::endl;
-  constexpr const char* const path = "/dev/ttyUSB0";
+  constexpr auto path = "/dev/ttyUSB0";
   constexpr auto baudrate = ics::Baudrate::RATE115200();
   constexpr ics::ID id {2};
   try {
@@ -233,7 +233,7 @@ void testIcsParam(ics::ICS3& ics, const ics::ID& id) {
   std::cout << "ICS3 'get' and 'set' method test section"  << std::endl;
   auto defaultStretch = ics.get(id, ics::Parameter::stretch());
   std::cout << "default stretch is " << static_cast<int>(defaultStretch) << std::endl;
-  constexpr uint8_t writeNumber {29};
+  constexpr ics::Parameter::type writeNumber {29};
   ics.set(id, ics::Parameter::stretch(writeNumber));
   auto newStretch = ics.get(id, defaultStretch);
   ics.set(id, defaultStretch); // before checking, restore data.
@@ -247,7 +247,7 @@ void testIcsEepRom(ics::ICS3& ics, const ics::ID& id) {
   auto defaultStretch = rom.get(ics::EepParam::stretch());
   std::cout << "default stretch is " << defaultStretch << std::endl;
   auto setRom = rom;
-  constexpr uint16_t writeNumber {62};
+  constexpr ics::EepParam::type writeNumber {62};
   setRom.set(ics::EepParam::stretch(writeNumber));
   ics.setRom(id, setRom);
   auto newRom = ics.getRom(id);
