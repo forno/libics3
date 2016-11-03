@@ -7,7 +7,7 @@ namespace ics {
   class Baudrate {
   public:
     using type = uint8_t;
-    static constexpr const Baudrate RATE115200() noexcept;
+    static constexpr Baudrate RATE115200() noexcept;
     //static constexpr Baudrate RATE625000() noexcept;
     //static constexpr Baudrate RATE1250000() noexcept;
     constexpr type get() const noexcept;
@@ -20,7 +20,7 @@ namespace ics {
     const speed_t baudrate;
   };
 
-  constexpr const Baudrate Baudrate::RATE115200() noexcept {
+  constexpr Baudrate Baudrate::RATE115200() noexcept {
     return Baudrate {10, B115200};
   }
 
