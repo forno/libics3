@@ -19,7 +19,7 @@ ics::ICS3::ICS3(const std::string& path, const Baudrate& baudrate)
 
 ics::Angle ics::ICS3::move(const ID& id, Angle angle) {
   static Core::Container tx(3), rx(6); // cache for runtime speed
-  const uint16_t send {angle.getRaw()};
+  const auto send = angle.getRaw();
   tx[0] = getCmd(0x80, id);
   tx[1] = 0x7F & (send >> 7);
   tx[2] = 0x7F & send;
