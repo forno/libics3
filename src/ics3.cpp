@@ -5,8 +5,8 @@
 #include"ics3/parameter.hpp"
 #include"ics3/id.hpp"
 
-static inline uint16_t getReceiveAngle(const ics::Core::Container& rx) noexcept {
-  return static_cast<uint16_t>((rx[4] << 7) | rx[5]);
+static inline ics::Angle::rawType getReceiveAngle(const ics::Core::Container& rx) noexcept {
+  return static_cast<ics::Angle::rawType>((rx[4] << 7) | rx[5]);
 }
 
 ics::ICS3::ICS3(const std::string& path, const Baudrate& baudrate)
