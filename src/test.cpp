@@ -86,6 +86,7 @@ void testBaudrate() {
   static_assert(baudrate115200 == 10, "Baudrate: not equal B115200");
   static_assert(baudrate115200.get() == 10, "Baudrate: romdata error");
   static_assert(baudrate115200.getSpeed() == B115200, "Baudrate: getSpeed method error");
+  static_assert(static_cast<uint8_t>(baudrate115200) == 10, "cast to Baudrate::type(uint8_t)");
 }
 
 void testEepParam() {
