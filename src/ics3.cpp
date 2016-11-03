@@ -65,7 +65,7 @@ void ics::ICS3::setRom(const ID& id, const EepRom& rom) {
 }
 
 ics::ID ics::ICS3::getID() {
-  const Core::IDContainerTx tx {0xFF, 0x00, 0x00, 0x00};
+  constexpr Core::IDContainerTx tx {0xFF, 0x00, 0x00, 0x00};
   Core::IDContainerRx rx;
   core->communicateID(tx, rx);
   return ID {static_cast<uint8_t>(0x1F & rx[4])};
