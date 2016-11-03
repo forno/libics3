@@ -45,8 +45,8 @@ namespace ics {
     constexpr operator type() const noexcept;
     void set(type);
     EepParam& operator=(type);
-    void write(std::array<uint8_t, 64>&) const noexcept;
     void read(const std::array<uint8_t, 64>&);
+    void write(std::array<uint8_t, 64>&) const noexcept;
   private:
     constexpr EepParam( // non explicit, user cannot touch this
         size_type,
@@ -162,14 +162,6 @@ namespace ics {
     return *this;
   }
 
-  inline void EepParam::write(std::array<uint8_t, 64>& dest) const noexcept {
-    type nowData {data};
-    for (size_type i {offset + length - 1}; i >= offset; --i) {
-      dest[i] = nowData & mask;
-      nowData >>= byteSize;
-    }
-  }
-
   inline void EepParam::read(const std::array<uint8_t, 64>& src) {
     type result {0};
     const size_type loopend = offset + length;
@@ -179,6 +171,15 @@ namespace ics {
     }
     set(result); // throw std::invalid_argument, std::out_of_range
   }
+
+  inline void EepParam::write(std::array<uint8_t, 64>& dest) const noexcept {
+    type nowData {data};
+    for (size_type i {offset + length - 1}; i >= offset; --i) {
+      dest[i] = nowData & mask;
+      nowData >>= byteSize;
+    }
+  }
+
   constexpr EepParam::EepParam(
       size_type offset,
       size_type length,
