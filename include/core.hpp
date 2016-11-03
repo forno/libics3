@@ -2,6 +2,7 @@
 #define LIBICS3_ICS3_CORE_H_
 
 #include<vector>
+#include<array>
 #include<string>
 #include<memory>
 #include<termios.h>
@@ -9,7 +10,8 @@
 namespace ics {
   class Core {
   public:
-    using Container = std::vector<uint8_t>;
+    using value = uint8_t;
+    using Container = std::vector<value>;
     explicit Core(const std::string&, speed_t); // touch by only libics3
     ~Core() noexcept;
     Core(const Core&) = delete;
