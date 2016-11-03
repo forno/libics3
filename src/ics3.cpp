@@ -55,7 +55,7 @@ ics::EepRom ics::ICS3::getRom(const ID& id) {
   core->communicate(tx, rx); // throw std::runtime_error
   EepRom::Container romData;
   std::copy(rx.cbegin() + 4, rx.cend(), romData.begin());
-  return EepRom {romData}; // need friend
+  return {romData}; // need friend
 }
 
 void ics::ICS3::setRom(const ID& id, const EepRom& rom) {
