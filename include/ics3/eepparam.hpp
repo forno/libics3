@@ -11,6 +11,7 @@ namespace ics {
   public:
     using type = uint16_t;
     using size_type = std::size_t;
+    using TargetContainer = std::array<uint8_t, 64>;
     enum Flag : type {
       REVERSE =   0x01,
       FREE =      0x02,
@@ -45,8 +46,8 @@ namespace ics {
     constexpr operator type() const noexcept;
     void set(type);
     EepParam& operator=(type);
-    void read(const std::array<uint8_t, 64>&);
-    void write(std::array<uint8_t, 64>&) const noexcept;
+    void read(const TargetContainer&);
+    void write(TargetContainer&) const noexcept;
   private:
     constexpr EepParam( // non explicit, user cannot touch this
         size_type,
@@ -162,7 +163,7 @@ namespace ics {
     return *this;
   }
 
-  inline void EepParam::read(const std::array<uint8_t, 64>& src) {
+  inline void EepParam::read(const TargetContainer& src) {
     type result {0};
     const size_type loopend = offset + length;
     for (size_type i {offset}; i < loopend; ++i) {
@@ -172,7 +173,7 @@ namespace ics {
     set(result); // throw std::invalid_argument, std::out_of_range
   }
 
-  inline void EepParam::write(std::array<uint8_t, 64>& dest) const noexcept {
+  inline void EepParam::write(TargetContainer& dest) const noexcept {
     type nowData {data};
     for (size_type i {offset + length - 1}; i >= offset; --i) {
       dest[i] = nowData & mask;
