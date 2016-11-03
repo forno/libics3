@@ -37,9 +37,8 @@ ics::Angle ics::ICS3::free(const ID& id, Angle unit) {
 }
 
 ics::Parameter ics::ICS3::get(const ID& id, const Parameter& type) {
-  Core::Container tx(2), rx(5);
-  tx[0] = getCmd(0xA0, id);
-  tx[1] = type.getSubcommand();
+  const Core::Container tx {getCmd(0xA0, id), type.getSubcommand()};
+  Core::Container rx(5);
   core->communicate(tx, rx); // throw std::runtime_error
   return Parameter::newParameter(type, rx[4]);
 }
