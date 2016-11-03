@@ -37,19 +37,19 @@ namespace ics {
   };
 
   constexpr Angle Angle::newDegree(type angle) {
-    return Angle {800.0 / 27.0, angle};
+    return {800.0 / 27.0, angle};
   }
 
   constexpr Angle Angle::newRadian(type angle) {
-    return Angle {16000.0 / 3.0 / PI, angle};
+    return {16000.0 / 3.0 / PI, angle};
   }
 
   constexpr Angle Angle::newSameUnit(const Angle& unit, type angle) {
-    return Angle {unit.rawCalibration, angle};
+    return {unit.rawCalibration, angle};
   }
 
   constexpr Angle Angle::newCalibration(type calibration, type angle) {
-    return Angle {calibration, angle};
+    return {calibration, angle};
   }
 
   inline Angle& Angle::operator=(const Angle& rhs) noexcept {
