@@ -10,10 +10,10 @@
 namespace ics {
   class Core {
   public:
-    using value = uint8_t;
-    using Container = std::vector<value>;
-    using IDContainerTx = std::array<value, 4>;
-    using IDContainerRx = std::array<value, 5>;
+    using value_type = uint8_t;
+    using Container = std::vector<value_type>;
+    using IDContainerTx = std::array<value_type, 4>;
+    using IDContainerRx = std::array<value_type, 5>;
     explicit Core(const std::string&, speed_t); // touch by only libics3
     ~Core() noexcept;
     Core(const Core&) = delete;
