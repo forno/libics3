@@ -9,7 +9,7 @@ static inline ics::Angle::rawType getReceiveAngle(const ics::Core::Container& rx
   return (rx[4] << 7) | rx[5];
 }
 
-static inline ics::Core::value getCmd(const ics::Core::value head, const ics::ID& id) {
+static inline ics::Core::value_type getCmd(const ics::Core::value_type head, const ics::ID& id) {
   return head | id.get();
 }
 
