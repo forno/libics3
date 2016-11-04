@@ -1,10 +1,10 @@
 #ifndef LIBICS3_ICS3_CORE_H_
 #define LIBICS3_ICS3_CORE_H_
 
-#include<vector>
 #include<array>
-#include<string>
 #include<memory>
+#include<string>
+#include<vector>
 #include<termios.h>
 
 namespace ics {

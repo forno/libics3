@@ -4,8 +4,8 @@
 #include"ics3/angle.hpp"
 #include"ics3/baudrate.hpp"
 
-#include<string>
 #include<memory>
+#include<string>
 
 namespace ics {
   // Forward declaration

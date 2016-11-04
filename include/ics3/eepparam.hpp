@@ -1,8 +1,8 @@
 #ifndef LIBICS3_ICS3_EEPPARAM_H_
 #define LIBICS3_ICS3_EEPPARAM_H_
 
-#include"ics3/check_invalid.hpp"
 #include"ics3/baudrate.hpp"
+#include"ics3/check_invalid.hpp"
 
 #include<array>
 
