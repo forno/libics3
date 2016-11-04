@@ -30,7 +30,7 @@ namespace ics {
   private:
     constexpr Angle(type, type); // non explicit, user cannot touch this
     static constexpr rawType castToRaw(type, type) noexcept;
-    static constexpr rawType checkInvalidAngle(rawType);
+    static constexpr rawType checkValidAngle(rawType);
 
     rawType rawData;
     const type rawCalibration;
@@ -79,11 +79,11 @@ namespace ics {
   }
 
   inline void Angle::setRaw(rawType raw) {
-    rawData = checkInvalidAngle(raw); // throw std::out_of_range
+    rawData = checkValidAngle(raw); // throw std::out_of_range
   }
 
   constexpr Angle::Angle(type calibration, type angle)
-  : rawData {checkInvalidAngle(castToRaw(calibration, angle))}, // throw std::out_of_range
+  : rawData {checkValidAngle(castToRaw(calibration, angle))}, // throw std::out_of_range
     rawCalibration {calibration}
   {}
 
@@ -91,8 +91,8 @@ namespace ics {
     return (calibration * angle) + MID;
   }
 
-  constexpr Angle::rawType Angle::checkInvalidAngle(rawType raw) {
-    return checkInvalidRange(raw, MIN, MAX);
+  constexpr Angle::rawType Angle::checkValidAngle(rawType raw) {
+    return checkValidRange(raw, MIN, MAX);
   }
 }
 
