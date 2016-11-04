@@ -10,8 +10,8 @@ namespace ics {
   class EepParam {
   public:
     using type = uint16_t;
-    using size_type = std::size_t;
     using TargetContainer = std::array<uint8_t, 64>;
+    using size_type = TargetContainer::size_type;
     using InvalidChecker = type (&)(type, type, type);
     enum Flag : type {
       REVERSE =   0x01,
