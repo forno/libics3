@@ -156,7 +156,7 @@ namespace ics {
   }
 
   inline void EepParam::set(type input) {
-    data = (*setFunc)(input, min, max); // throw std::invalid_argument, std::out_of_range
+    data = setFunc(input, min, max); // throw std::invalid_argument, std::out_of_range
   }
 
   inline EepParam& EepParam::operator=(type input) {
