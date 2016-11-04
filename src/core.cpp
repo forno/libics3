@@ -18,7 +18,7 @@ ics::Core::Core(const std::string& path, speed_t baudrate)
       throw std::invalid_argument {"Not tty device"};
     if (tcgetattr(fd, &oldTio) < 0)
       throw std::runtime_error {"Cannot setup tty"};
-    auto newTio = getTermios();
+    auto&& newTio = getTermios(); // forward reference
     if (cfsetispeed(&newTio, baudrate) < 0)
       throw std::runtime_error {"Cannot set baudrate"};
     if (cfsetospeed(&newTio, baudrate) < 0)
@@ -66,7 +66,7 @@ void ics::Core::communicate(const Container& tx, Container& rx) {
   write(fd, tx.data(), tx.size()); // send
   for (auto& receive : rx) read(fd, &receive, 1); // receive
 // check section
-  auto receive = rx.cbegin();
+  auto&& receive = rx.cbegin();
   for (const auto& send : tx) {
     if (send != *receive) {
       std::stringstream ss;
@@ -82,7 +82,7 @@ void ics::Core::communicateID(const IDContainerTx& tx, IDContainerRx& rx) {
   write(fd, tx.data(), tx.size()); // send
   for (auto& receive : rx) read(fd, &receive, 1); // receive
 // check section
-  auto receive = rx.cbegin();
+  auto&& receive = rx.cbegin();
   for (const auto& send : tx) {
     if (send != *receive) {
       std::stringstream ss;
