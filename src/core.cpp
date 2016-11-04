@@ -1,11 +1,11 @@
 #include"core.hpp"
 
 #include<stdexcept>
-#include<sstream>
+#include<sstream> // for error massage
+#include<unordered_map> // for cashe
+#include<cstring> // for memset
 #include<fcntl.h> // for open FLAGS
 #include<unistd.h> // for tty checks
-#include<cstring> // for memset
-#include<unordered_map> // for cashe
 
 ics::Core::Core(const std::string& path, speed_t baudrate)
 : fd {open(path.c_str(), O_RDWR | O_NOCTTY)},
