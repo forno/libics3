@@ -11,9 +11,7 @@ namespace ics {
   class EepRom {
     friend ICS3; // for ICS3::getRom()
   public:
-    using size_type = std::size_t;
-    static constexpr size_type length {64};
-    using Container = std::array<uint8_t, length>;
+    using Container = std::array<uint8_t, 64>;
 
     EepParam get(EepParam) const;
     void set(const EepParam&) noexcept;
