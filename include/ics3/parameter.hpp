@@ -56,7 +56,7 @@ namespace ics {
   }
 
   inline void Parameter::set(type input) {
-    data = checkInvalidRange(input, min, max);
+    data = checkValidRange(input, min, max);
   }
 
   inline Parameter& Parameter::operator=(type rhs) {
@@ -72,7 +72,7 @@ namespace ics {
   : sc {sc},
     min {min},
     max {max},
-    data {checkInvalidRange(defaultData, min, max)}
+    data {checkValidRange(defaultData, min, max)}
   {}
 }
 
