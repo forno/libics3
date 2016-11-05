@@ -70,11 +70,12 @@ ics::Core::Core(Core&& rhs) noexcept
 }
 
 ics::Core& ics::Core::operator=(Core&& rhs) noexcept {
-  if (&rhs == this) return *this;
-  closeThis();
-  fd = rhs.fd;
-  oldTio = rhs.oldTio;
-  rhs.fd = -1;
+  if (fd != ths.fd) {
+    closeThis();
+    fd = rhs.fd;
+    oldTio = rhs.oldTio;
+    rhs.fd = -1;
+  }
   return *this;
 }
 
