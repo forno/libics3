@@ -122,7 +122,7 @@ void ics::Core::communicateID(const IDContainerTx& tx, IDContainerRx& rx) {
   if ((tx[0] & 0xE0) != (*receive & 0xE0)) throw std::runtime_error {"Receive failed: invalid target data"};
 }
 
-void ics::Core::closeThis() noexcept {
+void ics::Core::closeThis() const noexcept {
   tcsetattr(fd, TCSANOW, &oldTio);
   close(fd);
 }
