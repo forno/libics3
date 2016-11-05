@@ -70,7 +70,7 @@ ics::Core::Core(Core&& rhs) noexcept
 }
 
 ics::Core& ics::Core::operator=(Core&& rhs) noexcept {
-  if (fd != ths.fd) {
+  if (fd != rhs.fd) {
     closeThis();
     fd = rhs.fd;
     oldTio = rhs.oldTio;
