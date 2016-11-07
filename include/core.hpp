@@ -51,7 +51,7 @@ namespace ics {
     void communicate(const Container&, Container&);
     void communicateID(const IDContainerTx&, IDContainerRx&);
   private:
-    void closeThis() noexcept;
+    void closeThis() const noexcept;
 
     static termios getTermios() noexcept;
 

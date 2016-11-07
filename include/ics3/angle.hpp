@@ -32,7 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace ics {
   class ICS3;
   class Angle {
-    friend ICS3; // for touch setRaw
+    friend ICS3; // for touch rawData
   public:
     using rawType = uint16_t;
     using type = double;

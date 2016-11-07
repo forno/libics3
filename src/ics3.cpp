@@ -35,12 +35,12 @@ static inline ics::Angle::rawType getReceiveAngle(const ics::Core::Container& rx
   return (rx[4] << 7) | rx[5];
 }
 
-static inline ics::Core::value_type getCmd(const ics::Core::value_type head, const ics::ID& id) {
+static inline ics::Core::value_type getCmd(const ics::Core::value_type head, const ics::ID& id) noexcept {
   return head | id.get();
 }
 
 ics::ICS3::ICS3(const std::string& path, const Baudrate& baudrate)
-: core {Core::getCore(path, baudrate.getSpeed())}
+: core {Core::getCore(path, baudrate.getSpeed())} // throw std::invalid_argument, std::runtime_error
 {}
 
 ics::Angle ics::ICS3::move(const ID& id, Angle angle) {
@@ -55,8 +55,8 @@ ics::Angle ics::ICS3::move(const ID& id, Angle angle) {
 }
 
 ics::Angle ics::ICS3::free(const ID& id, Angle unit) {
-  static Core::Container tx(3), rx(6); // cache for runtime speed
-  tx[0] = getCmd(0x80, id); // tx[1] == tx[2] == 0
+  const Core::Container tx {getCmd(0x80, id), 0x00, 0x00};
+  Core::Container rx(6);
   core->communicate(tx, rx); // throw std::runtime_error
   unit.rawData = getReceiveAngle(rx); // avoid invalid check. need friend
   return unit;
