@@ -31,7 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace ics {
   template<typename T>
-  constexpr T checkValidRange(T input, const T min, const T max) {
+  constexpr T checkValidRange(const T input, const T min, const T max) {
     return input < min ? throw std::out_of_range {"Too small argument"} :
            max < input ? throw std::out_of_range {"Too big argument"} :
            input;
