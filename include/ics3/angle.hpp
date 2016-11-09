@@ -1,3 +1,29 @@
+/* BSD 2-Clause License
+
+Copyright (c) 2016, Doi Yusuke
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice, this
+  list of conditions and the following disclaimer.
+
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
 #ifndef LIBICS3_ICS3_ANGLE_H_
 #define LIBICS3_ICS3_ANGLE_H_
 
@@ -6,7 +32,7 @@
 namespace ics {
   class ICS3;
   class Angle {
-    friend ICS3; // for touch setRaw
+    friend ICS3; // for touch rawData
   public:
     using rawType = uint16_t;
     using type = double;
@@ -30,7 +56,7 @@ namespace ics {
   private:
     constexpr Angle(type, type); // non explicit, user cannot touch this
     static constexpr rawType castToRaw(type, type) noexcept;
-    static constexpr rawType checkInvalidAngle(rawType);
+    static constexpr rawType checkValidAngle(rawType);
 
     rawType rawData;
     const type rawCalibration;
@@ -79,11 +105,11 @@ namespace ics {
   }
 
   inline void Angle::setRaw(rawType raw) {
-    rawData = checkInvalidAngle(raw); // throw std::out_of_range
+    rawData = checkValidAngle(raw); // throw std::out_of_range
   }
 
   constexpr Angle::Angle(type calibration, type angle)
-  : rawData {checkInvalidAngle(castToRaw(calibration, angle))}, // throw std::out_of_range
+  : rawData {checkValidAngle(castToRaw(calibration, angle))}, // throw std::out_of_range
     rawCalibration {calibration}
   {}
 
@@ -91,8 +117,8 @@ namespace ics {
     return (calibration * angle) + MID;
   }
 
-  constexpr Angle::rawType Angle::checkInvalidAngle(rawType raw) {
-    return checkInvalidRange(raw, MIN, MAX);
+  constexpr Angle::rawType Angle::checkValidAngle(rawType raw) {
+    return checkValidRange(raw, MIN, MAX);
   }
 }
 
