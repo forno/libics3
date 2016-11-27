@@ -5,8 +5,13 @@ group: beta
 compiler:
 - g++
 - clang++
-install:
+brefore_intall:
+- cd thirdpatry/googletest/googletest
+- cmake -DCMAKE_BUILD_TYPE=RELEASE .
+- make
+- cd -
 - mkdir build
+install:
 - cd build
 - cmake .. -DCMAKE_INSTALL_PREFIX=install
 - make
