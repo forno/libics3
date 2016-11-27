@@ -24,36 +24,38 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-#ifndef LIBICS3_ICS3_ICS3_H_
-#define LIBICS3_ICS3_ICS3_H_
+#ifndef LIBICS3_ICS3_ID_H
+#define LIBICS3_ICS3_ID_H
 
-#include"ics3/angle.hpp"
-#include"ics3/baudrate.hpp"
+#include <stdexcept>
 
-#include<memory>
-#include<string>
+namespace ics
+{
+class ID
+{
+public:
+  using type = uint8_t;
+  constexpr ID(type); // ID is non explicit constructor because only do check limit
+  constexpr type get() const noexcept;
+  constexpr operator type() const noexcept;
+private:
+  const type data;
+};
 
-namespace ics {
-  // Forward declaration
-  class Core;
-  class Parameter;
-  class EepRom;
-  class ID;
-
-  class ICS3 {
-  public:
-    explicit ICS3(const std::string&, const Baudrate& = Baudrate::RATE115200());
-    Angle move(const ID&, Angle);
-    Angle free(const ID&, Angle = Angle::newRadian());
-    Parameter get(const ID&, const Parameter&);
-    void set(const ID&, const Parameter&);
-    EepRom getRom(const ID&);
-    void setRom(const ID&, const EepRom&);
-    ID getID();
-    void setID(const ID&);
-  private:
-    std::shared_ptr<Core> core;
-  };
+constexpr ID::ID(type id)
+: data {id < 32 ? id : throw std::invalid_argument {"invalid ID: must be 0 <= id <= 31"}}
+{
 }
 
-#endif // LIBICS3_ICS3_ICS3_H_
+constexpr ID::type ID::get() const noexcept
+{
+  return data;
+}
+
+constexpr ID::operator type() const noexcept
+{
+  return get();
+}
+}
+
+#endif // LIBICS3_ICS3_ID_H

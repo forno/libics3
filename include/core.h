@@ -24,33 +24,43 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-#ifndef LIBICS3_ICS3_ID_H_
-#define LIBICS3_ICS3_ID_H_
+#ifndef LIBICS3_ICS3_CORE_H
+#define LIBICS3_ICS3_CORE_H
 
-#include<stdexcept>
+#include <array>
+#include <memory>
+#include <string>
+#include <vector>
 
-namespace ics {
-  class ID {
-  public:
-    using type = uint8_t;
-    constexpr ID(type); // ID is non explicit constructor because only do check limit
-    constexpr type get() const noexcept;
-    constexpr operator type() const noexcept;
-  private:
-    const type data;
-  };
+#include <termios.h>
 
-  constexpr ID::ID(type id)
-  : data {id < 32 ? id : throw std::invalid_argument {"invalid ID: must be 0 <= id <= 31"}}
-  {}
+namespace ics
+{
+class Core
+{
+public:
+  using value_type = uint8_t;
+  using Container = std::vector<value_type>;
+  using IDContainerTx = std::array<value_type, 4>;
+  using IDContainerRx = std::array<value_type, 5>;
+  explicit Core(const std::string&, speed_t); // touch by only libics3
+  ~Core() noexcept;
+  Core(const Core&) = delete;
+  Core& operator=(const Core&) = delete;
+  Core(Core&&) noexcept;
+  Core& operator=(Core&&) noexcept;
 
-  constexpr ID::type ID::get() const noexcept {
-    return data;
-  }
+  static std::shared_ptr<Core> getCore(const std::string&, speed_t);
+  void communicate(const Container&, Container&);
+  void communicateID(const IDContainerTx&, IDContainerRx&);
+private:
+  void closeThis() const noexcept;
 
-  constexpr ID::operator type() const noexcept {
-    return get();
-  }
+  static termios getTermios() noexcept;
+
+  int fd;
+  termios oldTio;
+};
 }
 
-#endif // LIBICS3_ICS3_ID_H_
+#endif // LIBICS3_ICS3_CORE_H

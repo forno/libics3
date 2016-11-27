@@ -1,17 +1,20 @@
 language: cpp
-sudo: false
-dist: trusty
 group: beta
+dist: trusty
+sudo: false
 compiler:
-  - g++
-  - clang++
+- g++
+- clang++
+before_install:
+- cd thirdpatry/googletest/googletest
+- cmake -DCMAKE_BUILD_TYPE=RELEASE .
+- make
+- cd -
+- mkdir build
+- cd build
 install:
-  - make
-  - mkdir cbuild
-  - cd cbuild
-  - cmake .. -DCMAKE_INSTALL_PREFIX=install
-  - make
-  - make install
-  - cd ..
+- cmake .. -DCMAKE_INSTALL_PREFIX=install -DENABLE_TEST=ON
+- make
+- make install
 script:
-  ./bin/test
+- ctest

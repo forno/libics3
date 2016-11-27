@@ -24,40 +24,38 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-#ifndef LIBICS3_ICS3_CORE_H_
-#define LIBICS3_ICS3_CORE_H_
+#ifndef LIBICS3_ICS3_ICS3_H
+#define LIBICS3_ICS3_ICS3_H
 
-#include<array>
-#include<memory>
-#include<string>
-#include<vector>
-#include<termios.h>
+#include <memory>
+#include <string>
 
-namespace ics {
-  class Core {
-  public:
-    using value_type = uint8_t;
-    using Container = std::vector<value_type>;
-    using IDContainerTx = std::array<value_type, 4>;
-    using IDContainerRx = std::array<value_type, 5>;
-    explicit Core(const std::string&, speed_t); // touch by only libics3
-    ~Core() noexcept;
-    Core(const Core&) = delete;
-    Core& operator=(const Core&) = delete;
-    Core(Core&&) noexcept;
-    Core& operator=(Core&&) noexcept;
+#include "ics3/angle.h"
+#include "ics3/baudrate.h"
 
-    static std::shared_ptr<Core> getCore(const std::string&, speed_t);
-    void communicate(const Container&, Container&);
-    void communicateID(const IDContainerTx&, IDContainerRx&);
-  private:
-    void closeThis() const noexcept;
+namespace ics
+{
+// Forward declaration
+class Core;
+class Parameter;
+class EepRom;
+class ID;
 
-    static termios getTermios() noexcept;
-
-    int fd;
-    termios oldTio;
-  };
+class ICS3
+{
+public:
+  explicit ICS3(const std::string&, const Baudrate& = Baudrate::RATE115200());
+  Angle move(const ID&, Angle);
+  Angle free(const ID&, Angle = Angle::newRadian());
+  Parameter get(const ID&, const Parameter&);
+  void set(const ID&, const Parameter&);
+  EepRom getRom(const ID&);
+  void setRom(const ID&, const EepRom&);
+  ID getID();
+  void setID(const ID&);
+private:
+  std::shared_ptr<Core> core;
+};
 }
 
-#endif // LIBICS3_ICS3_CORE_H_
+#endif // LIBICS3_ICS3_ICS3_H

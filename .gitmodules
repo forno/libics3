@@ -1,0 +1,4 @@
+[submodule "thirdpatry/googletest"]
+	path = thirdpatry/googletest
+	url = https://github.com/google/googletest.git
+	ignore = dirty

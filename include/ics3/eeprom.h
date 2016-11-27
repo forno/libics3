@@ -24,48 +24,54 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-#ifndef LIBICS3_ICS3_BAUDRATE_H_
-#define LIBICS3_ICS3_BAUDRATE_H_
+#ifndef LIBICS3_ICS3_EEPROM_H
+#define LIBICS3_ICS3_EEPROM_H
 
-#include<termios.h>
+#include <algorithm>
 
-namespace ics {
-  class Baudrate {
-  public:
-    using type = uint8_t;
-    static constexpr Baudrate RATE115200() noexcept;
-    //static constexpr Baudrate RATE625000() noexcept;
-    //static constexpr Baudrate RATE1250000() noexcept;
-    constexpr type get() const noexcept;
-    constexpr operator type() const noexcept;
-    constexpr speed_t getSpeed() const noexcept;
-  private:
-    constexpr Baudrate(type, speed_t) noexcept; // non explicit, user cannot touch this
+#include "ics3/eepparam.h"
 
-    const type romdata;
-    const speed_t baudrate;
-  };
+namespace ics
+{
+class ICS3;
 
-  constexpr Baudrate Baudrate::RATE115200() noexcept {
-    return {10, B115200};
-  }
+class EepRom
+{
+  friend ICS3; // for ICS3::getRom()
+public:
+  using Container = std::array<uint8_t, 64>;
 
-  constexpr Baudrate::type Baudrate::get() const noexcept {
-    return romdata;
-  }
+  EepParam get(EepParam) const;
+  void set(const EepParam&) noexcept;
+  template<typename Iter>
+  void write(Iter&&) const;
+private:
+  EepRom(const Container&); // non explicit, user cannot touch this
 
-  constexpr Baudrate::operator Baudrate::type() const noexcept {
-    return get();
-  }
+  Container data;
+};
 
-  constexpr speed_t Baudrate::getSpeed() const noexcept {
-    return baudrate;
-  }
-
-  constexpr Baudrate::Baudrate(type romdata, speed_t baudrate) noexcept
-  : romdata {romdata},
-    baudrate {baudrate}
-  {}
+inline ics::EepParam ics::EepRom::get(EepParam type) const
+{
+  type.read(data); // throw std::out_of_range
+  return type;
 }
 
-#endif // LIBICS3_ICS3_BAUDRATE_H_
+inline void EepRom::set(const EepParam& param) noexcept
+{
+  param.write(data);
+}
+
+template<typename Iter>
+inline void EepRom::write(Iter&& dest) const
+{
+  std::copy(data.cbegin(), data.cend(), dest);
+}
+
+inline EepRom::EepRom(const Container& src)
+: data(src) // for Ubuntu14.04 compiler
+{
+}
+}
+
+#endif // LIBICS3_ICS3_EEPROM_H
