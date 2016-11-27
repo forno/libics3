@@ -5,7 +5,7 @@ group: beta
 compiler:
 - g++
 - clang++
-brefore_intall:
+before_intall:
 - cd thirdpatry/googletest/googletest
 - cmake -DCMAKE_BUILD_TYPE=RELEASE .
 - make
