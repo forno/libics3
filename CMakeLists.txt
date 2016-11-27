@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.12.1)
-project(ics3 CXX)
+project(ics3 C CXX)
 
 set(PROJECT_VER_MAJOR 1)
 set(PROJECT_VER_MINOR 2)
