@@ -34,8 +34,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <termios.h>
 
-namespace ics {
-class Core {
+namespace ics
+{
+class Core
+{
 public:
   using value_type = uint8_t;
   using Container = std::vector<value_type>;

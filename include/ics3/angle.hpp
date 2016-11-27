@@ -29,9 +29,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "ics3/check_invalid.hpp"
 
-namespace ics {
+namespace ics
+{
 class ICS3;
-class Angle {
+class Angle
+{
   friend ICS3; // for touch rawData
 public:
   using rawType = uint16_t;
@@ -62,62 +64,76 @@ private:
   const type rawCalibration;
 };
 
-constexpr Angle Angle::newDegree(type angle) {
+constexpr Angle Angle::newDegree(type angle)
+{
   return {800.0 / 27.0, angle};
 }
 
-constexpr Angle Angle::newRadian(type angle) {
+constexpr Angle Angle::newRadian(type angle)
+{
   return {16000.0 / 3.0 / PI, angle};
 }
 
-constexpr Angle Angle::newSameUnit(const Angle& unit, type angle) {
+constexpr Angle Angle::newSameUnit(const Angle& unit, type angle)
+{
   return {unit.rawCalibration, angle};
 }
 
-constexpr Angle Angle::newCalibration(type calibration, type angle) {
+constexpr Angle Angle::newCalibration(type calibration, type angle)
+{
   return {calibration, angle};
 }
 
-inline Angle& Angle::operator=(const Angle& rhs) noexcept {
+inline Angle& Angle::operator=(const Angle& rhs) noexcept
+{
   rawData = rhs.rawData;
   return *this;
 }
 
-constexpr Angle::type Angle::get() const noexcept {
+constexpr Angle::type Angle::get() const noexcept
+{
   return (rawData - MID) / rawCalibration;
 }
 
-constexpr Angle::operator type() const noexcept {
+constexpr Angle::operator type() const noexcept
+{
   return get();
 }
 
-inline void Angle::set(type angle) {
+inline void Angle::set(type angle)
+{
   setRaw(castToRaw(rawCalibration, angle)); // throw std::out_of_range
 }
 
-inline Angle& Angle::operator=(type angle) {
+inline Angle& Angle::operator=(type angle)
+{
   set(angle);
   return *this;
 }
 
-constexpr Angle::rawType Angle::getRaw() const noexcept {
+constexpr Angle::rawType Angle::getRaw() const noexcept
+{
   return rawData;
 }
 
-inline void Angle::setRaw(rawType raw) {
+inline void Angle::setRaw(rawType raw)
+{
   rawData = checkValidAngle(raw); // throw std::out_of_range
 }
 
 constexpr Angle::Angle(type calibration, type angle)
 : rawData {checkValidAngle(castToRaw(calibration, angle))}, // throw std::out_of_range
   rawCalibration {calibration}
-{}
+{
+}
 
-constexpr Angle::rawType Angle::castToRaw(type calibration, type angle) noexcept {
+constexpr Angle::rawType Angle::castToRaw(type calibration, type angle) noexcept
+{
   return (calibration * angle) + MID;
 }
 
-constexpr Angle::rawType Angle::checkValidAngle(rawType raw) {
+constexpr Angle::rawType Angle::checkValidAngle(rawType raw)
+{
   return checkValidRange(raw, MIN, MAX);
 }
 }

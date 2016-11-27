@@ -33,14 +33,16 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "ics3/angle.hpp"
 #include "ics3/baudrate.hpp"
 
-namespace ics {
+namespace ics
+{
 // Forward declaration
 class Core;
 class Parameter;
 class EepRom;
 class ID;
 
-class ICS3 {
+class ICS3
+{
 public:
   explicit ICS3(const std::string&, const Baudrate& = Baudrate::RATE115200());
   Angle move(const ID&, Angle);

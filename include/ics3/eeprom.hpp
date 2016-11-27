@@ -31,10 +31,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "ics3/eepparam.hpp"
 
-namespace ics {
+namespace ics
+{
 class ICS3;
 
-class EepRom {
+class EepRom
+{
   friend ICS3; // for ICS3::getRom()
 public:
   using Container = std::array<uint8_t, 64>;
@@ -49,23 +51,27 @@ private:
   Container data;
 };
 
-inline ics::EepParam ics::EepRom::get(EepParam type) const {
+inline ics::EepParam ics::EepRom::get(EepParam type) const
+{
   type.read(data); // throw std::out_of_range
   return type;
 }
 
-inline void EepRom::set(const EepParam& param) noexcept {
+inline void EepRom::set(const EepParam& param) noexcept
+{
   param.write(data);
 }
 
 template<typename Iter>
-inline void EepRom::write(Iter&& dest) const {
+inline void EepRom::write(Iter&& dest) const
+{
   std::copy(data.cbegin(), data.cend(), dest);
 }
 
 inline EepRom::EepRom(const Container& src)
 : data(src) // for Ubuntu14.04 compiler
-{}
+{
+}
 }
 
 #endif // LIBICS3_ICS3_EEPROM_H_

@@ -57,7 +57,8 @@ ics::Core::Core(const std::string& path, speed_t baudrate)
   }
 }
 
-ics::Core::~Core() noexcept {
+ics::Core::~Core() noexcept
+{
   if (fd < 0) return;
   closeThis();
 }
@@ -69,8 +70,10 @@ ics::Core::Core(Core&& rhs) noexcept
   rhs.fd = -1;
 }
 
-ics::Core& ics::Core::operator=(Core&& rhs) noexcept {
-  if (fd != rhs.fd) {
+ics::Core& ics::Core::operator=(Core&& rhs) noexcept
+{
+  if (fd != rhs.fd)
+  {
     closeThis();
     fd = rhs.fd;
     oldTio = rhs.oldTio;
@@ -79,7 +82,8 @@ ics::Core& ics::Core::operator=(Core&& rhs) noexcept {
   return *this;
 }
 
-std::shared_ptr<ics::Core> ics::Core::getCore(const std::string& path, speed_t baudrate) {
+std::shared_ptr<ics::Core> ics::Core::getCore(const std::string& path, speed_t baudrate)
+{
   static std::unordered_map<std::string, std::weak_ptr<Core>> cache;
   auto objPtr = cache[path].lock(); // try get
   for (const auto& data : cache) if (data.second.expired()) cache.erase(data.first); // clean cashe
@@ -90,7 +94,8 @@ std::shared_ptr<ics::Core> ics::Core::getCore(const std::string& path, speed_t b
   return objPtr;
 }
 
-void ics::Core::communicate(const Container& tx, Container& rx) {
+void ics::Core::communicate(const Container& tx, Container& rx)
+{
   write(fd, tx.data(), tx.size()); // send
   for (auto& receive : rx) read(fd, &receive, 1); // receive
 // check section
@@ -106,7 +111,8 @@ void ics::Core::communicate(const Container& tx, Container& rx) {
   if ((tx[0] & 0x7F) != *receive) throw std::runtime_error {"Receive failed: invalid target data"};
 }
 
-void ics::Core::communicateID(const IDContainerTx& tx, IDContainerRx& rx) {
+void ics::Core::communicateID(const IDContainerTx& tx, IDContainerRx& rx)
+{
   write(fd, tx.data(), tx.size()); // send
   for (auto& receive : rx) read(fd, &receive, 1); // receive
 // check section
@@ -122,12 +128,14 @@ void ics::Core::communicateID(const IDContainerTx& tx, IDContainerRx& rx) {
   if ((tx[0] & 0xE0) != (*receive & 0xE0)) throw std::runtime_error {"Receive failed: invalid target data"};
 }
 
-void ics::Core::closeThis() const noexcept {
+void ics::Core::closeThis() const noexcept
+{
   tcsetattr(fd, TCSANOW, &oldTio);
   close(fd);
 }
 
-termios ics::Core::getTermios() noexcept {
+termios ics::Core::getTermios() noexcept
+{
   termios newTio;
   std::memset(&newTio, 0, sizeof(newTio));
   newTio.c_iflag = 0;

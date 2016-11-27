@@ -29,8 +29,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <termios.h>
 
-namespace ics {
-class Baudrate {
+namespace ics
+{
+class Baudrate
+{
 public:
   using type = uint8_t;
   static constexpr Baudrate RATE115200() noexcept;
@@ -46,26 +48,31 @@ private:
   const speed_t baudrate;
 };
 
-constexpr Baudrate Baudrate::RATE115200() noexcept {
+constexpr Baudrate Baudrate::RATE115200() noexcept
+{
   return {10, B115200};
 }
 
-constexpr Baudrate::type Baudrate::get() const noexcept {
+constexpr Baudrate::type Baudrate::get() const noexcept
+{
   return romdata;
 }
 
-constexpr Baudrate::operator Baudrate::type() const noexcept {
+constexpr Baudrate::operator Baudrate::type() const noexcept
+{
   return get();
 }
 
-constexpr speed_t Baudrate::getSpeed() const noexcept {
+constexpr speed_t Baudrate::getSpeed() const noexcept
+{
   return baudrate;
 }
 
 constexpr Baudrate::Baudrate(type romdata, speed_t baudrate) noexcept
 : romdata {romdata},
   baudrate {baudrate}
-{}
+{
+}
 }
 
 #endif // LIBICS3_ICS3_BAUDRATE_H_
