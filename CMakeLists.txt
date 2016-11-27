@@ -11,16 +11,11 @@ if(NOT DEFINED CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING "Choose: RelWithDebInfo Release Debug MinSizeRel None")
 endif()
 
-set(MY_DIR ${ics3_SOURCE_DIR})
-
-enable_testing()
-set(GTEST_ROOT ${MY_DIR}/thirdpatry/googletest/googletest)
-find_package(GTest REQUIRED)
-
-find_package(Threads)
-
 option(BUILD_SHARED_LIBS "Build shared (ON) or static (OFF) libraries" ON)
 option(ENABLE_CXX11 "Enable C++11 support" ON)
+option(ENABLE_TEST "Enable test program building" OFF)
+
+set(MY_DIR ${ics3_SOURCE_DIR})
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 
@@ -69,8 +64,6 @@ set(SOURCES
   ${ICS3_SOURCES}
 )
 
-include_directories(${GTEST_INCLUDE_DIRS})
-
 add_library(ics3 ${SOURCES})
 set_target_properties(ics3 PROPERTIES
   VERSION ${PROJECT_VER}
@@ -79,16 +72,24 @@ set_target_properties(ics3 PROPERTIES
 
 target_link_libraries(ics3)
 
-# test section
-add_executable(integrate test/integrate.cpp)
-target_link_libraries(integrate ics3 ${GTEST_BOTH_LIBRARIES})
-if(THREADS_HAVE_PTHREAD_ARG)
-  target_compile_options(PUBLIC integrate "-pthread")
+if(ENABLE_TEST)
+  set(GTEST_ROOT ${MY_DIR}/thirdpatry/googletest/googletest)
+  find_package(GTest REQUIRED)
+  find_package(Threads)
+
+  include_directories(${GTEST_INCLUDE_DIRS})
+  add_executable(integrate test/integrate.cpp)
+  target_link_libraries(integrate ics3 ${GTEST_BOTH_LIBRARIES})
+  if(THREADS_HAVE_PTHREAD_ARG)
+    target_compile_options(PUBLIC integrate "-pthread")
+  endif()
+  if(CMAKE_THREAD_LIBS_INIT)
+    target_link_libraries(integrate "${CMAKE_THREAD_LIBS_INIT}")
+  endif()
+
+  enable_testing()
+  add_test(AllTestInIntegrate ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/integrate)
 endif()
-if(CMAKE_THREAD_LIBS_INIT)
-  target_link_libraries(integrate "${CMAKE_THREAD_LIBS_INIT}")
-endif()
-add_test(AllTestInIntegrate ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/integrate)
 
 install(TARGETS ics3 DESTINATION lib RUNTIME DESTINATION bin)
 install(DIRECTORY "${MY_DIR}/include/${PROJECT_NAME}" DESTINATION include)
