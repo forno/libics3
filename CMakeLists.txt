@@ -46,8 +46,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 
 # Add includes
 include_directories(
-  "${MY_DIR}/include"
-  ${GTEST_INCLUDE_DIRS}
+  ${MY_DIR}/include
 )
 
 file(GLOB ICS3_SOURCES
