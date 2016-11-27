@@ -34,26 +34,26 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include<string>
 
 namespace ics {
-  // Forward declaration
-  class Core;
-  class Parameter;
-  class EepRom;
-  class ID;
+// Forward declaration
+class Core;
+class Parameter;
+class EepRom;
+class ID;
 
-  class ICS3 {
-  public:
-    explicit ICS3(const std::string&, const Baudrate& = Baudrate::RATE115200());
-    Angle move(const ID&, Angle);
-    Angle free(const ID&, Angle = Angle::newRadian());
-    Parameter get(const ID&, const Parameter&);
-    void set(const ID&, const Parameter&);
-    EepRom getRom(const ID&);
-    void setRom(const ID&, const EepRom&);
-    ID getID();
-    void setID(const ID&);
-  private:
-    std::shared_ptr<Core> core;
-  };
+class ICS3 {
+public:
+  explicit ICS3(const std::string&, const Baudrate& = Baudrate::RATE115200());
+  Angle move(const ID&, Angle);
+  Angle free(const ID&, Angle = Angle::newRadian());
+  Parameter get(const ID&, const Parameter&);
+  void set(const ID&, const Parameter&);
+  EepRom getRom(const ID&);
+  void setRom(const ID&, const EepRom&);
+  ID getID();
+  void setID(const ID&);
+private:
+  std::shared_ptr<Core> core;
+};
 }
 
 #endif // LIBICS3_ICS3_ICS3_H_
