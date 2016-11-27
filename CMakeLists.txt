@@ -80,7 +80,7 @@ target_link_libraries(ics3)
 
 # test section
 add_executable(integrate test/integrate.cpp)
-target_link_libraries(integrate ics3 ${GTEST_LIBRARIES} gtest_main)
+target_link_libraries(integrate ics3 ${GTEST_BOTH_LIBRARIES})
 if(THREADS_HAVE_PTHREAD_ARG)
   target_compile_options(PUBLIC integrate "-pthread")
 endif()
