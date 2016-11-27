@@ -27,33 +27,35 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef LIBICS3_ICS3_ICS3_H_
 #define LIBICS3_ICS3_ICS3_H_
 
-#include"ics3/angle.hpp"
-#include"ics3/baudrate.hpp"
+#include <memory>
+#include <string>
 
-#include<memory>
-#include<string>
+#include "ics3/angle.hpp"
+#include "ics3/baudrate.hpp"
 
-namespace ics {
-  // Forward declaration
-  class Core;
-  class Parameter;
-  class EepRom;
-  class ID;
+namespace ics
+{
+// Forward declaration
+class Core;
+class Parameter;
+class EepRom;
+class ID;
 
-  class ICS3 {
-  public:
-    explicit ICS3(const std::string&, const Baudrate& = Baudrate::RATE115200());
-    Angle move(const ID&, Angle);
-    Angle free(const ID&, Angle = Angle::newRadian());
-    Parameter get(const ID&, const Parameter&);
-    void set(const ID&, const Parameter&);
-    EepRom getRom(const ID&);
-    void setRom(const ID&, const EepRom&);
-    ID getID();
-    void setID(const ID&);
-  private:
-    std::shared_ptr<Core> core;
-  };
+class ICS3
+{
+public:
+  explicit ICS3(const std::string&, const Baudrate& = Baudrate::RATE115200());
+  Angle move(const ID&, Angle);
+  Angle free(const ID&, Angle = Angle::newRadian());
+  Parameter get(const ID&, const Parameter&);
+  void set(const ID&, const Parameter&);
+  EepRom getRom(const ID&);
+  void setRom(const ID&, const EepRom&);
+  ID getID();
+  void setID(const ID&);
+private:
+  std::shared_ptr<Core> core;
+};
 }
 
 #endif // LIBICS3_ICS3_ICS3_H_
