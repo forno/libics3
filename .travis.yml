@@ -1,7 +1,7 @@
 language: cpp
-sudo: false
-dist: trusty
 group: beta
+dist: trusty
+sudo: false
 compiler:
 - g++
 - clang++
@@ -11,12 +11,10 @@ before_install:
 - make
 - cd -
 - mkdir build
-install:
 - cd build
+install:
 - cmake .. -DCMAKE_INSTALL_PREFIX=install -DENABLE_TEST=ON
 - make
 - make install
-- cd -
 script:
-- cd build
 - ctest
