@@ -26,7 +26,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #include "ics3/ics3.hpp"
 
-#include "core.hpp"
+#include "core.h"
 #include "ics3/eeprom.hpp"
 #include "ics3/id.hpp"
 #include "ics3/parameter.hpp"
