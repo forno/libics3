@@ -29,7 +29,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <algorithm>
 
-#include "ics3/eepparam.hpp"
+#include "ics3/eepparam.h"
 
 namespace ics
 {

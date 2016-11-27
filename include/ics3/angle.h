@@ -24,10 +24,10 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-#ifndef LIBICS3_ICS3_ANGLE_H_
-#define LIBICS3_ICS3_ANGLE_H_
+#ifndef LIBICS3_ICS3_ANGLE_H
+#define LIBICS3_ICS3_ANGLE_H
 
-#include "ics3/check_invalid.hpp"
+#include "ics3/check_invalid.h"
 
 namespace ics
 {
@@ -138,4 +138,4 @@ constexpr Angle::rawType Angle::checkValidAngle(rawType raw)
 }
 }
 
-#endif // LIBICS3_ICS3_ANGLE_H_
+#endif // LIBICS3_ICS3_ANGLE_H

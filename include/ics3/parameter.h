@@ -24,10 +24,10 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-#ifndef LIBICS3_ICS3_PARAMETER_H_
-#define LIBICS3_ICS3_PARAMETER_H_
+#ifndef LIBICS3_ICS3_PARAMETER_H
+#define LIBICS3_ICS3_PARAMETER_H
 
-#include "ics3/check_invalid.hpp"
+#include "ics3/check_invalid.h"
 
 namespace ics
 {
@@ -115,4 +115,4 @@ constexpr Parameter::Parameter(type sc, type min, type max, type defaultData)
 }
 }
 
-#endif // LIBICS3_ICS3_PARAMETER_H_
+#endif // LIBICS3_ICS3_PARAMETER_H

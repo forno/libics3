@@ -28,8 +28,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "core.h"
 #include "ics3/eeprom.h"
-#include "ics3/id.hpp"
-#include "ics3/parameter.hpp"
+#include "ics3/id.h"
+#include "ics3/parameter.h"
 
 static inline ics::Angle::rawType getReceiveAngle(const ics::Core::Container& rx) noexcept
 {

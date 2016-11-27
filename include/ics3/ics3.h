@@ -30,8 +30,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <memory>
 #include <string>
 
-#include "ics3/angle.hpp"
-#include "ics3/baudrate.hpp"
+#include "ics3/angle.h"
+#include "ics3/baudrate.h"
 
 namespace ics
 {
