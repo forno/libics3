@@ -1,86 +1,85 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8.12.1)
+cmake_minimum_required(VERSION 2.8.12.1)
 project(ics3 CXX)
 
-SET(PROJECT_VER_MAJOR 1)
-SET(PROJECT_VER_MINOR 2)
-SET(PROJECT_VER_PATCH 6)
-SET(PROJECT_VER "${PROJECT_VER_MAJOR}.${PROJECT_VER_MINOR}.${PROJECT_VER_PATCH}")
-SET(PROJECT_APIVER "${PROJECT_VER_MAJOR}.${PROJECT_VER_MINOR}")
+set(PROJECT_VER_MAJOR 1)
+set(PROJECT_VER_MINOR 2)
+set(PROJECT_VER_PATCH 6)
+set(PROJECT_VER "${PROJECT_VER_MAJOR}.${PROJECT_VER_MINOR}.${PROJECT_VER_PATCH}")
+set(PROJECT_APIVER "${PROJECT_VER_MAJOR}.${PROJECT_VER_MINOR}")
 
-IF(NOT DEFINED CMAKE_BUILD_TYPE)
-  # No effect for multi-configuration generators (e.g. for Visual Studio)
-  SET(CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING "Choose: RelWithDebInfo Release Debug MinSizeRel None")
-ENDIF()
+if(NOT DEFINED CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING "Choose: RelWithDebInfo Release Debug MinSizeRel None")
+endif()
 
-SET(MY_DIR ${ics3_SOURCE_DIR})
+set(MY_DIR ${ics3_SOURCE_DIR})
 
-OPTION(BUILD_SHARED_LIBS "Build shared (ON) or static (OFF) libraries" ON)
-OPTION(ENABLE_CXX11 "Enable C++11 support" ON)
+option(BUILD_SHARED_LIBS "Build shared (ON) or static (OFF) libraries" ON)
+option(ENABLE_CXX11 "Enable C++11 support" ON)
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 
-SET(HAVE_CXX11 disabled)
-IF(ENABLE_CXX11)
-  INCLUDE(CheckCXXCompilerFlag)
+set(HAVE_CXX11 disabled)
+if(ENABLE_CXX11)
+  include(CheckCXXCompilerFlag)
   CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
   CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
-  IF(COMPILER_SUPPORTS_CXX11)
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-    SET(LIBICS3_WITH_CXX11_SUPPORT 1)
-    SET(HAVE_CXX11 yes)
-  ELSEIF(COMPILER_SUPPORTS_CXX0X)
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-    SET(HAVE_CXX11 c++0x)
-  ELSE()
-    SET(HAVE_CXX11 no)
-    MESSAGE(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
-  ENDIF()
-ENDIF(ENABLE_CXX11)
+  if(COMPILER_SUPPORTS_CXX11)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+    set(LIBICS3_WITH_CXX11_SUPPORT 1)
+    set(HAVE_CXX11 yes)
+  elseif(COMPILER_SUPPORTS_CXX0X)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+    set(HAVE_CXX11 c++0x)
+  else()
+    set(HAVE_CXX11 no)
+    message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
+  endif()
+endif(ENABLE_CXX11)
 
 #set the default path for built executables to the "bin" directory
-SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 
 #set the default path for built libraries to the "lib" directory
-SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
-SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 
 # Add includes
-INCLUDE_DIRECTORIES(
+include_directories(
   "${MY_DIR}/include"
   ${PROJECT_BINARY_DIR} # for generated headers
 )
 
-FILE(GLOB ICS3_SOURCES
+file(GLOB ICS3_SOURCES
   ${MY_DIR}/src/*.cpp
 )
 
-LIST(REMOVE_ITEM ICS3_SOURCES ${MY_DIR}/src/test.cpp)
+list(REMOVE_ITEM ICS3_SOURCES ${MY_DIR}/src/test.cpp)
 
-FILE(GLOB ICS3_HEADERS
+file(GLOB ICS3_HEADERS
   ${MY_DIR}/include/ics3/*.hpp
   ${MY_DIR}/include/core.hpp
 )
 
-SET(SOURCES
+set(SOURCES
   ${ICS3_HEADERS}
   ${ICS3_SOURCES}
 )
 
-ADD_LIBRARY(ics3 ${SOURCES})
-SET_TARGET_PROPERTIES(ics3 PROPERTIES
+add_library(ics3 ${SOURCES})
+set_target_properties(ics3 PROPERTIES
   VERSION ${PROJECT_VER}
   SOVERSION ${PROJECT_APIVER}
 )
 
-TARGET_LINK_LIBRARIES(ics3)
-INSTALL(TARGETS ics3 DESTINATION lib RUNTIME DESTINATION bin)
-INSTALL(DIRECTORY "${MY_DIR}/include/${PROJECT_NAME}" DESTINATION include)
+target_link_libraries(ics3)
+install(TARGETS ics3 DESTINATION lib RUNTIME DESTINATION bin)
+install(DIRECTORY "${MY_DIR}/include/${PROJECT_NAME}" DESTINATION include)
 
-GET_CMAKE_PROPERTY(vars VARIABLES)
-MESSAGE(STATUS "Feature list:")
-FOREACH(var ${vars})
-  IF(var MATCHES ^HAVE_)
-    STRING(REPLACE HAVE_ "" feature ${var})
-    MESSAGE(STATUS "  ${feature}    ${${var}}")
-  ENDIF()
-ENDFOREACH()
+get_cmake_property(vars VARIABLES)
+message(STATUS "Feature list:")
+foreach(var ${vars})
+  if(var MATCHES ^HAVE_)
+    string(REPLACE HAVE_ "" feature ${var})
+    message(STATUS "  ${feature}    ${${var}}")
+  endif()
+endforeach()
