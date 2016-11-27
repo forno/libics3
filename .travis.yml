@@ -1,7 +1,7 @@
 language: cpp
-sudo: false
-dist: trusty
 group: beta
+dist: trusty
+sudo: false
 compiler:
 - g++
 - clang++
