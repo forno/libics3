@@ -11,7 +11,6 @@ ex)[KRS series servo moters produced by KONDO KAGAKU co., ltd.](http://kondo-rob
 1. This software require c++11 compiler. In ubuntu 14.04 or after version have compiler support c++11.
 2. This software only support serial mode. You should lock the serial mode for never turn on PWM mode.
 3. Linux need serial device that mounted for use it. `script/setup.sh` will mount it to `/dev/ttyUSB0`.
-4. The Makefile for debuging. You should take CMake for installation.
 
 ## API Reference
 Reference [the libics3 wiki](https://github.com/forno/libics3/wiki)

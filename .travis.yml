@@ -3,15 +3,20 @@ sudo: false
 dist: trusty
 group: beta
 compiler:
-  - g++
-  - clang++
+- g++
+- clang++
+before_install:
+- cd thirdpatry/googletest/googletest
+- cmake -DCMAKE_BUILD_TYPE=RELEASE .
+- make
+- cd -
+- mkdir build
 install:
-  - make
-  - mkdir cbuild
-  - cd cbuild
-  - cmake .. -DCMAKE_INSTALL_PREFIX=install
-  - make
-  - make install
-  - cd ..
+- cd build
+- cmake .. -DCMAKE_INSTALL_PREFIX=install -DENABLE_TEST=ON
+- make
+- make install
+- cd -
 script:
-  ./bin/test
+- cd build
+- ctest
