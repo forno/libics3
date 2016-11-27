@@ -27,11 +27,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef LIBICS3_ICS3_ICS3_H_
 #define LIBICS3_ICS3_ICS3_H_
 
-#include"ics3/angle.hpp"
-#include"ics3/baudrate.hpp"
+#include <memory>
+#include <string>
 
-#include<memory>
-#include<string>
+#include "ics3/angle.hpp"
+#include "ics3/baudrate.hpp"
 
 namespace ics {
 // Forward declaration

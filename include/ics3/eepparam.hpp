@@ -27,10 +27,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef LIBICS3_ICS3_EEPPARAM_H_
 #define LIBICS3_ICS3_EEPPARAM_H_
 
-#include"ics3/baudrate.hpp"
-#include"ics3/check_invalid.hpp"
+#include <array>
 
-#include<array>
+#include "ics3/baudrate.hpp"
+#include "ics3/check_invalid.hpp"
 
 namespace ics {
 class EepParam {

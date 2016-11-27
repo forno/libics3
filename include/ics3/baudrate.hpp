@@ -27,7 +27,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef LIBICS3_ICS3_BAUDRATE_H_
 #define LIBICS3_ICS3_BAUDRATE_H_
 
-#include<termios.h>
+#include <termios.h>
 
 namespace ics {
 class Baudrate {

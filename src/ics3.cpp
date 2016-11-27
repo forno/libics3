@@ -24,12 +24,12 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-#include"ics3/ics3.hpp"
+#include "ics3/ics3.hpp"
 
-#include"core.hpp"
-#include"ics3/eeprom.hpp"
-#include"ics3/id.hpp"
-#include"ics3/parameter.hpp"
+#include "core.hpp"
+#include "ics3/eeprom.hpp"
+#include "ics3/id.hpp"
+#include "ics3/parameter.hpp"
 
 static inline ics::Angle::rawType getReceiveAngle(const ics::Core::Container& rx) noexcept {
   return (rx[4] << 7) | rx[5];

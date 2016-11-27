@@ -27,11 +27,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef LIBICS3_ICS3_CORE_H_
 #define LIBICS3_ICS3_CORE_H_
 
-#include<array>
-#include<memory>
-#include<string>
-#include<vector>
-#include<termios.h>
+#include <array>
+#include <memory>
+#include <string>
+#include <vector>
+
+#include <termios.h>
 
 namespace ics {
 class Core {

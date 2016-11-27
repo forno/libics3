@@ -27,7 +27,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef LIBICS3_ICS3_ID_H_
 #define LIBICS3_ICS3_ID_H_
 
-#include<stdexcept>
+#include <stdexcept>
 
 namespace ics {
 class ID {

@@ -27,7 +27,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef LIBICS3_ICS3_PARAMETER_H_
 #define LIBICS3_ICS3_PARAMETER_H_
 
-#include"ics3/check_invalid.hpp"
+#include "ics3/check_invalid.hpp"
 
 namespace ics {
 class Parameter {
