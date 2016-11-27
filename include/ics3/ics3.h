@@ -24,29 +24,38 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-#ifndef LIBICS3_ICS3_CHECK_INVALID_H_
-#define LIBICS3_ICS3_CHECK_INVALID_H_
+#ifndef LIBICS3_ICS3_ICS3_H
+#define LIBICS3_ICS3_ICS3_H
 
-#include <stdexcept>
-#include <utility>
+#include <memory>
+#include <string>
+
+#include "ics3/angle.h"
+#include "ics3/baudrate.h"
 
 namespace ics
 {
-template<typename T>
-constexpr T checkValidRange(const T&& input, const T&& min, const T&& max)
+// Forward declaration
+class Core;
+class Parameter;
+class EepRom;
+class ID;
+
+class ICS3
 {
-  return input < min ? throw std::out_of_range {"Too small argument"} :
-         max < input ? throw std::out_of_range {"Too big argument"} :
-         std::forward<T>(input);
+public:
+  explicit ICS3(const std::string&, const Baudrate& = Baudrate::RATE115200());
+  Angle move(const ID&, Angle);
+  Angle free(const ID&, Angle = Angle::newRadian());
+  Parameter get(const ID&, const Parameter&);
+  void set(const ID&, const Parameter&);
+  EepRom getRom(const ID&);
+  void setRom(const ID&, const EepRom&);
+  ID getID();
+  void setID(const ID&);
+private:
+  std::shared_ptr<Core> core;
+};
 }
 
-template<typename T>
-constexpr T checkValidRange(const T input, const T min, const T max)
-{
-  return input < min ? throw std::out_of_range {"Too small argument"} :
-         max < input ? throw std::out_of_range {"Too big argument"} :
-         input;
-}
-}
-
-#endif // LIBICS3_ICS3_CHECK_INVALID_H_
+#endif // LIBICS3_ICS3_ICS3_H

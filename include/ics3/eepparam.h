@@ -24,13 +24,13 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-#ifndef LIBICS3_ICS3_EEPPARAM_H_
-#define LIBICS3_ICS3_EEPPARAM_H_
+#ifndef LIBICS3_ICS3_EEPPARAM_H
+#define LIBICS3_ICS3_EEPPARAM_H
 
 #include <array>
 
-#include "ics3/baudrate.hpp"
-#include "ics3/check_invalid.hpp"
+#include "ics3/baudrate.h"
+#include "ics3/check_invalid.h"
 
 namespace ics
 {
@@ -287,4 +287,4 @@ constexpr EepParam::type EepParam::checkValidOffset(type input, type min, type m
 }
 }
 
-#endif // LIBICS3_ICS3_EEPPARAM_H_
+#endif // LIBICS3_ICS3_EEPPARAM_H
