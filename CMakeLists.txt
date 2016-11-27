@@ -51,7 +51,6 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 # Add includes
 include_directories(
   "${MY_DIR}/include"
-  ${PROJECT_BINARY_DIR} # for generated headers
   ${GTEST_INCLUDE_DIRS}
 )
 
