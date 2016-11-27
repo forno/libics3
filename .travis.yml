@@ -13,7 +13,7 @@ before_install:
 - mkdir build
 install:
 - cd build
-- cmake .. -DCMAKE_INSTALL_PREFIX=install
+- cmake .. -DCMAKE_INSTALL_PREFIX=install -ENABLE_TEST=ON
 - make
 - make install
 - cd -
