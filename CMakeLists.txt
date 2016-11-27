@@ -17,7 +17,7 @@ enable_testing()
 set(GTEST_ROOT ${MY_DIR}/thirdpatry/googletest/googletest)
 find_package(GTest REQUIRED)
 
-find_package(Threads REQUIRED)
+find_package(Threads)
 
 option(BUILD_SHARED_LIBS "Build shared (ON) or static (OFF) libraries" ON)
 option(ENABLE_CXX11 "Enable C++11 support" ON)
