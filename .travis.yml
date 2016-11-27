@@ -3,15 +3,15 @@ sudo: false
 dist: trusty
 group: beta
 compiler:
-  - g++
-  - clang++
+- g++
+- clang++
 install:
-  - make
-  - mkdir cbuild
-  - cd cbuild
-  - cmake .. -DCMAKE_INSTALL_PREFIX=install
-  - make
-  - make install
-  - cd ..
+- mkdir build
+- cd build
+- cmake .. -DCMAKE_INSTALL_PREFIX=install
+- make
+- make install
+- cd -
 script:
-  ./bin/test
+- cd build
+- ctest
