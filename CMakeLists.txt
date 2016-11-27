@@ -11,6 +11,11 @@ if(NOT DEFINED CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING "Choose: RelWithDebInfo Release Debug MinSizeRel None")
 endif()
 
+enable_testing()
+find_package(GTest REQUIRED)
+
+find_package(Threads REQUIRED)
+
 set(MY_DIR ${ics3_SOURCE_DIR})
 
 option(BUILD_SHARED_LIBS "Build shared (ON) or static (OFF) libraries" ON)
@@ -47,13 +52,12 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 include_directories(
   "${MY_DIR}/include"
   ${PROJECT_BINARY_DIR} # for generated headers
+  ${GTEST_INCLUDE_DIRS}
 )
 
 file(GLOB ICS3_SOURCES
   ${MY_DIR}/src/*.cpp
 )
-
-list(REMOVE_ITEM ICS3_SOURCES ${MY_DIR}/src/test.cpp)
 
 file(GLOB ICS3_HEADERS
   ${MY_DIR}/include/ics3/*.hpp
@@ -65,6 +69,8 @@ set(SOURCES
   ${ICS3_SOURCES}
 )
 
+include_directories(${GTEST_INCLUDE_DIRS})
+
 add_library(ics3 ${SOURCES})
 set_target_properties(ics3 PROPERTIES
   VERSION ${PROJECT_VER}
@@ -72,6 +78,18 @@ set_target_properties(ics3 PROPERTIES
 )
 
 target_link_libraries(ics3)
+
+# test section
+add_executable(integrate test/integrate.cpp)
+target_link_libraries(integrate ics3 ${GTEST_LIBRARIES} gtest_main)
+if(THREADS_HAVE_PTHREAD_ARG)
+  target_compile_options(PUBLIC integrate "-pthread")
+endif()
+if(CMAKE_THREAD_LIBS_INIT)
+  target_link_libraries(integrate "${CMAKE_THREAD_LIBS_INIT}")
+endif()
+add_test(AllTestInIntegrate ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/integrate)
+
 install(TARGETS ics3 DESTINATION lib RUNTIME DESTINATION bin)
 install(DIRECTORY "${MY_DIR}/include/${PROJECT_NAME}" DESTINATION include)
 

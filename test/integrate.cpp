@@ -26,17 +26,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #include "ics3/ics"
 
-#include<iostream>
-#include<cassert>
-#include<thread>
-#include<chrono>
+#include <chrono>
+#include <iostream>
+#include <thread>
 
-void testAngle();
-void testBaudrate();
-void testEepParam();
-void testID();
-void testParameter();
-void testICS3();
+#include <gtest/gtest.h>
+
 void testIcsMove(ics::ICS3&, const ics::ID&);
 void testIcsParam(ics::ICS3&, const ics::ID&);
 void testIcsEepRom(ics::ICS3&, const ics::ID&);
@@ -45,18 +40,7 @@ void testIcsID(ics::ICS3&);
 template<typename Iter>
 void dump(const Iter& begin, const Iter& end) noexcept;
 
-int main() {
-  testAngle();
-  testBaudrate();
-  testEepParam();
-  testID();
-  testParameter();
-  testICS3();
-  return 0;
-}
-
-void testAngle() {
-  std::cout << std::endl << "angle test section" << std::endl;
+TEST(AllTestInIntegrate, Angle) {
   // constexpr test
   constexpr auto defDeg = ics::Angle::newDegree();
   constexpr auto defRad = ics::Angle::newRadian();
@@ -74,106 +58,62 @@ void testAngle() {
   constexpr auto cast1 = static_cast<double>(degree_cast);
   constexpr double cast2 {degree_cast};
   static_assert(cast1 == cast2, "difference: angle cast to doubles. miss? impossible lol");
-  try {
-    ics::Angle::newDegree(136);
-    assert(false);
-  } catch (const std::out_of_range& e) {
-    std::cout << e.what() << std::endl;
-  }
+  EXPECT_THROW(ics::Angle::newDegree(136), std::out_of_range);
 
   // runtime test
   auto degree = ics::Angle::newDegree(0);
   auto radian = ics::Angle::newRadian(0);
-  assert(degree.getRaw() == radian.getRaw());
+  EXPECT_EQ(degree.getRaw(), radian.getRaw());
   degree.set(90);
   radian.set(ics::Angle::PI / 2);
-  assert(degree.getRaw() == radian.getRaw());
+  EXPECT_EQ(degree.getRaw(), radian.getRaw());
   degree.set(-60);
   radian.set(-ics::Angle::PI / 3);
-  assert(degree.getRaw() == radian.getRaw());
-  try {
-    degree.set(150);
-    assert(false);
-  } catch (const std::out_of_range& e) {
-    std::cout << e.what() << std::endl;
-  }
-  try {
-    radian.set(ics::Angle::PI);
-    assert(false);
-  } catch (const std::out_of_range& e) {
-    std::cout << e.what() << std::endl;
-  }
+  EXPECT_EQ(degree.getRaw(), radian.getRaw());
+  EXPECT_THROW(degree.set(150), std::out_of_range);
+  EXPECT_THROW(radian.set(ics::Angle::PI), std::out_of_range);
 }
 
-void testBaudrate() {
-  std::cout << std::endl << "Baudrate test section" << std::endl;
+TEST(AllTestInIntegrate, Baudrate) {
   // constexpr test
   constexpr auto baudrate115200 = ics::Baudrate::RATE115200();
-  static_assert(baudrate115200 == 10, "Baudrate: not equal B115200");
+  static_assert(baudrate115200 == 10, "Baudrate: not equal 10");
   static_assert(baudrate115200.get() == 10, "Baudrate: romdata error");
   static_assert(baudrate115200.getSpeed() == B115200, "Baudrate: getSpeed method error");
   static_assert(static_cast<uint8_t>(baudrate115200) == 10, "cast to Baudrate::type(uint8_t)");
 }
 
-void testEepParam() {
-  std::cout << std::endl << "EepParam test section" << std::endl;
+TEST(AllTestInIntegrate, EepParam) {
   // constexpr test
   constexpr auto current = ics::EepParam::current();
   static_assert(63 == current.get(), "current error");
   constexpr auto stretch = ics::EepParam::stretch(244);
   static_assert(244 == stretch.get(), "strech error");
-  try {
-    ics::EepParam::flag(10);
-    assert(false);
-  } catch (const std::invalid_argument& e) {
-    std::cout << e.what() << std::endl;
-  }
+  EXPECT_THROW(ics::EepParam::flag(10), std::invalid_argument);
 
   // runtime test
   auto speed = ics::EepParam::speed();
-  assert(127 == speed.get());
+  EXPECT_EQ(127, speed.get());
   speed.set(100);
-  assert(100 == speed.get());
+  EXPECT_EQ(100, speed.get());
   auto speed2 = ics::EepParam::newEepParam(speed, 60);
-  assert(60 == speed2.get());
-  try {
-    speed.set(200);
-    assert(false);
-  } catch (const std::out_of_range& e) {
-    std::cout << e.what() << std::endl;
-  }
-  try {
-    ics::EepParam::newEepParam(speed2, 130);
-    assert(false);
-  } catch (const std::out_of_range& e) {
-    std::cout << e.what() << std::endl;
-  }
+  EXPECT_EQ(60, speed2.get());
+  EXPECT_THROW(speed.set(200), std::out_of_range);
+  EXPECT_THROW(ics::EepParam::newEepParam(speed2, 130), std::out_of_range);
 }
 
-void testID() {
-  std::cout << std::endl << "ID test section" << std::endl;
+TEST(AllTestInIntegrate, ID) {
   constexpr ics::ID id {0};
   static_assert(id == 0, "id 0 error");
   static_assert(id.get() == 0, "id 0 error by get");
   constexpr ics::ID id31 {31};
   static_assert(id31 == 31, "id 31 error");
   static_assert(id31.get() == 31, "id 31 error by get");
-  try {
-    ics::ID id32 {32}; // if constexpr, compile error
-    assert(false);
-  } catch (const std::invalid_argument& e) {
-    std::cout << e.what() << std::endl;
-  }
-  try {
-    ics::ID error {static_cast<ics::ID::type>(-1)}; // if constexpr, compile error
-    assert(false);
-  } catch (const std::invalid_argument& e) {
-    std::cout << e.what() << std::endl;
-  }
+  EXPECT_THROW(ics::ID {32}, std::invalid_argument);
+  EXPECT_THROW(ics::ID {static_cast<ics::ID::type>(-1)}, std::invalid_argument);
 }
 
-void testParameter() {
-  std::cout << std::endl << "parameter test section" << std::endl;
+TEST(AllTestInIntegrate, Parameter) {
   // constexpr test
   constexpr auto stretch = ics::Parameter::stretch();
   static_assert(30 == stretch.get(), "stretch error");
@@ -183,37 +123,21 @@ void testParameter() {
   static_assert(100 == speed.get(), "speed error");
   static_assert(100 == speed, "speed error by cast");
   static_assert(0x02 == speed.getSubcommand(), "speed error by subcommand");
-  try {
-    ics::Parameter::temperature(0);
-    assert(false);
-  } catch (const std::out_of_range& e) {
-    std::cout << e.what() << std::endl;
-  }
+  EXPECT_THROW(ics::Parameter::temperature(0), std::out_of_range);
 
   // runtime test
   auto current = ics::Parameter::current();
-  assert(63 == current.get());
-  assert(0x03 == current.getSubcommand());
+  EXPECT_EQ(63, current.get());
+  EXPECT_EQ(0x03, current.getSubcommand());
   current.set(30);
-  assert(30 == current);
+  EXPECT_EQ(30, current);
   current = 10;
-  assert(10 == current);
-  try {
-    current.set(70);
-    assert(false);
-  } catch (const std::out_of_range& e) {
-    std::cout << e.what() << std::endl;
-  }
-  try {
-    current = 64;
-    assert(false);
-  } catch (const std::out_of_range& e) {
-    std::cout << e.what() << std::endl;
-  }
+  EXPECT_EQ(10, current);
+  EXPECT_THROW(current.set(70), std::out_of_range);
+  EXPECT_THROW(current = 64;, std::out_of_range);
 }
 
-void testICS3() {
-  std::cout << std::endl << "ICS3 test section" << std::endl;
+TEST(AllTestInIntegrate, ICS3) {
   constexpr auto path = "/dev/ttyUSB0";
   constexpr auto baudrate = ics::Baudrate::RATE115200();
   constexpr ics::ID id {2};
@@ -304,3 +228,4 @@ inline void dump(const Iter& begin, const Iter& end) noexcept {
   while (begin != end) std::cout << static_cast<int>(*begin++) << ", ";
   std::cout << std::endl;
 }
+
