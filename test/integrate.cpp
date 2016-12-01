@@ -40,15 +40,6 @@ void testIcsID(ics::ICS3&);
 template<typename Iter>
 void dump(const Iter& begin, const Iter& end) noexcept;
 
-TEST(AllTestInIntegrate, Baudrate) {
-  // constexpr test
-  constexpr auto baudrate115200 = ics::Baudrate::RATE115200();
-  static_assert(baudrate115200 == 10, "Baudrate: not equal 10");
-  static_assert(baudrate115200.get() == 10, "Baudrate: romdata error");
-  static_assert(baudrate115200.getSpeed() == B115200, "Baudrate: getSpeed method error");
-  static_assert(static_cast<uint8_t>(baudrate115200) == 10, "cast to Baudrate::type(uint8_t)");
-}
-
 TEST(AllTestInIntegrate, EepParam) {
   // constexpr test
   constexpr auto current = ics::EepParam::current();
