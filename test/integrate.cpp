@@ -40,40 +40,6 @@ void testIcsID(ics::ICS3&);
 template<typename Iter>
 void dump(const Iter& begin, const Iter& end) noexcept;
 
-TEST(AllTestInIntegrate, Angle) {
-  // constexpr test
-  constexpr auto defDeg = ics::Angle::newDegree();
-  constexpr auto defRad = ics::Angle::newRadian();
-  static_assert(defDeg == 0, "Angle default cast error");
-  static_assert(defRad.get() == 0, "Angle default get() error");
-  static_assert(defDeg.getRaw() == 7500, "Angle default must is 7500");
-  static_assert(defDeg.getRaw() == defRad.getRaw(), "Angle have different default");
-  constexpr auto degree1 = ics::Angle::newDegree(90);
-  constexpr auto radian1 = ics::Angle::newRadian(ics::Angle::PI / 2);
-  static_assert(degree1.getRaw() == radian1.getRaw(), "difference: 90 deg <-> pi/2 rad");
-  constexpr auto degree2 = ics::Angle::newDegree(30);
-  constexpr auto radian2 = ics::Angle::newRadian(ics::Angle::PI / 6);
-  static_assert(degree2.getRaw() == radian2.getRaw(), "difference: 30 deg <-> pi/6 rad");
-  constexpr auto degree_cast = ics::Angle::newDegree(50);
-  constexpr auto cast1 = static_cast<double>(degree_cast);
-  constexpr double cast2 {degree_cast};
-  static_assert(cast1 == cast2, "difference: angle cast to doubles. miss? impossible lol");
-  EXPECT_THROW(ics::Angle::newDegree(136), std::out_of_range);
-
-  // runtime test
-  auto degree = ics::Angle::newDegree(0);
-  auto radian = ics::Angle::newRadian(0);
-  EXPECT_EQ(degree.getRaw(), radian.getRaw());
-  degree.set(90);
-  radian.set(ics::Angle::PI / 2);
-  EXPECT_EQ(degree.getRaw(), radian.getRaw());
-  degree.set(-60);
-  radian.set(-ics::Angle::PI / 3);
-  EXPECT_EQ(degree.getRaw(), radian.getRaw());
-  EXPECT_THROW(degree.set(150), std::out_of_range);
-  EXPECT_THROW(radian.set(ics::Angle::PI), std::out_of_range);
-}
-
 TEST(AllTestInIntegrate, Baudrate) {
   // constexpr test
   constexpr auto baudrate115200 = ics::Baudrate::RATE115200();
