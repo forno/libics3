@@ -107,7 +107,6 @@ void ics::Core::communicate(const Container& tx, Container& rx)
     }
     ++receive;
   }
-  if ((tx[0] & 0x7F) != *receive) throw std::runtime_error {"Receive failed: invalid target data"};
 }
 
 void ics::Core::communicateID(const IDContainerTx& tx, IDContainerRx& rx)
