@@ -40,25 +40,6 @@ void testIcsID(ics::ICS3&);
 template<typename Iter>
 void dump(const Iter& begin, const Iter& end) noexcept;
 
-TEST(AllTestInIntegrate, EepParam) {
-  // constexpr test
-  constexpr auto current = ics::EepParam::current();
-  static_assert(63 == current.get(), "current error");
-  constexpr auto stretch = ics::EepParam::stretch(244);
-  static_assert(244 == stretch.get(), "strech error");
-  EXPECT_THROW(ics::EepParam::flag(10), std::invalid_argument);
-
-  // runtime test
-  auto speed = ics::EepParam::speed();
-  EXPECT_EQ(127, speed.get());
-  speed.set(100);
-  EXPECT_EQ(100, speed.get());
-  auto speed2 = ics::EepParam::newEepParam(speed, 60);
-  EXPECT_EQ(60, speed2.get());
-  EXPECT_THROW(speed.set(200), std::out_of_range);
-  EXPECT_THROW(ics::EepParam::newEepParam(speed2, 130), std::out_of_range);
-}
-
 TEST(AllTestInIntegrate, ID) {
   constexpr ics::ID id {0};
   static_assert(id == 0, "id 0 error");
