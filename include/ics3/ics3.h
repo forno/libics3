@@ -37,9 +37,9 @@ namespace ics
 {
 // Forward declaration
 class Core;
-class Parameter;
 class EepRom;
 class ID;
+class Parameter;
 
 class ICS3
 {
