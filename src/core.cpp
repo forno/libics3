@@ -31,7 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <fcntl.h> // for open FLAGS
 #include <unistd.h> // for tty checks
 
-#include "core.h"
+#include "core.hpp"
 
 ics::Core::Core(const std::string& path, speed_t baudrate)
 : fd {open(path.c_str(), O_RDWR | O_NOCTTY)},

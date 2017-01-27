@@ -27,7 +27,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef LIBICS3_ICS3_ANGLE_H
 #define LIBICS3_ICS3_ANGLE_H
 
-#include "ics3/check_invalid.h"
+#include "ics3/check_invalid.hpp"
 
 namespace ics
 {

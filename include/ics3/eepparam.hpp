@@ -29,8 +29,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <array>
 
-#include "ics3/baudrate.h"
-#include "ics3/check_invalid.h"
+#include "ics3/baudrate.hpp"
+#include "ics3/check_invalid.hpp"
 
 namespace ics
 {
