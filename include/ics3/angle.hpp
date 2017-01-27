@@ -39,6 +39,7 @@ class Angle
 public:
   using rawType = uint16_t;
   using type = double;
+
   static constexpr Angle newDegree(type = 0.0);
   static constexpr Angle newRadian(type = 0.0);
   static constexpr Angle newSameUnit(const Angle&, type = 0.0);
@@ -50,6 +51,7 @@ public:
 
   Angle(const Angle&) noexcept = default;
   Angle& operator=(const Angle&) noexcept;
+
   constexpr type get() const noexcept;
   constexpr operator type() const noexcept;
   void set(type);
@@ -58,6 +60,7 @@ public:
   void setRaw(rawType);
 private:
   constexpr Angle(type, type); // non explicit, user cannot touch this
+
   static constexpr rawType castToRaw(type, type) noexcept;
   static constexpr rawType checkValidAngle(rawType);
 
