@@ -237,18 +237,18 @@ inline void EepParam::write(TargetContainer& dest) const noexcept
 }
 
 constexpr EepParam::EepParam(
-    size_type offset,
-    size_type length,
-    type min,
-    type max,
-    ValidChecker setFunc,
-    type data)
-: offset(offset),
-  length(length),
-  min(min),
-  max(max),
-  setFunc(setFunc),
-  data(setFunc(data, min, max)) // throw std::invalid_argument, std::out_of_range
+      size_type offset,
+      size_type length,
+      type min,
+      type max,
+      ValidChecker setFunc,
+      type data)
+  : offset(offset),
+    length(length),
+    min(min),
+    max(max),
+    setFunc(setFunc),
+    data(setFunc(data, min, max)) // throw std::invalid_argument, std::out_of_range
 {
 }
 
