@@ -35,9 +35,11 @@ class Baudrate
 {
 public:
   using type = uint8_t;
+
   static constexpr Baudrate RATE115200() noexcept;
   //static constexpr Baudrate RATE625000() noexcept;
   //static constexpr Baudrate RATE1250000() noexcept;
+
   constexpr type get() const noexcept;
   constexpr operator type() const noexcept;
   constexpr speed_t getSpeed() const noexcept;
@@ -69,8 +71,8 @@ constexpr speed_t Baudrate::getSpeed() const noexcept
 }
 
 constexpr Baudrate::Baudrate(type romdata, speed_t baudrate) noexcept
-: romdata {romdata},
-  baudrate {baudrate}
+  : romdata {romdata},
+    baudrate {baudrate}
 {
 }
 }

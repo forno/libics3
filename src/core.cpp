@@ -40,8 +40,8 @@ inline std::unique_ptr<T> make_unique(Args&&... args)
 }
 
 ics::Core::Core(const std::string& path, speed_t baudrate)
-: fd {open(path.c_str(), O_RDWR | O_NOCTTY)},
-  oldTio {}
+  : fd {open(path.c_str(), O_RDWR | O_NOCTTY)},
+    oldTio {}
 {
   if (fd < 0)
     throw std::runtime_error {"Cannot open deveice"};
@@ -70,8 +70,8 @@ ics::Core::~Core() noexcept
 }
 
 ics::Core::Core(Core&& rhs) noexcept
-: fd {rhs.fd},
-  oldTio(rhs.oldTio) // for Ubuntu14.04 compiler
+  : fd {rhs.fd},
+    oldTio(rhs.oldTio) // for Ubuntu14.04 compiler
 {
   rhs.fd = -1;
 }

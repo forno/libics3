@@ -32,12 +32,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace ics
 {
 class ICS3;
+
 class Angle
 {
   friend ICS3; // for touch rawData
 public:
   using rawType = uint16_t;
   using type = double;
+
   static constexpr Angle newDegree(type = 0.0);
   static constexpr Angle newRadian(type = 0.0);
   static constexpr Angle newSameUnit(const Angle&, type = 0.0);
@@ -49,6 +51,7 @@ public:
 
   Angle(const Angle&) noexcept = default;
   Angle& operator=(const Angle&) noexcept;
+
   constexpr type get() const noexcept;
   constexpr operator type() const noexcept;
   void set(type);
@@ -57,6 +60,7 @@ public:
   void setRaw(rawType);
 private:
   constexpr Angle(type, type); // non explicit, user cannot touch this
+
   static constexpr rawType castToRaw(type, type) noexcept;
   static constexpr rawType checkValidAngle(rawType);
 
@@ -122,8 +126,8 @@ inline void Angle::setRaw(rawType raw)
 }
 
 constexpr Angle::Angle(type calibration, type angle)
-: rawData {checkValidAngle(castToRaw(calibration, angle))}, // throw std::out_of_range
-  rawCalibration {calibration}
+  : rawData {checkValidAngle(castToRaw(calibration, angle))}, // throw std::out_of_range
+    rawCalibration {calibration}
 {
 }
 
