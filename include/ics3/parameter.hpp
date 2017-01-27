@@ -35,6 +35,7 @@ class Parameter
 {
 public:
   using type = uint8_t;
+
   static constexpr Parameter stretch(type = 30);
   static constexpr Parameter speed(type = 127);
   static constexpr Parameter current(type = 63);
@@ -107,10 +108,10 @@ constexpr Parameter::type Parameter::getSubcommand() const noexcept
 }
 
 constexpr Parameter::Parameter(type sc, type min, type max, type defaultData)
-: sc {sc},
-  min {min},
-  max {max},
-  data {checkValidRange(defaultData, min, max)}
+  : sc {sc},
+    min {min},
+    max {max},
+    data {checkValidRange(defaultData, min, max)}
 {
 }
 }
