@@ -45,6 +45,7 @@ class ICS3
 {
 public:
   explicit ICS3(const std::string&, const Baudrate& = Baudrate::RATE115200());
+  ~ICS3() noexcept;
   Angle move(const ID&, Angle);
   Angle free(const ID&, Angle = Angle::newRadian());
   Parameter get(const ID&, const Parameter&);
