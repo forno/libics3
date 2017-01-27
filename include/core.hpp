@@ -50,7 +50,7 @@ public:
   Core(Core&&) noexcept;
   Core& operator=(Core&&) noexcept;
 
-  static std::shared_ptr<Core> getCore(const std::string&, speed_t);
+  static std::unique_ptr<Core> getCore(const std::string&, speed_t);
   void communicate(const Container&, Container&);
   void communicateID(const IDContainerTx&, IDContainerRx&);
 private:
