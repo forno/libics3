@@ -83,7 +83,7 @@ ics::Core& ics::Core::operator=(Core&& rhs) noexcept
 
 std::unique_ptr<ics::Core> ics::Core::getCore(const std::string& path, speed_t baudrate)
 {
-  return std::unique_ptr<Core> {new Core {path, baudrate}};
+  return std::unique_ptr<Core>(path, baudrate);
 }
 
 void ics::Core::communicate(const Container& tx, Container& rx)
