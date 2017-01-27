@@ -69,7 +69,7 @@ inline void EepRom::write(Iter&& dest) const
 }
 
 inline EepRom::EepRom(const Container& src)
-: data(src) // for Ubuntu14.04 compiler
+  : data(src) // for Ubuntu14.04 compiler
 {
 }
 }
