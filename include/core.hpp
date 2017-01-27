@@ -55,7 +55,6 @@ public:
   void communicateID(const IDContainerTx&, IDContainerRx&);
 private:
   void closeThis() const noexcept;
-
   static termios getTermios() noexcept;
 
   int fd;
