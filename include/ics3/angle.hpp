@@ -123,8 +123,8 @@ inline void Angle::setRaw(rawType raw)
 }
 
 constexpr Angle::Angle(type calibration, type angle)
-: rawData {checkValidAngle(castToRaw(calibration, angle))}, // throw std::out_of_range
-  rawCalibration {calibration}
+  : rawData {checkValidAngle(castToRaw(calibration, angle))}, // throw std::out_of_range
+    rawCalibration {calibration}
 {
 }
 
