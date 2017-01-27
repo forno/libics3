@@ -35,7 +35,9 @@ class ID
 {
 public:
   using type = uint8_t;
+
   constexpr ID(type); // ID is non explicit constructor because only do check limit
+
   constexpr type get() const noexcept;
   constexpr operator type() const noexcept;
 private:
@@ -43,7 +45,7 @@ private:
 };
 
 constexpr ID::ID(type id)
-: data {id < 32 ? id : throw std::invalid_argument {"invalid ID: must be 0 <= id <= 31"}}
+  : data {id < 32 ? id : throw std::invalid_argument {"invalid ID: must be 0 <= id <= 31"}}
 {
 }
 
