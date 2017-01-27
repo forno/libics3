@@ -69,8 +69,8 @@ constexpr speed_t Baudrate::getSpeed() const noexcept
 }
 
 constexpr Baudrate::Baudrate(type romdata, speed_t baudrate) noexcept
-: romdata {romdata},
-  baudrate {baudrate}
+  : romdata {romdata},
+    baudrate {baudrate}
 {
 }
 }
