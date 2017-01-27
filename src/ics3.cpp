@@ -42,7 +42,7 @@ static inline ics::Core::value_type getCmd(const ics::Core::value_type head, con
 }
 
 ics::ICS3::ICS3(const std::string& path, const Baudrate& baudrate)
-: core {Core::getCore(path, baudrate.getSpeed())} // throw std::invalid_argument, std::runtime_error
+  : core {Core::getCore(path, baudrate.getSpeed())} // throw std::invalid_argument, std::runtime_error
 {
 }
 
