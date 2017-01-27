@@ -33,6 +33,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "core.hpp"
 
+template<typename T, typename... Args>
+inline std::unique_ptr<T> make_unique(Args&&... args)
+{
+  return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
+}
+
 ics::Core::Core(const std::string& path, speed_t baudrate)
 : fd {open(path.c_str(), O_RDWR | O_NOCTTY)},
   oldTio {}
@@ -83,7 +89,7 @@ ics::Core& ics::Core::operator=(Core&& rhs) noexcept
 
 std::unique_ptr<ics::Core> ics::Core::getCore(const std::string& path, speed_t baudrate)
 {
-  return std::unique_ptr<Core>(path, baudrate);
+  return make_unique<Core>(path, baudrate);
 }
 
 void ics::Core::communicate(const Container& tx, Container& rx)
