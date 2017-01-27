@@ -54,7 +54,7 @@ public:
   ID getID();
   void setID(const ID&);
 private:
-  std::shared_ptr<Core> core;
+  std::unique_ptr<Core> core;
 };
 }
 
