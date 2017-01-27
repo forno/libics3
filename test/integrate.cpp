@@ -140,7 +140,7 @@ TEST(AllTestInIntegrate, Parameter) {
 TEST(AllTestInIntegrate, ICS3) {
   constexpr auto path = "/dev/ttyUSB0";
   constexpr auto baudrate = ics::Baudrate::RATE115200();
-  constexpr ics::ID id {2};
+  constexpr ics::ID id {0};
   try {
     ics::ICS3 ics {path, baudrate};
     testIcsMove(ics, id);

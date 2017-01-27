@@ -29,8 +29,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <array>
 
-#include "ics3/baudrate.h"
-#include "ics3/check_invalid.h"
+#include "ics3/baudrate.hpp"
+#include "ics3/check_invalid.hpp"
 
 namespace ics
 {
@@ -41,6 +41,7 @@ public:
   using TargetContainer = std::array<uint8_t, 64>;
   using size_type = TargetContainer::size_type;
   using ValidChecker = type (&)(type, type, type);
+
   enum Flag : type
   {
     REVERSE =   0x01,
@@ -86,6 +87,7 @@ private:
       type,
       ValidChecker,
       type);
+
   static constexpr type checkValidRange(type, type, type);
   static constexpr type checkValidEvenRange(type, type, type);
   static constexpr type checkValidFlag(type, type, type);
@@ -237,18 +239,18 @@ inline void EepParam::write(TargetContainer& dest) const noexcept
 }
 
 constexpr EepParam::EepParam(
-    size_type offset,
-    size_type length,
-    type min,
-    type max,
-    ValidChecker setFunc,
-    type data)
-: offset(offset),
-  length(length),
-  min(min),
-  max(max),
-  setFunc(setFunc),
-  data(setFunc(data, min, max)) // throw std::invalid_argument, std::out_of_range
+      size_type offset,
+      size_type length,
+      type min,
+      type max,
+      ValidChecker setFunc,
+      type data)
+  : offset(offset),
+    length(length),
+    min(min),
+    max(max),
+    setFunc(setFunc),
+    data(setFunc(data, min, max)) // throw std::invalid_argument, std::out_of_range
 {
 }
 

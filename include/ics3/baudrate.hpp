@@ -24,38 +24,57 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-#ifndef LIBICS3_ICS3_ID_H
-#define LIBICS3_ICS3_ID_H
+#ifndef LIBICS3_ICS3_BAUDRATE_H
+#define LIBICS3_ICS3_BAUDRATE_H
 
-#include <stdexcept>
+#include <termios.h>
 
 namespace ics
 {
-class ID
+class Baudrate
 {
 public:
   using type = uint8_t;
-  constexpr ID(type); // ID is non explicit constructor because only do check limit
+
+  static constexpr Baudrate RATE115200() noexcept;
+  //static constexpr Baudrate RATE625000() noexcept;
+  //static constexpr Baudrate RATE1250000() noexcept;
+
   constexpr type get() const noexcept;
   constexpr operator type() const noexcept;
+  constexpr speed_t getSpeed() const noexcept;
 private:
-  const type data;
+  constexpr Baudrate(type, speed_t) noexcept; // non explicit, user cannot touch this
+
+  const type romdata;
+  const speed_t baudrate;
 };
 
-constexpr ID::ID(type id)
-: data {id < 32 ? id : throw std::invalid_argument {"invalid ID: must be 0 <= id <= 31"}}
+constexpr Baudrate Baudrate::RATE115200() noexcept
 {
+  return {10, B115200};
 }
 
-constexpr ID::type ID::get() const noexcept
+constexpr Baudrate::type Baudrate::get() const noexcept
 {
-  return data;
+  return romdata;
 }
 
-constexpr ID::operator type() const noexcept
+constexpr Baudrate::operator Baudrate::type() const noexcept
 {
   return get();
 }
+
+constexpr speed_t Baudrate::getSpeed() const noexcept
+{
+  return baudrate;
 }
 
-#endif // LIBICS3_ICS3_ID_H
+constexpr Baudrate::Baudrate(type romdata, speed_t baudrate) noexcept
+  : romdata {romdata},
+    baudrate {baudrate}
+{
+}
+}
+
+#endif // LIBICS3_ICS3_BAUDRATE_H

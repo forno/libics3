@@ -24,55 +24,45 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-#ifndef LIBICS3_ICS3_BAUDRATE_H
-#define LIBICS3_ICS3_BAUDRATE_H
+#ifndef LIBICS3_ICS3_CORE_H
+#define LIBICS3_ICS3_CORE_H
+
+#include <array>
+#include <memory>
+#include <string>
+#include <vector>
 
 #include <termios.h>
 
 namespace ics
 {
-class Baudrate
+class Core
 {
 public:
-  using type = uint8_t;
-  static constexpr Baudrate RATE115200() noexcept;
-  //static constexpr Baudrate RATE625000() noexcept;
-  //static constexpr Baudrate RATE1250000() noexcept;
-  constexpr type get() const noexcept;
-  constexpr operator type() const noexcept;
-  constexpr speed_t getSpeed() const noexcept;
+  using value_type = uint8_t;
+  using Container = std::vector<value_type>;
+  using IDContainerTx = std::array<value_type, 4>;
+  using IDContainerRx = std::array<value_type, 5>;
+
+  explicit Core(const std::string&, speed_t); // touch by only libics3
+  ~Core() noexcept;
+  Core(const Core&) = delete;
+  Core& operator=(const Core&) = delete;
+  Core(Core&&) noexcept;
+  Core& operator=(Core&&) noexcept;
+
+  static std::unique_ptr<Core> getCore(const std::string&, speed_t);
+
+  void communicate(const Container&, Container&);
+  void communicateID(const IDContainerTx&, IDContainerRx&);
 private:
-  constexpr Baudrate(type, speed_t) noexcept; // non explicit, user cannot touch this
+  void closeThis() const noexcept;
 
-  const type romdata;
-  const speed_t baudrate;
+  static termios getTermios() noexcept;
+
+  int fd;
+  termios oldTio;
 };
-
-constexpr Baudrate Baudrate::RATE115200() noexcept
-{
-  return {10, B115200};
 }
 
-constexpr Baudrate::type Baudrate::get() const noexcept
-{
-  return romdata;
-}
-
-constexpr Baudrate::operator Baudrate::type() const noexcept
-{
-  return get();
-}
-
-constexpr speed_t Baudrate::getSpeed() const noexcept
-{
-  return baudrate;
-}
-
-constexpr Baudrate::Baudrate(type romdata, speed_t baudrate) noexcept
-: romdata {romdata},
-  baudrate {baudrate}
-{
-}
-}
-
-#endif // LIBICS3_ICS3_BAUDRATE_H
+#endif // LIBICS3_ICS3_CORE_H
