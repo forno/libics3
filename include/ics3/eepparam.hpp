@@ -41,6 +41,7 @@ public:
   using TargetContainer = std::array<uint8_t, 64>;
   using size_type = TargetContainer::size_type;
   using ValidChecker = type (&)(type, type, type);
+
   enum Flag : type
   {
     REVERSE =   0x01,
@@ -86,6 +87,7 @@ private:
       type,
       ValidChecker,
       type);
+
   static constexpr type checkValidRange(type, type, type);
   static constexpr type checkValidEvenRange(type, type, type);
   static constexpr type checkValidFlag(type, type, type);
