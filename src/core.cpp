@@ -133,8 +133,7 @@ void ics::Core::closeThis() const noexcept
 
 termios ics::Core::getTermios() noexcept
 {
-  termios newTio;
-  std::memset(&newTio, 0, sizeof(newTio));
+  termios newTio {};
   newTio.c_iflag = 0;
   newTio.c_oflag = 0;
   newTio.c_cflag = CS8 | CREAD | CLOCAL | PARENB;
