@@ -11,7 +11,7 @@ if(NOT DEFINED CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING "Choose: RelWithDebInfo Release Debug MinSizeRel None")
 endif()
 
-option(BUILD_SHARED_LIBS "Build shared (ON) or static (OFF) libraries" ON)
+option(BUILD_SHARED_LIBS "Build shared (ON) or static (OFF) libraries" OFF)
 option(ENABLE_TEST "Enable test program building" OFF)
 
 set(MY_DIR ${ics3_SOURCE_DIR})
