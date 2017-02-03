@@ -40,30 +40,6 @@ void testIcsID(ics::ICS3&);
 template<typename Iter>
 void dump(const Iter& begin, const Iter& end) noexcept;
 
-TEST(AllTestInIntegrate, Parameter) {
-  // constexpr test
-  constexpr auto stretch = ics::Parameter::stretch();
-  static_assert(30 == stretch.get(), "stretch error");
-  static_assert(30 == stretch, "stretch error by cast");
-  static_assert(0x01 == stretch.getSubcommand(), "stretch error by subcommand");
-  constexpr auto speed = ics::Parameter::speed(100);
-  static_assert(100 == speed.get(), "speed error");
-  static_assert(100 == speed, "speed error by cast");
-  static_assert(0x02 == speed.getSubcommand(), "speed error by subcommand");
-  EXPECT_THROW(ics::Parameter::temperature(0), std::out_of_range);
-
-  // runtime test
-  auto current = ics::Parameter::current();
-  EXPECT_EQ(63, current.get());
-  EXPECT_EQ(0x03, current.getSubcommand());
-  current.set(30);
-  EXPECT_EQ(30, current);
-  current = 10;
-  EXPECT_EQ(10, current);
-  EXPECT_THROW(current.set(70), std::out_of_range);
-  EXPECT_THROW(current = 64;, std::out_of_range);
-}
-
 TEST(AllTestInIntegrate, ICS3) {
   constexpr auto path = "/dev/ttyUSB0";
   constexpr auto baudrate = ics::Baudrate::RATE115200();
