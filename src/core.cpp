@@ -31,11 +31,17 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <fcntl.h> // for open FLAGS
 #include <unistd.h> // for tty checks
 
-#include "core.h"
+#include "core.hpp"
+
+template<typename T, typename... Args>
+inline std::unique_ptr<T> make_unique(Args&&... args)
+{
+  return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
+}
 
 ics::Core::Core(const std::string& path, speed_t baudrate)
-: fd {open(path.c_str(), O_RDWR | O_NOCTTY)},
-  oldTio {}
+  : fd {open(path.c_str(), O_RDWR | O_NOCTTY)},
+    oldTio {}
 {
   if (fd < 0)
     throw std::runtime_error {"Cannot open deveice"};
@@ -64,8 +70,8 @@ ics::Core::~Core() noexcept
 }
 
 ics::Core::Core(Core&& rhs) noexcept
-: fd {rhs.fd},
-  oldTio(rhs.oldTio) // for Ubuntu14.04 compiler
+  : fd {rhs.fd},
+    oldTio(rhs.oldTio) // for Ubuntu14.04 compiler
 {
   rhs.fd = -1;
 }
@@ -81,16 +87,9 @@ ics::Core& ics::Core::operator=(Core&& rhs) noexcept
   return *this;
 }
 
-std::shared_ptr<ics::Core> ics::Core::getCore(const std::string& path, speed_t baudrate)
+std::unique_ptr<ics::Core> ics::Core::getCore(const std::string& path, speed_t baudrate)
 {
-  static std::unordered_map<std::string, std::weak_ptr<Core>> cache;
-  auto objPtr = cache[path].lock(); // try get
-  for (const auto& data : cache) if (data.second.expired()) cache.erase(data.first); // clean cashe
-  if (!objPtr) { // get failed
-    objPtr = std::make_shared<Core>(path, baudrate);
-    cache[path] = objPtr;
-  }
-  return objPtr;
+  return make_unique<Core>(path, baudrate);
 }
 
 void ics::Core::communicate(const Container& tx, Container& rx)

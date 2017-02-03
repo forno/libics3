@@ -24,38 +24,54 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-#ifndef LIBICS3_ICS3_ICS3_H
-#define LIBICS3_ICS3_ICS3_H
+#ifndef LIBICS3_ICS3_EEPROM_H
+#define LIBICS3_ICS3_EEPROM_H
 
-#include <memory>
-#include <string>
+#include <algorithm>
 
-#include "ics3/angle.h"
-#include "ics3/baudrate.h"
+#include "ics3/eepparam.hpp"
 
 namespace ics
 {
-// Forward declaration
-class Core;
-class Parameter;
-class EepRom;
-class ID;
+class ICS3;
 
-class ICS3
+class EepRom
 {
+  friend ICS3; // for ICS3::getRom()
 public:
-  explicit ICS3(const std::string&, const Baudrate& = Baudrate::RATE115200());
-  Angle move(const ID&, Angle);
-  Angle free(const ID&, Angle = Angle::newRadian());
-  Parameter get(const ID&, const Parameter&);
-  void set(const ID&, const Parameter&);
-  EepRom getRom(const ID&);
-  void setRom(const ID&, const EepRom&);
-  ID getID();
-  void setID(const ID&);
+  using Container = std::array<uint8_t, 64>;
+
+  EepParam get(EepParam) const;
+  void set(const EepParam&) noexcept;
+  template<typename Iter>
+  void write(Iter&&) const;
 private:
-  std::shared_ptr<Core> core;
+  EepRom(const Container&); // non explicit, user cannot touch this
+
+  Container data;
 };
+
+inline ics::EepParam ics::EepRom::get(EepParam type) const
+{
+  type.read(data); // throw std::out_of_range
+  return type;
 }
 
-#endif // LIBICS3_ICS3_ICS3_H
+inline void EepRom::set(const EepParam& param) noexcept
+{
+  param.write(data);
+}
+
+template<typename Iter>
+inline void EepRom::write(Iter&& dest) const
+{
+  std::copy(data.cbegin(), data.cend(), dest);
+}
+
+inline EepRom::EepRom(const Container& src)
+  : data(src) // for Ubuntu14.04 compiler
+{
+}
+}
+
+#endif // LIBICS3_ICS3_EEPROM_H

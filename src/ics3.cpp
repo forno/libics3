@@ -24,12 +24,12 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-#include "ics3/ics3.h"
+#include "ics3/ics3.hpp"
 
-#include "core.h"
-#include "ics3/eeprom.h"
-#include "ics3/id.h"
-#include "ics3/parameter.h"
+#include "core.hpp"
+#include "ics3/eeprom.hpp"
+#include "ics3/id.hpp"
+#include "ics3/parameter.hpp"
 
 static inline ics::Angle::rawType getReceiveAngle(const ics::Core::Container& rx) noexcept
 {
@@ -42,7 +42,11 @@ static inline ics::Core::value_type getCmd(const ics::Core::value_type head, con
 }
 
 ics::ICS3::ICS3(const std::string& path, const Baudrate& baudrate)
-: core {Core::getCore(path, baudrate.getSpeed())} // throw std::invalid_argument, std::runtime_error
+  : core {Core::getCore(path, baudrate.getSpeed())} // throw std::invalid_argument, std::runtime_error
+{
+}
+
+ics::ICS3::~ICS3() noexcept
 {
 }
 
