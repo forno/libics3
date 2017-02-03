@@ -40,17 +40,6 @@ void testIcsID(ics::ICS3&);
 template<typename Iter>
 void dump(const Iter& begin, const Iter& end) noexcept;
 
-TEST(AllTestInIntegrate, ID) {
-  constexpr ics::ID id {0};
-  static_assert(id == 0, "id 0 error");
-  static_assert(id.get() == 0, "id 0 error by get");
-  constexpr ics::ID id31 {31};
-  static_assert(id31 == 31, "id 31 error");
-  static_assert(id31.get() == 31, "id 31 error by get");
-  EXPECT_THROW(ics::ID {32}, std::invalid_argument);
-  EXPECT_THROW(ics::ID {static_cast<ics::ID::type>(-1)}, std::invalid_argument);
-}
-
 TEST(AllTestInIntegrate, Parameter) {
   // constexpr test
   constexpr auto stretch = ics::Parameter::stretch();
