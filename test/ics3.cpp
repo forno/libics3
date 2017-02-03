@@ -24,11 +24,11 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-#include "ics3/ics"
-
 #include <chrono>
 #include <iostream>
 #include <thread>
+
+#include "ics3/ics"
 
 #include <gtest/gtest.h>
 
@@ -40,7 +40,7 @@ void testIcsID(ics::ICS3&);
 template<typename Iter>
 void dump(const Iter& begin, const Iter& end) noexcept;
 
-TEST(AllTestInIntegrate, ICS3) {
+TEST(ICS3MethodTest, All) {
   constexpr auto path = "/dev/ttyUSB0";
   constexpr auto baudrate = ics::Baudrate::RATE115200();
   constexpr ics::ID id {0};
