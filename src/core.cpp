@@ -25,10 +25,9 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #include <cstring> // for memset
+#include <fcntl.h> // for open FLAGS
 #include <sstream> // for error massage
 #include <stdexcept>
-#include <unordered_map> // for cashe
-#include <fcntl.h> // for open FLAGS
 #include <unistd.h> // for tty checks
 
 #include "core.hpp"
@@ -133,8 +132,7 @@ void ics::Core::closeThis() const noexcept
 
 termios ics::Core::getTermios() noexcept
 {
-  termios newTio;
-  std::memset(&newTio, 0, sizeof(newTio));
+  termios newTio {};
   newTio.c_iflag = 0;
   newTio.c_oflag = 0;
   newTio.c_cflag = CS8 | CREAD | CLOCAL | PARENB;

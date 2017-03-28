@@ -53,7 +53,7 @@ if [ $inputCheck -gt 1 ]; then
   if [ $INTCHECK -gt 1 ]; then
     echo "Invalid argument"
     return 1
-fi
+  fi
 else
   onePID=$1
 fi
